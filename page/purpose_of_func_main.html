@@ -23,10 +23,10 @@
 	  to application startup state.</b> The flags are the
 	  equivalent of arguments to a function.  A command however
 	  may setup other state before actually calling that first
-	  entry function. Things such as verbosity and logging are
-	  often setup before starting the actual counting.<br>  Use
-	  the builtin flag package to define, document and parse the
-	  flags.
+	  entry function. More often than not the verbosity of logging
+	  is one such state that needs to be configured early on.
+	  <br> Use the builtin flag package to define, document and
+	  parse the flags.
       </p>
 
 	<h2>Example <code>CountStars(galaxy string)</code></h2>
@@ -38,9 +38,11 @@
 	  a flag and perhaps a verbosity flag for debugging purposes.
 	  </p>
 
-	<!-- Update below code block with: cat
-	    example/cmd/countstars/main.go | awk '{if(NR>7)print}' | \
-	    ud -html purpose_of_func_main.html -i countstars -c -w -->
+	<!--
+	     Update below code block with:
+	     cat cmd/countstars/main.go | awk '{if(NR>7)print}' | \
+	       ud -html page/purpose_of_func_main.html -i countstars -c -w
+	  -->
 	<pre class="srcfile"><code class="go" id="countstars">func main() {
 	galaxy := "milkyway"
 	flag.StringVar(
