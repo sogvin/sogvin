@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="a4.css">
+  </head>
+  <body>
+    <header>
+      <span class="left">Go-learn</span>
+      <code>func main()</code>
+    </header>
+
+    <article>
+      <h1>Purpose of <code>func main()</code></h1>
+
+      <p>
+	The purpose is to <b>translate commandline arguments (flags) to application startup
+	  state.</b> The flags are the equivalent of arguments to a function.
+	A command however may setup other state before actually calling that
+	first entry function. Things such as verbosity and logging are often setup
+	before starting the actual counting.<br>  Use the builtin flag
+	package to define, document and parse the flags.
+      </p>
+
+	<h2>Example <code>CountStars(galaxy string)</code></h2>
+
+	<p>Imagine an application that counts the stars in a named
+	  galaxy. The main function should then make sure the flags
+	  are correct and forward them as arguments to the function
+	  doing the actual work. The name of the galaxy would be such
+	  a flag and perhaps a verbosity flag for debugging purposes.
+	  </p>
+
+	<!-- Update below code block with: cat
+	    example/cmd/countstars/main.go | awk '{if(NR>7)print}' | \
+	    ud -html purpose_of_func_main.html -i countstars -c -w -->
+	<pre class="srcfile"><code class="go" id="countstars">func main() {
+	galaxy := "milkyway"
+	flag.StringVar(
+		&galaxy, "galaxy",
+		galaxy, "name of galaxy to count stars in",
+	)
+	verbose := false
+	flag.BoolVar(
+		&verbose, "verbose",
+		verbose, "enables verbose logging",
+	)
+	flag.Parse()
+	SetVerbose(verbose)
+	CountStars(os.Stdout, galaxy)
+}</code></pre>
+
+      <p>Now that you know what the main function should do, let us
+	take a look at how it should be done, apart of the flag
+	definition and argument passing.<br>  First, the cyclomatic
+	complexity of the main function is one. Ie. there is only one
+	path throught this program.  There are however two exit
+	points, apart from the obvious one <code>flag.Parse()</code>
+	exits if the parsed flags do not match the predefined. The
+	single pathway means that testing the main function is
+	simple. Execute this application with valid flags and all
+	lines are covered, leaving all other code for unittesting.<br>
+	Also, if you execute the program you would note that second,
+	the order of the flags are sorted in the same way as the
+	output.
+      </p>
+
+      <div class="boxnote" style="margin-top: -5.2cm">Cyclomatic complexity should be one.</div>
+
+      <div class="boxnote" style="margin-top: -1.7cm">Flag order should match output.</div>
+
+      <h2>Benefits</h2>
+
+      <p>Adhering to the &ldquo;keep it simple principle&rdquo; and
+	only doing one thing in each function, works out nicely for
+	the main function as well. One could argue that, if you moved
+	everything inside main main into a start function, the flag
+	definitions would also be tested.  Think about it for a minute
+	and figure out what exactly you would be testing. If the flag
+	package already makes sure it's functions work as expected the
+	only thing left is testing the definition of your own
+	flags. They would need to be updated each time you add or
+	remove a flag which is a sign of a poor test.<br> You could
+	potentially refactor main and separate the flag definitions
+	into smaller functions for readability but you still wouldn't
+	need to write unittests for them.
+      </p>
+
+      <p>
+	Keep main simple, constrain it to only set global startup
+	state before calling the one function that does the actual
+	work.<br>This works great for services and simpler commands
+	that only do one thing.
+      </p>
+    </article>
+
+    <footer>
+      Gregory Vinčić
+    </footer>
+  </body>
+</html>
