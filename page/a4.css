@@ -1,12 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Inconsolata|Source+Sans+Pro');
-html, body {
-    font-family: 'Source Sans Pro', sans-serif;
-}
-
-code {
-    font-family: Inconsolata;
-}
-
 html, body, header, footer, h1, h2, h3, h4, h5 {
     margin: 0px 0px;
     padding: 0px 0px;

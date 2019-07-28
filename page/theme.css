@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata|Source+Sans+Pro');
+html, body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+code {
+    font-family: Inconsolata;
+}
