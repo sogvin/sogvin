@@ -6,51 +6,51 @@ import (
 )
 
 func CopyFile_nexus(src, dst string) error {
-	fi := &fileIO{}
-	r := fi.Open(src)
-	w := fi.Create(dst)
-	fi.Copy(w, r)
-	fi.Close(w)
-	if fi.err != nil {
+	x := &fileIO{}
+	r := x.Open(src)
+	w := x.Create(dst)
+	x.Copy(w, r)
+	x.Close(w)
+	if x.err != nil {
 		os.Remove(dst)
 	}
-	return fi.err
+	return x.err
 }
 
 type fileIO struct {
 	err error
 }
 
-func (fi *fileIO) Open(filename string) (fh *os.File) {
-	if fi.err != nil {
+func (x *fileIO) Open(filename string) (fh *os.File) {
+	if x.err != nil {
 		return
 	}
-	fh, fi.err = os.Open(filename)
+	fh, x.err = os.Open(filename)
 	return
 }
 
-func (fi *fileIO) Create(filename string) (fh *os.File) {
-	if fi.err != nil {
+func (x *fileIO) Create(filename string) (fh *os.File) {
+	if x.err != nil {
 		return
 	}
-	fh, fi.err = os.Create(filename)
+	fh, x.err = os.Create(filename)
 	return
 }
 
-func (fi *fileIO) Close(w io.Closer) {
-	if fi.err != nil {
+func (x *fileIO) Close(w io.Closer) {
+	if x.err != nil {
 		return
 	}
-	fi.err = w.Close()
+	x.err = w.Close()
 	return
 }
 
-func (fi *fileIO) Copy(w io.WriteCloser, r io.Reader) (n int64) {
-	if fi.err != nil {
+func (x *fileIO) Copy(w io.WriteCloser, r io.Reader) (n int64) {
+	if x.err != nil {
 		return
 	}
-	n, fi.err = io.Copy(w, r)
-	if fi.err != nil {
+	n, x.err = io.Copy(w, r)
+	if x.err != nil {
 		w.Close()
 	}
 	return
