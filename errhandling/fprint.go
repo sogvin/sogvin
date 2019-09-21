@@ -5,6 +5,7 @@ import (
 	"io"
 )
 
+/*
 func writeAlot_original(w io.Writer) error {
 	_, err := fmt.Fprint(w, "Hello")
 	if err != nil {
@@ -21,6 +22,7 @@ func writeAlot_original(w io.Writer) error {
 	_, err = fmt.Fprint(w, "Where is your sword?")
 	return err
 }
+*/
 
 func writeAlot(w io.Writer) (err error) {
 	fprint := fprintFunc(err)

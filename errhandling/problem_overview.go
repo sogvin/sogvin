@@ -1,16 +1,11 @@
 package errhandling
 
-import (
-	"fmt"
-	"io"
-	"os"
-)
-
 // Error Handling - Problem Overview
 // Working example from
 // https://go.googlesource.com/proposal/+/master/design\
 //          /go2draft-error-handling-overview.md
 
+/*
 func CopyFile(src, dst string) error {
 	r, err := os.Open(src)
 	if err != nil {
@@ -35,3 +30,4 @@ func CopyFile(src, dst string) error {
 	}
 	return nil
 }
+*/

@@ -20,11 +20,12 @@ func Test_implementations(t *testing.T) {
 		subtest string
 		fn      copyFunc
 	}{
-		{"Original CopyFile", copyFunc(CopyFile)},
 		{"CopyFile try catch", copyFunc(CopyFile_trycatch)},
 		{"Split CopyFile2", copyFunc(CopyFile_split)},
 		{"Nexus", copyFunc(CopyFile_nexus)},
 		{"firstOf", copyFunc(CopyFile_firstOf)},
+		// Original cannot be covered
+		// {"Original CopyFile", copyFunc(CopyFile)},
 	}
 	for _, c := range cases {
 		t.Run(c.subtest, func(t *testing.T) {

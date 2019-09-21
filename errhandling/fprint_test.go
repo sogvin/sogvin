@@ -9,7 +9,7 @@ import (
 	"github.com/gregoryv/asserter"
 )
 
-func Test_writeAlog(t *testing.T) {
+func Test_writeAlot(t *testing.T) {
 	buf := bytes.NewBufferString("")
 	err := writeAlot(buf)
 	if err != nil {
