@@ -1,6 +1,15 @@
+github.com/gregoryv/asserter v0.0.0-20190113151027-b6bfcdf82e90 h1:vrN8m/qjomGGi6x5wtE9YEE+FAdSgAJ0Z8E6ZgRjJ3U=
 github.com/gregoryv/asserter v0.0.0-20190113151027-b6bfcdf82e90/go.mod h1:iLD46IKZjjleTkmDikemRaDZQldDrq8uwTnygV/hC/M=
+github.com/gregoryv/asserter v0.1.0 h1:p+0pvUOuUCn/rVy7YxafoxfXnYPfVptbExJOrWQy9sc=
+github.com/gregoryv/asserter v0.1.0/go.mod h1:iLD46IKZjjleTkmDikemRaDZQldDrq8uwTnygV/hC/M=
+github.com/gregoryv/gocyclo v0.0.0-20180305144948-0be7902fabdc h1:chhF7lRELMFmxWl3AWbZ2UT1xQtN9nqFGyhL3jwGWDs=
+github.com/gregoryv/gocyclo v0.0.0-20180305144948-0be7902fabdc/go.mod h1:x/QA8cT1gfn/XriQ/CVNX7I8IM4Z2YJAAEWFym2clZI=
 github.com/gregoryv/logger v0.0.0-20190129141326-b615f3072110 h1:/P48XM3pV3+e27bvcMbZg6D6qqtIa2mkUt25+TsNFoA=
 github.com/gregoryv/logger v0.0.0-20190129141326-b615f3072110/go.mod h1:/dc6pRKnuzDcajoaxnoat7rYs7jQrvBsTNPF/QgB1wc=
+github.com/gregoryv/qual v0.3.1 h1:RUdYxRhxkkZSHU0eTH7nTzYgxG7NxEYsMyN6Gnj/qus=
+github.com/gregoryv/qual v0.3.1/go.mod h1:dB0ZUMaE5qieQ975kKI7A4CDfg6wgcsPcSlY1SWuq9Y=
+github.com/gregoryv/workdir v0.2.0 h1:a0V87TpJpda5rHPj+lrJTiUD7pqdddUERYPWEJY8ufc=
+github.com/gregoryv/workdir v0.2.0/go.mod h1:qX7yFN0yqysNfEr2F5Tta9+5K8oueS/sqBmdiExBoYA=
 github.com/mattn/go-colorable v0.0.9/go.mod h1:9vuHe8Xs5qXnSaW/c/ABM9alt+Vo+STaOChaDxuIBZU=
 github.com/mattn/go-isatty v0.0.4/go.mod h1:M+lRXTBqGeGNdLjl/ufCoiOlB5xdOkqRJdNxMWT7Zi4=
 github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b/go.mod h1:01TrycV0kFyexm33Z7vhZRXopbI8J3TDReVlkTgMUxE=
