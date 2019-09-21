@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="theme.css">
+    <link rel="stylesheet" type="text/css" href="a4.css">
+
+  </head>
+  <body>
+    <header>
+      <span class="left"></span>
+      <code>Nexus pattern</code>
+    </header>
+
+    <article>
+      <h1>Nexus pattern</h1>
+      <p>The word nexus is defined as
+	<quote>&#34;The means of connection between things linked in
+	  series&#34;</quote>. The pattern is useful in error handling
+	  sequential function calls.
+      </p>
+
+      <h2>Example <code>CopyFile(from, to string)</code></h2>
+
+      <p>Copying a file, if done all in one function, is unreadable
+	due to multiple error checking and handling.  With the nexus
+	pattern you define a <code>type fileIO struct</code> with the
+	error field. Each method must check the previous error and
+	return if it is set without doing anything. This way all
+	subsequent calls are no-operations.
+      </p>
+
+      <div class="boxnote" style="margin-top: .6cm">The err field links operations.</div>
+      <div class="boxnote" style="margin-top: 3.3cm">Each method sets
+	x.err before returning.</div>
+	<!--
+	     Update below code block with:
+	     cat errhandling/nexus.go | awk '{if(NR>19)print}' | \
+	       ud -i fileio -c -w page/nexus_pattern.html
+	  -->
+	<pre class="srcfile"><code class="go" id="fileio">type fileIO struct {
+	err error
+}
+
+func (x *fileIO) Open(filename string) (fh *os.File) {
+	if x.err != nil {
+		return
+	}
+	fh, x.err = os.Open(filename)
+	return
+}
+
+func (x *fileIO) Create(filename string) (fh *os.File) {
+	if x.err != nil {
+		return
+	}
+	fh, x.err = os.Create(filename)
+	return
+}
+
+func (x *fileIO) Close(w io.Closer) {
+	if x.err != nil {
+		return
+	}
+	x.err = w.Close()
+}
+
+func (x *fileIO) Copy(w io.WriteCloser, r io.Reader) (n int64) {
+	if x.err != nil {
+		return
+	}
+	n, x.err = io.Copy(w, r)
+	if x.err != nil {
+		w.Close()
+	}
+	return
+}</code></pre>
+
+	With the fileIO nexus inplace the CopyFile function is
+	readable and with only one error checking and handling needed.
+	<!--
+	     Update below code block with:
+	     head -n 18 errhandling/nexus.go | awk '{if(NR>7)print}' | \
+	       ud -i copyfile -c -w page/nexus_pattern.html
+	  -->
+	<pre class="srcfile"><code class="go" id="copyfile">func CopyFile(src, dst string) error {
+	x := &fileIO{}
+	r := x.Open(src)
+	w := x.Create(dst)
+	x.Copy(w, r)
+	x.Close(w)
+	if x.err != nil {
+		os.Remove(dst)
+	}
+	return x.err
+}</code></pre>
+    </article>
+
+    <footer>
+      Gregory Vinčić
+    </footer>
+  </body>
+</html>

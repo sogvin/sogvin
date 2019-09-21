@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func CopyFile_nexus(src, dst string) error {
+func CopyFile(src, dst string) error {
 	x := &fileIO{}
 	r := x.Open(src)
 	w := x.Create(dst)
@@ -42,7 +42,6 @@ func (x *fileIO) Close(w io.Closer) {
 		return
 	}
 	x.err = w.Close()
-	return
 }
 
 func (x *fileIO) Copy(w io.WriteCloser, r io.Reader) (n int64) {

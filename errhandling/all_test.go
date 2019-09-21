@@ -22,7 +22,7 @@ func Test_implementations(t *testing.T) {
 	}{
 		{"CopyFile try catch", copyFunc(CopyFile_trycatch)},
 		{"Split CopyFile2", copyFunc(CopyFile_split)},
-		{"Nexus", copyFunc(CopyFile_nexus)},
+		{"Nexus", copyFunc(CopyFile)},
 		{"firstOf", copyFunc(CopyFile_firstOf)},
 		// Original cannot be covered
 		// {"Original CopyFile", copyFunc(CopyFile)},
