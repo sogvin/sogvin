@@ -19,8 +19,9 @@
       <h1>Nexus pattern</h1>
       <p>The word nexus is defined as
 	<quote>&#34;The means of connection between things linked in
-	  series&#34;</quote>. The pattern is useful in error handling
-	  sequential function calls.
+	  series&#34;</quote>. The pattern is useful
+	  in <a href="https://go.googlesource.com/proposal/+/master/design/go2draft-error-handling-overview.md">error
+	  handling</a> sequential function calls.
       </p>
 
       <h2>Example <code>CopyFile(from, to string)</code></h2>
@@ -95,6 +96,7 @@ func (x *fileIO) Copy(w io.WriteCloser, r io.Reader) (n int64) {
 	if x.err != nil {
 		os.Remove(dst)
 	}
+	r.Close()
 	return x.err
 }</code></pre>
     </article>

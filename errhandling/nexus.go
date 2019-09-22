@@ -14,6 +14,7 @@ func CopyFile(src, dst string) error {
 	if x.err != nil {
 		os.Remove(dst)
 	}
+	r.Close()
 	return x.err
 }
 
