@@ -19,14 +19,13 @@
       <h1>Purpose of <code>func main()</code></h1>
 
       <p>
-	The purpose is to <b>translate commandline arguments (flags)
-	  to application startup state.</b> The flags are the
-	  equivalent of arguments to a function.  A command however
-	  may setup other state before actually calling that first
-	  entry function. More often than not the verbosity of logging
-	  is one such state that needs to be configured early on.
-	  <br> Use the builtin flag package to define, document and
-	  parse the flags.
+	The purpose of <code>func main()</code> is to <b>translate
+	  commandline arguments to application startup state</b>. Once
+	  the state is prepared a specific entry function is
+	  called. More often than not, logging verbosity is one such
+	  state that needs to be configured early on.
+	<br> Use the builtin flag package to define, document and
+	parse the arguments.
       </p>
 
 	<h2>Example <code>CountStars(galaxy string)</code></h2>
@@ -63,14 +62,14 @@
 	take a look at how it should be done, apart of the flag
 	definition and argument passing.<br>  First, the cyclomatic
 	complexity of the main function is one. Ie. there is only one
-	path throught this program.  There are however two exit
-	points, apart from the obvious one <code>flag.Parse()</code>
-	exits if the parsed flags do not match the predefined. The
-	single pathway means that testing the main function is
+	path through this program.  There are however two exit points,
+	apart from the obvious one <code>flag.Parse()</code> exits if
+	the parsed flags do not match the predefined. The single
+	pathway means that testing the main function is
 	simple. Execute this application with valid flags and all
 	lines are covered, leaving all other code for unittesting.<br>
 	Also, if you execute the program you would note that second,
-	the order of the flags are sorted in the same way as the
+	the order of the flags are sorted in the same way as the help
 	output.
       </p>
 
