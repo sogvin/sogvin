@@ -2,29 +2,38 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"time"
 )
 
 func main() {
-	srv := &http.Server{Addr: ":2121", Handler: &http.ServeMux{}}
+	me := &MainEntry{
+		Server: http.Server{
+			Addr:    ":2121",
+			Handler: &http.ServeMux{},
+		},
+	}
+	go me.ShutdownAfter(400 * time.Millisecond)
+	me.Enter()
+}
 
+type MainEntry struct {
+	err error
+	http.Server
+}
+
+func (me *MainEntry) ShutdownAfter(d time.Duration) {
+	<-time.After(d)
+	me.Shutdown(context.Background())
+}
+
+func (me *MainEntry) Enter() {
 	done := make(chan bool)
-	srv.RegisterOnShutdown(func() {
-		fmt.Println("Stopping")
-		time.Sleep(100 * time.Millisecond)
+	me.RegisterOnShutdown(func() {
+		// close everything before signaling done
 		done <- true
 	})
 
-	go shutdownAfter(srv, 400*time.Millisecond)
-
-	srv.ListenAndServe()
-	fmt.Println("Waiting for done")
+	me.err = me.ListenAndServe()
 	<-done
-}
-
-func shutdownAfter(srv *http.Server, d time.Duration) {
-	<-time.After(d)
-	srv.Shutdown(context.Background())
 }
