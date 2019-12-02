@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"os"
 	"os/signal"
 
@@ -19,10 +18,6 @@ func main() {
 func NewMainEntry() *MainEntry {
 	return &MainEntry{
 		Logger: logger.NewProgress(),
-		Server: http.Server{
-			Addr:    ":2121",
-			Handler: &http.ServeMux{},
-		},
 	}
 }
 
@@ -30,23 +25,18 @@ type MainEntry struct {
 	logger.Logger
 	err    error
 	dryrun bool
-
-	http.Server
 }
 
 func (me *MainEntry) Enter() {
-	me.setupInterrupts()
-	done := make(chan bool)
-	me.RegisterOnShutdown(func() {
-		// close everything before signaling done
-		done <- true
-	})
+	srv := NewServer(":2121")
+	me.setupInterrupts(&srv)
 
-	me.err = me.ListenAndServe()
-	<-done
+	me.err = srv.ListenAndServe()
+	// Wait for shutdown to complete
+	<-srv.Done
 }
 
-func (me *MainEntry) setupInterrupts() {
+func (me *MainEntry) setupInterrupts(srv *Server) {
 	if me.skipf("interrupt with Ctrl-c") {
 		return
 	}
@@ -54,8 +44,8 @@ func (me *MainEntry) setupInterrupts() {
 	signal.Notify(c, os.Kill, os.Interrupt)
 
 	go func() {
-		<-c
-		fmt.Println("exiting...")
-		me.Shutdown(context.Background())
+		sig := <-c
+		fmt.Printf("%v\n", sig)
+		srv.Shutdown(context.Background())
 	}()
 }

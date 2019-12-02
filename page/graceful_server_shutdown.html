@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="theme.css">
+    <link rel="stylesheet" type="text/css" href="a4.css">
+
+  </head>
+  <body>
+    <header>
+      <span class="left"></span>
+      <code>Shutdown</code>
+    </header>
+
+    <article>
+      <h1>Graceful server shutdown</h1>
+      <p>Avoid disrupting ongoing requests by shutting down
+	gracefully. In the below example Ctrl-c can be used to signal
+	an interrupt which tells a listening <code>http.Server</code>
+	to shutdown.
+      </p>
+
+      <div class="boxnote" style="margin-top: .8cm">Register the graceful part of the server.</div>
+
+	<!--
+	     Update below code block with:
+	     cat cmd/graceful/graceful.go | awk '{if(NR>19)print}' | \
+	       ud -i graceful -c -w page/graceful_server_shutdown.html
+	  -->
+	<pre class="srcfile"><code class="go" id="graceful">}
+
+func (me *MainEntry) setupInterrupts(srv *Server) {
+	if me.skipf("interrupt with Ctrl-c") {
+		return
+	}
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Kill, os.Interrupt)
+
+	go func() {
+		sig := <-c
+		fmt.Printf("%v\n", sig)
+		srv.Shutdown(context.Background())
+	}()
+}</code></pre>
+
+    </article>
+
+    <footer>
+      Gregory Vinčić
+    </footer>
+  </body>
+</html>

@@ -8,10 +8,11 @@ nameonly="${filename%.*}"
 case $extension in
     go)
         goimports -w $path
-        gofmt -w $path
         ;;
 esac
+cat cmd/graceful/graceful.go | \
+    awk '{if(NR>36)print}' | \
+    ud -i graceful -c -w page/graceful_server_shutdown.html
 
-cat testing/inline_test.go | awk '{if(NR>6)print}' | ud -i inlinetest -c -w page/inline_test_helpers.html
 go test -coverprofile /tmp/c.out ./...
 uncover /tmp/c.out
