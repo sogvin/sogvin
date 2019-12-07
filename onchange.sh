@@ -11,7 +11,7 @@ case $extension in
         ;;
 esac
 cat cmd/graceful/graceful.go | \
-    awk '{if(NR>36)print}' | \
+    awk '{if(NR>10)print}' | \
     ud -i graceful -c -w page/graceful_server_shutdown.html
 
 go test -coverprofile /tmp/c.out ./...

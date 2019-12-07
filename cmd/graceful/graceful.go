@@ -3,49 +3,39 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"os/signal"
-
-	"github.com/gregoryv/logger"
 )
 
 func main() {
-	me := NewMainEntry()
-	me.Enter()
-	os.Exit(me.Exit())
-}
-
-func NewMainEntry() *MainEntry {
-	return &MainEntry{
-		Logger: logger.NewProgress(),
+	done := make(chan bool)
+	graceful := func() {
+		// close everything before signaling done
+		fmt.Println("Closing down ...")
+		done <- true
 	}
-}
 
-type MainEntry struct {
-	logger.Logger
-	err    error
-	dryrun bool
-}
-
-func (me *MainEntry) Enter() {
-	srv := NewServer(":2121")
-	me.setupInterrupts(&srv)
-
-	me.err = srv.ListenAndServe()
-	// Wait for shutdown to complete
-	<-srv.Done
-}
-
-func (me *MainEntry) setupInterrupts(srv *Server) {
-	if me.skipf("interrupt with Ctrl-c") {
-		return
+	srv := http.Server{
+		Addr:    ":8080",
+		Handler: &http.ServeMux{},
 	}
+	srv.RegisterOnShutdown(graceful)
+	go stopOn(&srv, os.Kill, os.Interrupt)
+
+	err := srv.ListenAndServe()
+	if err != nil {
+		fmt.Println(err)
+	}
+	// Wait for graceful to complete
+	<-done
+}
+
+// stopOn calls Shutdown on the server for the given signals
+func stopOn(srv *http.Server, signals ...os.Signal) {
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Kill, os.Interrupt)
-
-	go func() {
-		sig := <-c
-		fmt.Printf("%v\n", sig)
-		srv.Shutdown(context.Background())
-	}()
+	signal.Notify(c, signals...)
+	sig := <-c
+	fmt.Printf("%v\n", sig)
+	srv.Shutdown(context.Background())
 }

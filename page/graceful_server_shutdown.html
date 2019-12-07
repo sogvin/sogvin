@@ -23,27 +23,49 @@
 	to shutdown.
       </p>
 
-      <div class="boxnote" style="margin-top: .8cm">Register the graceful part of the server.</div>
+      <div class="boxnote" style="margin-top: 4.8cm">Register the
+      graceful part of the server.</div>
+
+
+      <div class="boxnote" style="margin-top: 7.8cm">Important to wait
+	for graceful stop to end.</div>
+
 
 	<!--
 	     Update below code block with:
-	     cat cmd/graceful/graceful.go | awk '{if(NR>19)print}' | \
+	     cat cmd/graceful/graceful.go | awk '{if(NR>10)print}' | \
 	       ud -i graceful -c -w page/graceful_server_shutdown.html
 	  -->
-	<pre class="srcfile"><code class="go" id="graceful">}
-
-func (me *MainEntry) setupInterrupts(srv *Server) {
-	if me.skipf("interrupt with Ctrl-c") {
-		return
+	<pre class="srcfile"><code class="go" id="graceful">func main() {
+	done := make(chan bool)
+	graceful := func() {
+		// close everything before signaling done
+		fmt.Println("Closing down ...")
+		done <- true
 	}
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Kill, os.Interrupt)
 
-	go func() {
-		sig := <-c
-		fmt.Printf("%v\n", sig)
-		srv.Shutdown(context.Background())
-	}()
+	srv := http.Server{
+		Addr:    ":8080",
+		Handler: &http.ServeMux{},
+	}
+	srv.RegisterOnShutdown(graceful)
+	go stopOn(&srv, os.Kill, os.Interrupt)
+
+	err := srv.ListenAndServe()
+	if err != nil {
+		fmt.Println(err)
+	}
+	// Wait for graceful to complete
+	<-done
+}
+
+// stopOn calls Shutdown on the server for the given signals
+func stopOn(srv *http.Server, signals ...os.Signal) {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, signals...)
+	sig := <-c
+	fmt.Printf("%v\n", sig)
+	srv.Shutdown(context.Background())
 }</code></pre>
 
     </article>
