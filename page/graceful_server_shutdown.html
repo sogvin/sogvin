@@ -68,6 +68,13 @@ func stopOn(srv *http.Server, signals ...os.Signal) {
 	srv.Shutdown(context.Background())
 }</code></pre>
 
+
+
+      <p>Remember that you could expose the Shutdown func of your
+         server through an URL to simplify clean shutdown. Useful for
+         when you are doing continuous integration and
+         deployment.</p>
+
     </article>
 
     <footer>
