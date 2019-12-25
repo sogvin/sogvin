@@ -39,6 +39,7 @@ h1 code, h2 code {
     margin-left: 8px;
 }
 code.go {
+    -moz-tab-size: 4;
     tab-size: 4;
 }
 
