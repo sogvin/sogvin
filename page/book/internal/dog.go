@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path"
 
 	"github.com/gregoryv/notes/page"
 )
@@ -12,11 +13,13 @@ import (
 func main() {
 	fmt.Println("Dog")
 	pages := map[string]writerTo{
-		"../dictionary.html": page.Dictionary,
+		"dictionary.html": page.Dictionary,
 	}
+	base := "../www/"
 	for filename, page := range pages {
+		out := path.Join(base, filename)
 		fmt.Println("  ", filename)
-		fh, err := os.Create(filename)
+		fh, err := os.Create(out)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
