@@ -1,6 +1,13 @@
 package page
 
-import . "github.com/gregoryv/web/doctype"
+import (
+	"bufio"
+	"bytes"
+	"fmt"
+	"os"
+
+	. "github.com/gregoryv/web/doctype"
+)
 
 var (
 	en       = Lang("en")
@@ -21,4 +28,48 @@ func stylesheet(href string) *Tag {
 		Type("text/css"),
 		Href(href),
 	)
+}
+
+func header(left, right string) *Tag {
+	return Header(
+		Span(
+			Class("left"),
+			left,
+		),
+		Code(right),
+	)
+}
+
+func boxnote(txt string, cm float64) *Tag {
+	return Div(Class("boxnote"),
+		&Attr{Name: "style", Val: fmt.Sprintf("margin-top: %vcm", cm)},
+		txt,
+	)
+}
+
+func loadGoFile(filename string, from, to int) string {
+	return `<pre class="srcfile"><code class="go">` +
+		loadFile(filename, from, to) + "</code></pre>"
+}
+
+func loadFile(filename string, from, to int) string {
+	var buf bytes.Buffer
+	fh, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	scanner := bufio.NewScanner(fh)
+	for i := from; i > 1; i-- {
+		scanner.Scan()
+		to--
+	}
+
+	for scanner.Scan() {
+		to--
+		buf.WriteString(scanner.Text() + "\n")
+		if to == 0 {
+			break
+		}
+	}
+	return buf.String()
 }

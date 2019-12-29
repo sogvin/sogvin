@@ -33,12 +33,12 @@ func LoadFunc(filename, funcName string) (string, error) {
 	return b, nil
 }
 
-func MustLoadFunc(filename, funcName string) *bytes.Buffer {
+func MustLoadFunc(filename, funcName string) string {
 	b, err := LoadFunc(filename, funcName)
 	if err != nil {
 		panic(err)
 	}
-	return bytes.NewBufferString(b)
+	return b
 }
 
 func parseFunc(filename, funcName string) (fun *ast.FuncDecl, fset *token.FileSet) {
