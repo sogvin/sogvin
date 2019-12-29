@@ -15,7 +15,7 @@ func main() {
 	pages := map[string]writerTo{
 		"dictionary.html": page.Dictionary,
 	}
-	base := "../www/"
+	base := "./www/"
 	for filename, page := range pages {
 		out := path.Join(base, filename)
 		fmt.Println("  ", filename)
