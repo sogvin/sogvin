@@ -14,11 +14,12 @@ func main() {
 	fmt.Println("Dog")
 	pages := map[string]writerTo{
 		"dictionary.html": page.Dictionary,
+		"index.html":      page.Index,
 	}
 	base := "./www/"
 	for filename, page := range pages {
 		out := path.Join(base, filename)
-		fmt.Println("  ", filename)
+		fmt.Println("  ", out)
 		fh, err := os.Create(out)
 		if err != nil {
 			fmt.Println(err)

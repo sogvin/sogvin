@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+package page
 
-<html lang="en">
-  <head>
+import . "github.com/gregoryv/web/doctype"
+
+var Index = Html(Lang("en"),
+	`<head>
     <meta charset="utf-8"/>
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,5 +37,5 @@
 
     <footer></footer>
   </body>
-
-</html>
+`,
+)
