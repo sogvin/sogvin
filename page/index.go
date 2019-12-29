@@ -3,26 +3,17 @@ package page
 import . "github.com/gregoryv/web/doctype"
 
 var Index = Html(en,
-	`<head>
-    <meta charset="utf-8"/>
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="theme.css">
-    <link rel="stylesheet" type="text/css" href="a4.css">
-    <style type="text/css">
-      ul {
+	Head(utf8, viewport, theme, a4,
+		Style(Type("text/css"),
+			`ul {
       padding: 0px;
       }
       li {
       padding: 0px;
       list-style: none;
-      }
-    </style>
-
-  </head>
-  <body>
-
-    <article>
+      }`),
+	),
+	Body(`<article>
       <h1>Software Engineering</h1>
       <p>Notes by Gregory Vin&ccaron;i&cacute;</p>
 
@@ -35,7 +26,6 @@ var Index = Html(en,
       </ul>
     </article>
 
-    <footer></footer>
-  </body>
-`,
+    <footer></footer>`,
+	),
 )

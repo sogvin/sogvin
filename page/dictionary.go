@@ -3,11 +3,7 @@ package page
 import . "github.com/gregoryv/web/doctype"
 
 var Dictionary = Html(en,
-	Head(utf8, viewport,
-		`<title></title>
-    <link rel="stylesheet" type="text/css" href="theme.css">
-    <link rel="stylesheet" type="text/css" href="a4.css">`,
-	),
+	Head(utf8, viewport, theme, a4),
 	Body(`<header>
       <span class="left"></span>
       <code>References</code>
