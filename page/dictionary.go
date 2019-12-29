@@ -28,10 +28,7 @@ var Dictionary = Html(en,
 	<dd>Argument starting with single or double dashes.</dd>
 
       </dl>
-    </article>
-
-    <footer>
-      Gregory Vinčić
-    </footer>
-`),
+    </article>`,
+		footer,
+	),
 )

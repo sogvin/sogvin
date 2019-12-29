@@ -13,9 +13,8 @@ var Index = Html(en,
       list-style: none;
       }`),
 	),
-	Body(`<article>
-      <h1>Software Engineering</h1>
-      <p>Notes by Gregory Vin&ccaron;i&cacute;</p>
+	Body(Article(H1("Software Engineering"),
+		`<p>Notes by Gregory Vin&ccaron;i&cacute;</p>
 
       <h2>Table of Contents</h2>
       <ul>
@@ -23,9 +22,7 @@ var Index = Html(en,
 	<li><a href="nexus_pattern.html">Nexus pattern</a></li>
 	<li><a href="inline_test_helpers.html">Inline test helpers</a></li>
 	<li><a href="graceful_server_shutdown.html">Graceful server shutdown</a></li>
-      </ul>
-    </article>
-
-    <footer></footer>`,
+      </ul>`),
+		footer,
 	),
 )
