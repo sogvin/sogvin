@@ -1,4 +1,4 @@
-module esara
+module github.com/gregoryv/notes
 
 go 1.12
 
