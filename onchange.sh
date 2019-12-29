@@ -10,6 +10,7 @@ case $extension in
         goimports -w $path
         ;;
 esac
+go generate ./...
 cat cmd/graceful/graceful.go | \
     awk '{if(NR>10)print}' | \
     ud -i graceful -c -w page/graceful_server_shutdown.html
