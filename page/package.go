@@ -9,11 +9,12 @@ import (
 
 func WriteAllPages(base string) {
 	pages := map[string]writerTo{
-		"dictionary.html":    Dictionary,
-		"index.html":         Index,
-		"nexus_pattern.html": NexusPattern,
+		"dictionary.html":          Dictionary,
+		"index.html":               Index,
+		"nexus_pattern.html":       NexusPattern,
+		"inline_test_helpers.html": InlineTestHelpers,
 	}
-	for filename, page := range pages {
+	for filename, art := range pages {
 		out := path.Join(base, filename)
 		fmt.Println("  ", out)
 		fh, err := os.Create(out)
@@ -21,7 +22,7 @@ func WriteAllPages(base string) {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		page.WriteTo(fh)
+		art.WriteTo(fh)
 		fh.Close()
 	}
 }
