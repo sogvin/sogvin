@@ -28,6 +28,24 @@ func Test(t *testing.T) {
 }`)
 	ok("c", `func c(x int, v ...interface{}) {
 }`)
+	notes.MustLoadFunc("printfunc_test.go", "c")
+
+	err := notes.PrintFunc("x", "y", nil)
+	if err == nil {
+		t.Error("Should fail")
+	}
+
+	err = notes.PrintFunc("printfunc_test.go", "y", nil)
+	if err == nil {
+		t.Error("Should fail")
+	}
+	defer func() {
+		e := recover()
+		if e == nil {
+			t.Fail()
+		}
+	}()
+	notes.MustLoadFunc("x", "y")
 }
 
 func a() {}
