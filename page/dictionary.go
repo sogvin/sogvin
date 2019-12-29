@@ -2,16 +2,13 @@ package page
 
 import . "github.com/gregoryv/web/doctype"
 
-var Dictionary = Html(Lang("en"),
-	`<head>
-    <meta charset="utf-8"/>
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+var Dictionary = Html(en,
+	Head(utf8, viewport,
+		`<title></title>
     <link rel="stylesheet" type="text/css" href="theme.css">
-    <link rel="stylesheet" type="text/css" href="a4.css">
-  </head>
-  <body>
-    <header>
+    <link rel="stylesheet" type="text/css" href="a4.css">`,
+	),
+	Body(`<header>
       <span class="left"></span>
       <code>References</code>
     </header>
@@ -40,5 +37,5 @@ var Dictionary = Html(Lang("en"),
     <footer>
       Gregory Vinčić
     </footer>
-  </body>
-`)
+`),
+)

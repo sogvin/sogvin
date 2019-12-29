@@ -2,7 +2,7 @@ package page
 
 import . "github.com/gregoryv/web/doctype"
 
-var Index = Html(Lang("en"),
+var Index = Html(en,
 	`<head>
     <meta charset="utf-8"/>
     <title></title>
