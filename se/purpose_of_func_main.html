@@ -3,23 +3,27 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="theme.css">
-    <link rel="stylesheet" type="text/css" href="a4.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="theme.css"/>
+    <link rel="stylesheet" type="text/css" href="a4.css"/>
 
   </head>
   <body>
     <header>
-      <span class="left"></span>
-      <code>func main()</code>
+      <span class="left">
+        
+      </span>
+      <code>
+        func main()
+      </code>
+
     </header>
-
     <article>
-      <h1>Purpose of <code>func main()</code></h1>
-
+      <h1>
+        Purpose of <code>func main()</code>
+      </h1>
       <p>
-	The purpose of <code>func main()</code> is to <b>translate
+        The purpose of <code>func main()</code> is to <b>translate
 	  commandline arguments to application startup state</b>. Once
 	  the state is prepared a specific entry function is
 	  called. More often than not, logging verbosity is one such
@@ -27,22 +31,17 @@
 	<br> Use the builtin flag package to define, document and
 	parse the arguments.
       </p>
-
-	<h2>Example <code>CountStars(galaxy string)</code></h2>
-
-	<p>Imagine an application that counts the stars in a named
+      <h2>
+        Example <code>CountStars(galaxy string)</code>
+      </h2>
+      <p>
+        Imagine an application that counts the stars in a named
 	  galaxy. The main function should then make sure the flags
 	  are correct and forward them as arguments to the function
 	  doing the actual work. The name of the galaxy would be such
 	  a flag and perhaps a verbosity flag for debugging purposes.
-	  </p>
-
-	<!--
-	     Update below code block with:
-	     cat cmd/countstars/main.go | awk '{if(NR>7)print}' | \
-	       ud -html page/purpose_of_func_main.html -i countstars -c -w
-	  -->
-	<pre class="srcfile"><code class="go" id="countstars">func main() {
+      </p>
+      <pre class="srcfile"><code class="go">func main() {
 	galaxy := "milkyway"
 	flag.StringVar(
 		&galaxy, "galaxy",
@@ -56,9 +55,9 @@
 	flag.Parse()
 	SetVerbose(verbose)
 	CountStars(os.Stdout, galaxy)
-}</code></pre>
-
-      <p>Now that you know what the main function should do, let us
+}
+</code></pre> <p>
+  Now that you know what the main function should do, let us
 	take a look at how it should be done, apart of the flag
 	definition and argument passing.<br>  First, the cyclomatic
 	complexity of the main function is one. Ie. there is only one
@@ -71,14 +70,18 @@
 	Also, if you execute the program you would note that second,
 	the order of the flags are sorted in the same way as the help
 	output.
-      </p>
-
-      <div class="boxnote" style="margin-top: -5.2cm">Cyclomatic complexity should be one.</div>
-      <div class="boxnote" style="margin-top: -1.7cm">Flag order should match output.</div>
-
-      <h2>Benefits</h2>
-
-      <p>Adhering to the &ldquo;keep it simple principle&rdquo; and
+</p>
+      <div class="boxnote" style="margin-top: -5.2cm">
+        Cyclomatic complexity should be one.
+      </div>
+      <div class="boxnote" style="margin-top: -1.7cm">
+        Flag order should match output.
+      </div>
+      <h2>
+        Benefits
+      </h2>
+      <p>
+        Adhering to the &ldquo;keep it simple principle&rdquo; and
 	only doing one thing in each function, works out nicely for
 	the main function as well. One could argue that, if you moved
 	everything inside main into a start function, the flag
@@ -92,17 +95,18 @@
 	into smaller functions for readability but you still wouldn't
 	need to write unittests for them.
       </p>
-
       <p>
-	Keep main simple, constrain it to only set global startup
+        Keep main simple, constrain it to only set global startup
 	state before calling the one function that does the actual
 	work.<br>This works great for services and simpler commands
 	that only do one thing.
       </p>
-    </article>
 
+    </article>
     <footer>
-      Gregory Vinčić
+      Gregory Vin&ccaron;i&cacute;
     </footer>
+
   </body>
+
 </html>

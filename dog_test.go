@@ -17,8 +17,9 @@ func WriteAllPages(base string) {
 		"dictionary.html":               Dictionary,
 		"graceful_server_shutdown.html": GracefulServerShutdown,
 		"index.html":                    Index,
-		"nexus_pattern.html":            NexusPattern,
 		"inline_test_helpers.html":      InlineTestHelpers,
+		"nexus_pattern.html":            NexusPattern,
+		"purpose_of_func_main.html":     PurposeOfFuncMain,
 	}
 	for filename, art := range pages {
 		out := path.Join(base, filename)

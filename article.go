@@ -149,3 +149,67 @@ doing anything. This way all subsequent calls are no-operations.`),
 		footer,
 	),
 )
+
+var PurposeOfFuncMain = Html(en,
+	Head(utf8, viewport, theme, a4),
+	Body(
+		header("", "func main()"),
+		Article(
+			H1("Purpose of <code>func main()</code>"),
+			P(`The purpose of <code>func main()</code> is to <b>translate
+	  commandline arguments to application startup state</b>. Once
+	  the state is prepared a specific entry function is
+	  called. More often than not, logging verbosity is one such
+	  state that needs to be configured early on.
+	<br> Use the builtin flag package to define, document and
+	parse the arguments.`),
+
+			H2("Example <code>CountStars(galaxy string)</code>"),
+			P(`Imagine an application that counts the stars in a named
+	  galaxy. The main function should then make sure the flags
+	  are correct and forward them as arguments to the function
+	  doing the actual work. The name of the galaxy would be such
+	  a flag and perhaps a verbosity flag for debugging purposes.`),
+
+			loadGoFile("./cmd/countstars/main.go", 8, -1),
+			P(`Now that you know what the main function should do, let us
+	take a look at how it should be done, apart of the flag
+	definition and argument passing.<br>  First, the cyclomatic
+	complexity of the main function is one. Ie. there is only one
+	path through this program.  There are however two exit points,
+	apart from the obvious one <code>flag.Parse()</code> exits if
+	the parsed flags do not match the predefined. The single
+	pathway means that testing the main function is
+	simple. Execute this application with valid flags and all
+	lines are covered, leaving all other code for unittesting.<br>
+	Also, if you execute the program you would note that second,
+	the order of the flags are sorted in the same way as the help
+	output.`),
+
+			boxnote("Cyclomatic complexity should be one.", -5.2),
+			boxnote("Flag order should match output.", -1.7),
+
+			H2("Benefits"),
+
+			P(`Adhering to the &ldquo;keep it simple principle&rdquo; and
+	only doing one thing in each function, works out nicely for
+	the main function as well. One could argue that, if you moved
+	everything inside main into a start function, the flag
+	definitions would also be tested.  Think about it for a minute
+	and figure out what exactly you would be testing. If the flag
+	package already makes sure it's functions work as expected the
+	only thing left is testing what you flags you have defined.
+	They would need to be updated each time you add or
+	remove a flag which is a sign of a poor test.<br> You could
+	potentially refactor main and separate the flag definitions
+	into smaller functions for readability but you still wouldn't
+	need to write unittests for them.`),
+
+			P(`Keep main simple, constrain it to only set global startup
+	state before calling the one function that does the actual
+	work.<br>This works great for services and simpler commands
+	that only do one thing.`),
+		),
+		footer,
+	),
+)
