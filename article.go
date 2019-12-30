@@ -2,39 +2,6 @@ package notes
 
 import . "github.com/gregoryv/web/doctype"
 
-var Index = Article(
-	H1("Software Engineering"),
-	P("Notes by", myname),
-
-	H2("Table of Contents"),
-	Ul(Class("toc"),
-		Li(
-			A(
-				Href("purpose_of_func_main.html"),
-				"Purpose of func main()",
-			),
-		),
-		Li(
-			A(
-				Href("nexus_pattern.html"),
-				"Nexus pattern",
-			),
-		),
-		Li(
-			A(
-				Href("inline_test_helpers.html"),
-				"Inline test helpers",
-			),
-		),
-		Li(
-			A(
-				Href("graceful_server_shutdown.html"),
-				"Graceful server shutdown",
-			),
-		),
-	),
-)
-
 var GracefulServerShutdown = Article(
 	H1("Graceful server shutdown"),
 	P(`Avoid disrupting ongoing requests by shutting down
