@@ -1,11 +1,9 @@
 package notes
 
 import (
-	"bufio"
-	"bytes"
 	"fmt"
-	"os"
 
+	"github.com/gregoryv/notes/internal"
 	. "github.com/gregoryv/web/doctype"
 )
 
@@ -49,27 +47,5 @@ func boxnote(txt string, cm float64) *Tag {
 
 func loadGoFile(filename string, from, to int) string {
 	return `<pre class="srcfile"><code class="go">` +
-		loadFile(filename, from, to) + "</code></pre>"
-}
-
-func loadFile(filename string, from, to int) string {
-	var buf bytes.Buffer
-	fh, err := os.Open(filename)
-	if err != nil {
-		panic(err)
-	}
-	scanner := bufio.NewScanner(fh)
-	for i := from; i > 1; i-- {
-		scanner.Scan()
-		to--
-	}
-
-	for scanner.Scan() {
-		to--
-		buf.WriteString(scanner.Text() + "\n")
-		if to == 0 {
-			break
-		}
-	}
-	return buf.String()
+		internal.LoadFile(filename, from, to) + "</code></pre>"
 }

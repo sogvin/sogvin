@@ -38,13 +38,16 @@ func Test(t *testing.T) {
 	if err == nil {
 		t.Error("Should fail")
 	}
-	defer func() {
-		e := recover()
-		if e == nil {
-			t.Fail()
-		}
-	}()
+	defer catchPanic(t)
 	MustLoadFunc("x", "y")
+}
+
+func catchPanic(t *testing.T) {
+	t.Helper()
+	e := recover()
+	if e == nil {
+		t.Fail()
+	}
 }
 
 func a() {}
