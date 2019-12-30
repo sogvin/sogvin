@@ -64,6 +64,16 @@ code.go {
     margin-left: -4cm;
 }
 
+ul.toc {
+      padding: 0px;
+}
+
+ul.toc li {
+      padding: 0px;
+      list-style: none;
+}
+
+
 @media screen {
     html, body {
 	margin: 3px 10px;
