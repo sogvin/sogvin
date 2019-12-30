@@ -1,18 +1,17 @@
-package notes_test
+package internal
 
 import (
 	"bytes"
 	"testing"
 
 	"github.com/gregoryv/asserter"
-	"github.com/gregoryv/notes"
 )
 
 func Test(t *testing.T) {
 	ok := func(funcName, exp string) {
 		t.Helper()
 		var w bytes.Buffer
-		err := notes.PrintFunc("printfunc_test.go", funcName, &w)
+		err := PrintFunc("printfunc_test.go", funcName, &w)
 		if err != nil {
 			t.Error(err)
 		}
@@ -28,14 +27,14 @@ func Test(t *testing.T) {
 }`)
 	ok("c", `func c(x int, v ...interface{}) {
 }`)
-	notes.MustLoadFunc("printfunc_test.go", "c")
+	MustLoadFunc("printfunc_test.go", "c")
 
-	err := notes.PrintFunc("x", "y", nil)
+	err := PrintFunc("x", "y", nil)
 	if err == nil {
 		t.Error("Should fail")
 	}
 
-	err = notes.PrintFunc("printfunc_test.go", "y", nil)
+	err = PrintFunc("printfunc_test.go", "y", nil)
 	if err == nil {
 		t.Error("Should fail")
 	}
@@ -45,7 +44,7 @@ func Test(t *testing.T) {
 			t.Fail()
 		}
 	}()
-	notes.MustLoadFunc("x", "y")
+	MustLoadFunc("x", "y")
 }
 
 func a() {}
