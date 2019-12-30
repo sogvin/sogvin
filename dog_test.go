@@ -9,7 +9,7 @@ import (
 )
 
 func Test_generate_www(t *testing.T) {
-	WriteAllPages("./www")
+	WriteAllPages("./se")
 }
 
 func WriteAllPages(base string) {
