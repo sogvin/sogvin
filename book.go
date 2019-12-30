@@ -12,40 +12,44 @@ import (
 )
 
 func NewBook() *Book {
-	return &Book{}
+	return &Book{
+		pages: []*Page{
+			NewPage(PurposeOfFuncMain, "func main()", "purpose_of_func_main.html"),
+			NewPage(NexusPattern, "Nexus pattern", "nexus_pattern.html"),
+			NewPage(InlineTestHelpers, "Testing", "inline_test_helpers.html"),
+			NewPage(GracefulServerShutdown, "Shutdown", "graceful_server_shutdown.html"),
+
+			//NewPage(Dictionary, "Dictionary", "dictionary.html"),
+		},
+	}
 }
 
-type Book struct{}
+type Book struct {
+	pages []*Page
+}
 
+// Saves all pages and table of contents
 func (book *Book) SaveTo(base string) {
 	toc := Ul(Class("toc"))
-	pages := map[string]writerTo{
-		"purpose_of_func_main.html":     page(PurposeOfFuncMain, "func main()"),
-		"nexus_pattern.html":            page(NexusPattern, "Nexus pattern"),
-		"inline_test_helpers.html":      page(InlineTestHelpers, "Testing"),
-		"graceful_server_shutdown.html": page(GracefulServerShutdown, "Shutdown"),
-
-		//		"dictionary.html": page(Dictionary, "Dictionary"),
-	}
-	for filename, p := range pages {
-		saveAs(base, filename, p)
+	for _, p := range book.pages {
+		p.SaveTo(base)
 		toc = toc.With(
 			Li(
 				A(
-					Href(filename),
-					findH1(p),
+					Href(p.filename),
+					findH1(p.html),
 				),
 			),
 		)
 	}
-	index := Article(
+	art := Article(
 		H1("Software Engineering"),
 		P("Notes by", myname),
-
 		H2("Table of Contents"),
 		toc,
 	)
-	saveAs(base, "index.html", page(index, ""))
+	index := NewPage(art, "", "index.html")
+	index.SaveTo(base)
 }
 
 func findH1(article writerTo) string {
@@ -56,11 +60,11 @@ func findH1(article writerTo) string {
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
 }
 
-func saveAs(base, filename string, page writerTo) {
-	out := path.Join(base, filename)
+func (page *Page) SaveTo(base string) {
+	out := path.Join(base, page.filename)
 	fmt.Println("  ", out)
 	fh, _ := os.Create(out)
-	page.WriteTo(fh)
+	page.html.WriteTo(fh)
 	fh.Close()
 }
 
@@ -68,13 +72,23 @@ type writerTo interface {
 	WriteTo(io.Writer) (int, error)
 }
 
-func page(article *Tag, right string) *HtmlTag {
-	return Html(en,
-		Head(utf8, viewport, theme, a4),
-		Body(
-			header("", right),
-			article,
-			footer,
+func NewPage(article *Tag, right, filename string) *Page {
+	return &Page{
+		html: Html(en,
+			Head(utf8, viewport, theme, a4),
+			Body(
+				header("", right),
+				article,
+				footer,
+			),
 		),
-	)
+		right:    right,
+		filename: filename,
+	}
+}
+
+type Page struct {
+	filename string
+	html     *HtmlTag
+	right    string
 }
