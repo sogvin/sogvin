@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8"/>
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="theme.css">
-    <link rel="stylesheet" type="text/css" href="a4.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="theme.css"/>
+    <link rel="stylesheet" type="text/css" href="a4.css"/>
 
   </head>
   <body>
     <header>
-      <span class="left"></span>
-      <code>Shutdown</code>
-    </header>
+      <span class="left">
+        
+      </span>
+      <code>
+        Shutdown
+      </code>
 
+    </header>
     <article>
-      <h1>Graceful server shutdown</h1>
-      <p>Avoid disrupting ongoing requests by shutting down
+      <h1>
+        Graceful server shutdown
+      </h1>
+      <p>
+        Avoid disrupting ongoing requests by shutting down
 	gracefully. In the below example Ctrl-c can be used to signal
 	an interrupt which tells a listening <code>http.Server</code>
 	to shutdown.
       </p>
-
-      <div class="boxnote" style="margin-top: 4.8cm">Register the
-      graceful part of the server.</div>
-
-
-      <div class="boxnote" style="margin-top: 7.8cm">Important to wait
-	for graceful stop to end.</div>
-
-
-	<!--
-	     Update below code block with:
-	     cat cmd/graceful/graceful.go | awk '{if(NR>10)print}' | \
-	       ud -i graceful -c -w page/graceful_server_shutdown.html
-	  -->
-	<pre class="srcfile"><code class="go" id="graceful">func main() {
+      <div class="boxnote" style="margin-top: 4.8cm">
+        Register the graceful part of the server.
+      </div>
+      <div class="boxnote" style="margin-top: 7.8cm">
+        Important to wait for graceful stop to end.
+      </div>
+      <pre class="srcfile"><code class="go">func main() {
 	done := make(chan bool)
 	graceful := func() {
 		// close everything before signaling done
@@ -66,19 +64,16 @@ func stopOn(srv *http.Server, signals ...os.Signal) {
 	sig := <-c
 	fmt.Printf("%v\n", sig)
 	srv.Shutdown(context.Background())
-}</code></pre>
-
-
-
-      <p>Remember that you could expose the Shutdown func of your
+}
+</code></pre> <p>
+  Remember that you could expose the Shutdown func of your
          server through an URL to simplify clean shutdown. Useful for
          when you are doing continuous integration and
-         deployment.</p>
+         deployment.
+</p>
 
     </article>
 
-    <footer>
-      Gregory Vinčić
-    </footer>
   </body>
+
 </html>

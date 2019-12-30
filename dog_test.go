@@ -14,10 +14,11 @@ func Test_generate_www(t *testing.T) {
 
 func WriteAllPages(base string) {
 	pages := map[string]writerTo{
-		"dictionary.html":          Dictionary,
-		"index.html":               Index,
-		"nexus_pattern.html":       NexusPattern,
-		"inline_test_helpers.html": InlineTestHelpers,
+		"dictionary.html":               Dictionary,
+		"graceful_server_shutdown.html": GracefulServerShutdown,
+		"index.html":                    Index,
+		"nexus_pattern.html":            NexusPattern,
+		"inline_test_helpers.html":      InlineTestHelpers,
 	}
 	for filename, art := range pages {
 		out := path.Join(base, filename)

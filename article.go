@@ -27,6 +27,27 @@ var Index = Html(en,
 	),
 )
 
+var GracefulServerShutdown = Html(
+	Head(utf8, viewport, theme, a4),
+	Body(
+		header("", "Shutdown"),
+		Article(
+			H1("Graceful server shutdown"),
+			P(`Avoid disrupting ongoing requests by shutting down
+	gracefully. In the below example Ctrl-c can be used to signal
+	an interrupt which tells a listening <code>http.Server</code>
+	to shutdown.`),
+			boxnote("Register the graceful part of the server.", 4.8),
+			boxnote("Important to wait for graceful stop to end.", 7.8),
+			loadGoFile("./cmd/graceful/graceful.go", 11, -1),
+			P(`Remember that you could expose the Shutdown func of your
+         server through an URL to simplify clean shutdown. Useful for
+         when you are doing continuous integration and
+         deployment.`),
+		),
+	),
+)
+
 var Dictionary = Html(en,
 	Head(utf8, viewport, theme, a4),
 	Body(
