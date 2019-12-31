@@ -20,21 +20,24 @@ var (
 	myname = "Gregory Vin&ccaron;i&cacute;"
 )
 
+func header(left, right string) *Tag {
+	h := Header()
+	if left != "" {
+		h = h.With(Span(Class("left"),
+			left,
+		))
+	}
+	if right != "" {
+		h = h.With(Code(right))
+	}
+	return h
+}
+
 func stylesheet(href string) *Tag {
 	return Link(
 		Rel("stylesheet"),
 		Type("text/css"),
 		Href(href),
-	)
-}
-
-func header(left, right string) *Tag {
-	return Header(
-		Span(
-			Class("left"),
-			left,
-		),
-		Code(right),
 	)
 }
 

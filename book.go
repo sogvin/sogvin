@@ -88,7 +88,7 @@ func NewPage(article *Tag, right, filename string) *Page {
 }
 
 type Page struct {
-	filename string
 	html     *HtmlTag
 	right    string
+	filename string
 }
