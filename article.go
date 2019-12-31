@@ -139,7 +139,7 @@ var PurposeOfFuncMain = Article(
 	   also be tested.  Think about it for a minute and figure out
 	   what exactly you would be testing. If the flag package already
 	   makes sure it's functions work as expected the only thing left
-	   is testing what you flags you have defined.  They would need to
+	   is testing which flags you have defined.  They would need to
 	   be updated each time you add or remove a flag which is a sign
 	   of a poor test.<br> You could potentially refactor main and
 	   separate the flag definitions into smaller functions for
