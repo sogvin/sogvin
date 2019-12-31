@@ -45,7 +45,7 @@ var InlineTestHelpers = Article(
 
 	boxnote("Inlined helper does not need t argument.", 0.8),
 	boxnote("Descriptive cases fail on correct line.", 5.6),
-	loadGoFile("./testing/inline_test.go", 8, -1),
+	loadGoFile("./internal/testing/inline_test.go", 8, -1),
 
 	boxnote("Utmost 2 inlined helpers.", 0.2),
 
