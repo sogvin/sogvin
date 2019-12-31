@@ -10,6 +10,5 @@ case $extension in
         goimports -w $path
         ;;
 esac
-go generate ./...
 go test -coverprofile /tmp/c.out ./...
 uncover /tmp/c.out

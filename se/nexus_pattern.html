@@ -35,11 +35,12 @@
         Example <code>CopyFile(from, to string)</code>
       </h2>
       <p>
-        Copying a file, if done all in one function, is unreadable due to
-multiple error checking and handling.  With the nexus pattern you
-define a <code>type fileIO struct</code> with the error field. Each
-method must check the previous error and return if it is set without
-doing anything. This way all subsequent calls are no-operations.
+        Copying a file, if done all in one function, is unreadable due
+       to multiple error checking and handling.  With the nexus
+       pattern you define a <code>type fileIO struct</code> with the
+       error field. Each method must check the previous error and
+       return if it is set without doing anything. This way all
+       subsequent calls are no-operations.
       </p>
       <div class="boxnote" style="margin-top: 0.6cm">
         The err field links operations.
