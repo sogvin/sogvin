@@ -8,7 +8,7 @@ import (
 	"path"
 	"strings"
 
-	. "github.com/gregoryv/web/doctype"
+	. "github.com/gregoryv/web"
 )
 
 func NewBook() *Book {

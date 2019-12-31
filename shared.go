@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gregoryv/notes/internal"
-	. "github.com/gregoryv/web/doctype"
+	. "github.com/gregoryv/web"
 )
 
 var (

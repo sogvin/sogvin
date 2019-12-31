@@ -1,6 +1,6 @@
 package notes
 
-import . "github.com/gregoryv/web/doctype"
+import . "github.com/gregoryv/web"
 
 var GracefulServerShutdown = Article(
 	H1("Graceful server shutdown"),
