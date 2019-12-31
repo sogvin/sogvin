@@ -48,7 +48,7 @@ func (book *Book) SaveTo(base string) {
 		H2("Table of Contents"),
 		toc,
 	)
-	index := NewPage(art, "", "index.html")
+	index := newPage(art, "", "index.html")
 	index.SaveTo(base)
 }
 
@@ -73,11 +73,15 @@ type writerTo interface {
 }
 
 func NewPage(article *Tag, right, filename string) *Page {
+	return newPage(article, right+" - Software Engineering", filename)
+}
+
+func newPage(article *Tag, right, filename string) *Page {
 	return &Page{
 		html: Html(en,
 			Head(utf8, viewport, theme, a4),
 			Body(
-				header("", right),
+				header(right),
 				article,
 				footer,
 			),

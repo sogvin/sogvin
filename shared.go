@@ -20,13 +20,8 @@ var (
 	myname = "Gregory Vin&ccaron;i&cacute;"
 )
 
-func header(left, right string) *Tag {
+func header(right string) *Tag {
 	h := Header()
-	if left != "" {
-		h = h.With(Span(Class("left"),
-			left,
-		))
-	}
 	if right != "" {
 		h = h.With(Code(right))
 	}
