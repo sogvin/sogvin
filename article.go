@@ -10,7 +10,7 @@ var GracefulServerShutdown = Article(
 	to shutdown.`),
 	boxnote("Register the graceful part of the server.", 4.8),
 	boxnote("Important to wait for graceful stop to end.", 7.8),
-	loadGoFile("./cmd/graceful/graceful.go", 11, -1),
+	loadGoFile("./internal/cmd/graceful/graceful.go", 11, -1),
 	P(`Remember that you could expose the Shutdown func of your
        server through an URL to simplify clean shutdown. Useful for
        when you are doing continuous integration and
@@ -114,7 +114,7 @@ var PurposeOfFuncMain = Article(
 	  doing the actual work. The name of the galaxy would be such
 	  a flag and perhaps a verbosity flag for debugging purposes.`),
 
-	loadGoFile("./cmd/countstars/main.go", 8, -1),
+	loadGoFile("./internal/cmd/countstars/main.go", 8, -1),
 	P(`Now that you know what the main function should do, let us
 	take a look at how it should be done, apart of the flag
 	definition and argument passing.<br>  First, the cyclomatic
