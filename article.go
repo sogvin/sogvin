@@ -90,11 +90,11 @@ doing anything. This way all subsequent calls are no-operations.`),
 
 	boxnote("The err field links operations.", 0.6),
 	boxnote("Each method sets x.err before returning.", 3.3),
-	loadGoFile("./errhandling/nexus.go", 21, -1),
+	loadGoFile("./internal/errhandling/nexus.go", 21, -1),
 
 	`With the fileIO nexus inplace the CopyFile function is
 	readable and with only one error checking and handling needed.`,
-	loadGoFile("./errhandling/nexus.go", 8, 19),
+	loadGoFile("./internal/errhandling/nexus.go", 8, 19),
 )
 
 var PurposeOfFuncMain = Article(
