@@ -13,11 +13,11 @@ import (
 
 func NewBook() *Book {
 	return &Book{
-		pages: []*Page{
-			NewPage(PurposeOfFuncMain, "func main()", "purpose_of_func_main.html"),
-			NewPage(NexusPattern, "Nexus pattern", "nexus_pattern.html"),
-			NewPage(InlineTestHelpers, "Testing", "inline_test_helpers.html"),
-			NewPage(GracefulServerShutdown, "Shutdown", "graceful_server_shutdown.html"),
+		pages: []*PageA4{
+			NewPageA4(PurposeOfFuncMain, "func main()", "purpose_of_func_main.html"),
+			NewPageA4(NexusPattern, "Nexus pattern", "nexus_pattern.html"),
+			NewPageA4(InlineTestHelpers, "Testing", "inline_test_helpers.html"),
+			NewPageA4(GracefulServerShutdown, "Shutdown", "graceful_server_shutdown.html"),
 
 			//NewPage(Dictionary, "Dictionary", "dictionary.html"),
 		},
@@ -25,7 +25,7 @@ func NewBook() *Book {
 }
 
 type Book struct {
-	pages []*Page
+	pages []*PageA4
 }
 
 // Saves all pages and table of contents
@@ -52,7 +52,7 @@ func (book *Book) SaveTo(base string) {
 	index.SaveTo(base)
 }
 
-func findH1(article writerTo) string {
+func findH1(article io.WriterTo) string {
 	var buf bytes.Buffer
 	article.WriteTo(&buf)
 	from := bytes.Index(buf.Bytes(), []byte("<h1>")) + 4
@@ -60,7 +60,7 @@ func findH1(article writerTo) string {
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
 }
 
-func (page *Page) SaveTo(base string) {
+func (page *PageA4) SaveTo(base string) {
 	out := path.Join(base, page.filename)
 	fmt.Println("  ", out)
 	fh, _ := os.Create(out)
@@ -68,16 +68,12 @@ func (page *Page) SaveTo(base string) {
 	fh.Close()
 }
 
-type writerTo interface {
-	WriteTo(io.Writer) (int, error)
-}
-
-func NewPage(article *Tag, right, filename string) *Page {
+func NewPageA4(article *Element, right, filename string) *PageA4 {
 	return newPage(article, right+" - Software Engineering", filename)
 }
 
-func newPage(article *Tag, right, filename string) *Page {
-	return &Page{
+func newPage(article *Element, right, filename string) *PageA4 {
+	return &PageA4{
 		html: Html(en,
 			Head(utf8, viewport, theme, a4),
 			Body(
@@ -91,7 +87,7 @@ func newPage(article *Tag, right, filename string) *Page {
 	}
 }
 
-type Page struct {
+type PageA4 struct {
 	html     *HtmlTag
 	right    string
 	filename string

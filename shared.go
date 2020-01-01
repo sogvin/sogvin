@@ -20,7 +20,7 @@ var (
 	myname = "Gregory Vin&ccaron;i&cacute;"
 )
 
-func header(right string) *Tag {
+func header(right string) *Element {
 	h := Header()
 	if right != "" {
 		h = h.With(Code(right))
@@ -28,7 +28,7 @@ func header(right string) *Tag {
 	return h
 }
 
-func stylesheet(href string) *Tag {
+func stylesheet(href string) *Element {
 	return Link(
 		Rel("stylesheet"),
 		Type("text/css"),
@@ -36,9 +36,12 @@ func stylesheet(href string) *Tag {
 	)
 }
 
-func boxnote(txt string, cm float64) *Tag {
+func boxnote(txt string, cm float64) *Element {
 	return Div(Class("boxnote"),
-		&Attr{Name: "style", Val: fmt.Sprintf("margin-top: %vcm", cm)},
+		&Attribute{
+			Name: "style",
+			Val:  fmt.Sprintf("margin-top: %vcm", cm),
+		},
 		txt,
 	)
 }
