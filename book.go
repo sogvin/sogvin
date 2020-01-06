@@ -41,7 +41,7 @@ func (book *Book) SaveTo(base string) error {
 	}
 	art := Article(
 		H1("Software Engineering"),
-		P("Notes by", myname),
+		P("Notes by ", myname),
 		H2("Table of Contents"),
 		toc,
 		H3("Design"),
@@ -228,7 +228,11 @@ func findH1(article *Element) string {
 }
 
 func NewPageA4(article *Element, right, filename string) *Page {
-	return newPage(article, right+" - Software Engineering", filename)
+	return newPage(
+		article,
+		right+" - "+A(Href("index.html"), "Software Engineering").String(),
+		filename,
+	)
 }
 
 func newPage(article *Element, right, filename string) *Page {
