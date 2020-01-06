@@ -241,14 +241,12 @@ func newPage(article *Element, right, filename string) *PageA4 {
 				footer,
 			),
 		)),
-		right:    right,
 		filename: filename,
 	}
 }
 
 type PageA4 struct {
 	*Page
-	right    string
 	filename string
 }
 
