@@ -10,26 +10,16 @@ import (
 )
 
 func NewBook() *Book {
-	return &Book{
+	book := &Book{
 		pages: []*Page{
-			NewPageA4(PurposeOfFuncMain, "func main()", "purpose_of_func_main.html"),
-			NewPageA4(NexusPattern, "Nexus pattern", "nexus_pattern.html"),
-			NewPageA4(InlineTestHelpers, "Testing", "inline_test_helpers.html"),
-			NewPageA4(GracefulServerShutdown, "Shutdown", "graceful_server_shutdown.html"),
-			//NewPage(Dictionary, "Dictionary", "dictionary.html"),
+			NewPageA4("purpose_of_func_main.html", "func main()", PurposeOfFuncMain),
+			NewPageA4("nexus_pattern.html", "Nexus pattern", NexusPattern),
+			NewPageA4("inline_test_helpers.html", "Testing", InlineTestHelpers),
+			NewPageA4("graceful_server_shutdown.html", "Shutdown", GracefulServerShutdown),
 		},
 	}
-}
-
-type Book struct {
-	pages []*Page
-}
-
-// Saves all pages and table of contents
-func (book *Book) SaveTo(base string) error {
 	toc := Ul(Class("toc"))
 	for _, p := range book.pages {
-		p.SaveTo(base)
 		toc = toc.With(
 			Li(
 				A(
@@ -64,8 +54,21 @@ func (book *Book) SaveTo(base string) error {
 			gregoryv("find", "search for files by name or content"),
 		),
 	)
-	index := newPage(art, "", "index.html")
-	return index.SaveTo(base)
+	index := newPage("index.html", "", art)
+	book.pages = append(book.pages, index)
+	return book
+}
+
+type Book struct {
+	pages []*Page
+}
+
+// Saves all pages and table of contents
+func (book *Book) SaveTo(base string) error {
+	for _, page := range book.pages {
+		page.SaveTo(base)
+	}
+	return nil
 }
 
 var GracefulServerShutdown = Article(
@@ -227,15 +230,15 @@ func findH1(article *Element) string {
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
 }
 
-func NewPageA4(article *Element, right, filename string) *Page {
+func NewPageA4(filename, right string, article *Element) *Page {
 	return newPage(
-		article,
-		right+" - "+A(Href("index.html"), "Software Engineering").String(),
 		filename,
+		right+" - "+A(Href("index.html"), "Software Engineering").String(),
+		article,
 	)
 }
 
-func newPage(article *Element, right, filename string) *Page {
+func newPage(filename, right string, article *Element) *Page {
 	return NewPage(filename,
 		Html(en,
 			Head(utf8, viewport, theme, a4),
