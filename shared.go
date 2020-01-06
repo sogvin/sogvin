@@ -50,3 +50,12 @@ func loadGoFile(filename string, from, to int) string {
 	return `<pre class="srcfile"><code class="go">` +
 		internal.LoadFile(filename, from, to) + "</code></pre>"
 }
+
+func gregoryv(name, txt string) *Element {
+	return Li(
+		fmt.Sprintf(
+			`<a href="https://github.com/gregoryv/%s">%s</a> - %s`,
+			name, name, txt,
+		),
+	)
+}

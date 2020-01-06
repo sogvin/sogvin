@@ -2,9 +2,6 @@ package notes
 
 import (
 	"bytes"
-	"fmt"
-	"os"
-	"path"
 	"strings"
 
 	. "github.com/gregoryv/web"
@@ -17,7 +14,6 @@ func NewBook() *Book {
 			NewPageA4(NexusPattern, "Nexus pattern", "nexus_pattern.html"),
 			NewPageA4(InlineTestHelpers, "Testing", "inline_test_helpers.html"),
 			NewPageA4(GracefulServerShutdown, "Shutdown", "graceful_server_shutdown.html"),
-
 			//NewPage(Dictionary, "Dictionary", "dictionary.html"),
 		},
 	}
@@ -28,7 +24,7 @@ type Book struct {
 }
 
 // Saves all pages and table of contents
-func (book *Book) SaveTo(base string) {
+func (book *Book) SaveTo(base string) error {
 	toc := Ul(Class("toc"))
 	for _, p := range book.pages {
 		p.SaveTo(base)
@@ -36,7 +32,7 @@ func (book *Book) SaveTo(base string) {
 			Li(
 				A(
 					Href(p.filename),
-					findH1(p.html),
+					findH1(p.Element),
 				),
 			),
 		)
@@ -46,9 +42,28 @@ func (book *Book) SaveTo(base string) {
 		P("Notes by", myname),
 		H2("Table of Contents"),
 		toc,
+		H3("Design"),
+		Ul(Class("toc"),
+			gregoryv("draw", "software engineering diagrams"),
+			gregoryv("web", "html generation"),
+		),
+
+		H3("Test"),
+		Ul(Class("toc"),
+			gregoryv("golden", "simplify use of golden files"),
+			gregoryv("qual", "quality constraints"),
+			gregoryv("ex", "indented JSON or redirect handler response to stdout"),
+			gregoryv("uncover", "generate coverage reports from cover profiles"),
+		),
+
+		H3("Build"),
+		Ul(Class("toc"),
+			gregoryv("stamp", "parse build information to embed into your binary"),
+			gregoryv("find", "search for files by name or content"),
+		),
 	)
 	index := newPage(art, "", "index.html")
-	index.SaveTo(base)
+	return index.SaveTo(base)
 }
 
 func findH1(article *Element) string {
@@ -60,36 +75,27 @@ func findH1(article *Element) string {
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
 }
 
-func (page *PageA4) SaveTo(base string) {
-	out := path.Join(base, page.filename)
-	fmt.Println("  ", out)
-	fh, _ := os.Create(out)
-	w := NewHtmlWriter(fh)
-	w.WriteHtml(page.html)
-	fh.Close()
-}
-
 func NewPageA4(article *Element, right, filename string) *PageA4 {
 	return newPage(article, right+" - Software Engineering", filename)
 }
 
 func newPage(article *Element, right, filename string) *PageA4 {
 	return &PageA4{
-		html: Html(en,
+		Page: NewPage(filename, Html(en,
 			Head(utf8, viewport, theme, a4),
 			Body(
 				header(right),
 				article,
 				footer,
 			),
-		),
+		)),
 		right:    right,
 		filename: filename,
 	}
 }
 
 type PageA4 struct {
-	html     *Element
+	*Page
 	right    string
 	filename string
 }

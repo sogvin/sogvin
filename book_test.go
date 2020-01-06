@@ -6,5 +6,8 @@ import (
 
 func Test_generate_www(t *testing.T) {
 	book := NewBook()
-	book.SaveTo("./se")
+	err := book.SaveTo("./htdocs")
+	if err != nil {
+		t.Error(err)
+	}
 }
