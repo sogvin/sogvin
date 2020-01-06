@@ -11,7 +11,7 @@ import (
 
 func NewBook() *Book {
 	return &Book{
-		pages: []*PageA4{
+		pages: []*Page{
 			NewPageA4(PurposeOfFuncMain, "func main()", "purpose_of_func_main.html"),
 			NewPageA4(NexusPattern, "Nexus pattern", "nexus_pattern.html"),
 			NewPageA4(InlineTestHelpers, "Testing", "inline_test_helpers.html"),
@@ -22,7 +22,7 @@ func NewBook() *Book {
 }
 
 type Book struct {
-	pages []*PageA4
+	pages []*Page
 }
 
 // Saves all pages and table of contents
@@ -33,7 +33,7 @@ func (book *Book) SaveTo(base string) error {
 		toc = toc.With(
 			Li(
 				A(
-					Href(p.filename),
+					Href(p.Filename),
 					findH1(p.Element),
 				),
 			),
@@ -227,27 +227,17 @@ func findH1(article *Element) string {
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
 }
 
-func NewPageA4(article *Element, right, filename string) *PageA4 {
+func NewPageA4(article *Element, right, filename string) *Page {
 	return newPage(article, right+" - Software Engineering", filename)
 }
 
-func newPage(article *Element, right, filename string) *PageA4 {
-	return &PageA4{
-		Page: NewPage(filename, Html(en,
+func newPage(article *Element, right, filename string) *Page {
+	return NewPage(filename,
+		Html(en,
 			Head(utf8, viewport, theme, a4),
-			Body(
-				header(right),
-				article,
-				footer,
-			),
-		)),
-		filename: filename,
-	}
-}
-
-type PageA4 struct {
-	*Page
-	filename string
+			Body(header(right), article, footer),
+		),
+	)
 }
 
 var (
@@ -272,11 +262,7 @@ func header(right string) *Element {
 }
 
 func stylesheet(href string) *Element {
-	return Link(
-		Rel("stylesheet"),
-		Type("text/css"),
-		Href(href),
-	)
+	return Link(Rel("stylesheet"), Type("text/css"), Href(href))
 }
 
 func boxnote(txt string, cm float64) *Element {
