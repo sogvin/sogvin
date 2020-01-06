@@ -12,10 +12,10 @@ import (
 func NewBook() *Book {
 	book := &Book{
 		pages: []*Page{
-			NewPageA4("purpose_of_func_main.html", "func main()", PurposeOfFuncMain),
-			NewPageA4("nexus_pattern.html", "Nexus pattern", NexusPattern),
-			NewPageA4("inline_test_helpers.html", "Testing", InlineTestHelpers),
-			NewPageA4("graceful_server_shutdown.html", "Shutdown", GracefulServerShutdown),
+			NewPageA4("func main()", PurposeOfFuncMain),
+			NewPageA4("Nexus pattern", NexusPattern),
+			NewPageA4("Testing", InlineTestHelpers),
+			NewPageA4("Shutdown", GracefulServerShutdown),
 		},
 	}
 	art := Article(
@@ -229,12 +229,36 @@ func findH1(article *Element) string {
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
 }
 
-func NewPageA4(filename, right string, article *Element) *Page {
+func NewPageA4(right string, article *Element) *Page {
+	filename := filenameFrom(findH1(article)) + ".html"
 	return newPage(
 		filename,
 		right+" - "+A(Href("index.html"), "Software Engineering").String(),
 		article,
 	)
+}
+
+func filenameFrom(in string) string {
+	tidy := bytes.NewBufferString("")
+	var inside bool
+	for _, c := range in {
+		switch c {
+		case '(', ')':
+			continue
+		case ' ':
+			tidy.WriteRune('_')
+		case '<':
+			inside = true
+		case '>':
+			inside = false
+		default:
+			if inside {
+				continue
+			}
+			tidy.WriteString(strings.ToLower(string(c)))
+		}
+	}
+	return tidy.String()
 }
 
 func newPage(filename, right string, article *Element) *Page {
