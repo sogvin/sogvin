@@ -3,7 +3,6 @@ package notes
 import (
 	"bytes"
 	"fmt"
-	"io"
 	"os"
 	"path"
 	"strings"
@@ -52,9 +51,10 @@ func (book *Book) SaveTo(base string) {
 	index.SaveTo(base)
 }
 
-func findH1(article io.WriterTo) string {
+func findH1(article *Element) string {
 	var buf bytes.Buffer
-	article.WriteTo(&buf)
+	w := NewHtmlWriter(&buf)
+	w.WriteHtml(article)
 	from := bytes.Index(buf.Bytes(), []byte("<h1>")) + 4
 	to := bytes.Index(buf.Bytes(), []byte("</h1>"))
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
@@ -64,7 +64,8 @@ func (page *PageA4) SaveTo(base string) {
 	out := path.Join(base, page.filename)
 	fmt.Println("  ", out)
 	fh, _ := os.Create(out)
-	page.html.WriteTo(fh)
+	w := NewHtmlWriter(fh)
+	w.WriteHtml(page.html)
 	fh.Close()
 }
 
@@ -88,7 +89,7 @@ func newPage(article *Element, right, filename string) *PageA4 {
 }
 
 type PageA4 struct {
-	html     *HtmlTag
+	html     *Element
 	right    string
 	filename string
 }
