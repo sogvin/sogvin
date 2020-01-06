@@ -10,46 +10,39 @@ import (
 )
 
 func NewBook() *Book {
-	book := &Book{
-		pages: []*Page{
-			NewPageA4("func main()", PurposeOfFuncMain),
-			NewPageA4("Nexus pattern", NexusPattern),
-			NewPageA4("Testing", InlineTestHelpers),
-			NewPageA4("Shutdown", GracefulServerShutdown),
-		},
-	}
-	art := Article(
+	book := &Book{}
+
+	toc := Article(
 		H1("Software Engineering"),
 		P("Notes by ", myname),
 		H2("Table of Contents"),
-		Ul(Class("toc"),
-			linkToPage(book.pages[0]),
-			linkToPage(book.pages[1]),
-			linkToPage(book.pages[2]),
-			linkToPage(book.pages[3]),
-		),
 
 		H3("Design"),
 		Ul(Class("toc"),
+			book.AddPage("func main()", PurposeOfFuncMain),
+			book.AddPage("Nexus pattern", NexusPattern),
+			book.AddPage("Shutdown", GracefulServerShutdown),
+
 			gregoryv("draw", "software engineering diagrams"),
 			gregoryv("web", "html generation"),
 		),
 
 		H3("Test"),
 		Ul(Class("toc"),
+			book.AddPage("Testing", InlineTestHelpers),
 			gregoryv("golden", "simplify use of golden files"),
 			gregoryv("qual", "quality constraints"),
 			gregoryv("ex", "indented JSON or redirect handler response to stdout"),
-			gregoryv("uncover", "generate coverage reports from cover profiles"),
+			gregoryv("uncover", "paths that need more testing"),
 		),
 
 		H3("Build"),
 		Ul(Class("toc"),
-			gregoryv("stamp", "parse build information to embed into your binary"),
-			gregoryv("find", "search for files by name or content"),
+			gregoryv("stamp", "build information code generator"),
+			gregoryv("find", "files by name or content"),
 		),
 	)
-	index := newPage("index.html", "", art)
+	index := newPage("index.html", "", toc)
 	book.pages = append(book.pages, index)
 	return book
 }
@@ -229,13 +222,15 @@ func findH1(article *Element) string {
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
 }
 
-func NewPageA4(right string, article *Element) *Page {
+func (book *Book) AddPage(right string, article *Element) *Element {
 	filename := filenameFrom(findH1(article)) + ".html"
-	return newPage(
+	page := newPage(
 		filename,
 		right+" - "+A(Href("index.html"), "Software Engineering").String(),
 		article,
 	)
+	book.pages = append(book.pages, page)
+	return linkToPage(page)
 }
 
 func filenameFrom(in string) string {
