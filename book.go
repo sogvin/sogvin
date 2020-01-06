@@ -18,22 +18,17 @@ func NewBook() *Book {
 			NewPageA4("graceful_server_shutdown.html", "Shutdown", GracefulServerShutdown),
 		},
 	}
-	toc := Ul(Class("toc"))
-	for _, p := range book.pages {
-		toc = toc.With(
-			Li(
-				A(
-					Href(p.Filename),
-					findH1(p.Element),
-				),
-			),
-		)
-	}
 	art := Article(
 		H1("Software Engineering"),
 		P("Notes by ", myname),
 		H2("Table of Contents"),
-		toc,
+		Ul(Class("toc"),
+			linkToPage(book.pages[0]),
+			linkToPage(book.pages[1]),
+			linkToPage(book.pages[2]),
+			linkToPage(book.pages[3]),
+		),
+
 		H3("Design"),
 		Ul(Class("toc"),
 			gregoryv("draw", "software engineering diagrams"),
@@ -57,6 +52,10 @@ func NewBook() *Book {
 	index := newPage("index.html", "", art)
 	book.pages = append(book.pages, index)
 	return book
+}
+
+func linkToPage(page *Page) *Element {
+	return Li(A(Href(page.Filename), findH1(page.Element)))
 }
 
 type Book struct {
