@@ -41,7 +41,7 @@ func NewBook() *Book {
 			gregoryv("find", "files by name or content"),
 		),
 	)
-	index := newPage("index.html", "", toc)
+	index := newPage("index.html", header(""), toc, Footer())
 	book.pages = append(book.pages, index)
 	return book
 }
@@ -225,8 +225,9 @@ func (book *Book) AddPage(right string, article *Element) *Element {
 	filename := filenameFrom(findH1(article)) + ".html"
 	page := newPage(
 		filename,
-		right+" - "+A(Href("index.html"), "Software Engineering").String(),
+		header(right+" - "+A(Href("index.html"), "Software Engineering").String()),
 		article,
+		footer,
 	)
 	book.pages = append(book.pages, page)
 	return linkToPage(page)
@@ -255,11 +256,11 @@ func filenameFrom(in string) string {
 	return tidy.String()
 }
 
-func newPage(filename, right string, article *Element) *Page {
+func newPage(filename string, header, article, footer *Element) *Page {
 	return NewPage(filename,
 		Html(en,
 			Head(utf8, viewport, theme, a4),
-			Body(header(right), article, footer),
+			Body(header, article, footer),
 		),
 	)
 }
