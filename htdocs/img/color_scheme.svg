@@ -1,0 +1,18 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="634" height="82" font-family="Arial, Helvetica, sans-serif">
+<circle stroke="#d3d3d3" stroke-width="1" fill="#ffffff" cx="50" cy="50" r="30" />\n
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="38" y="51">#ffffff</text>
+<circle stroke="#d3d3d3" stroke-width="1" fill="#e2e2e2" cx="142" cy="50" r="30" />\n
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="118" y="51">#e2e2e2</text>
+<circle stroke="#d3d3d3" stroke-width="1" fill="#ffffcc" cx="234" cy="50" r="30" />\n
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="219" y="51">#ffffcc</text>
+<circle stroke="#d3d3d3" stroke-width="1" fill="#ffcc99" cx="326" cy="50" r="30" />\n
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="307" y="51">#ffcc99</text>
+<circle stroke="#d3d3d3" stroke-width="1" fill="#ff9999" cx="418" cy="50" r="30" />\n
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="398" y="51">#ff9999</text>
+<circle stroke="#d3d3d3" stroke-width="1" fill="#ccff99" cx="510" cy="50" r="30" />\n
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="491" y="51">#ccff99</text>
+<circle stroke="#d3d3d3" stroke-width="1" fill="#99e6ff" cx="602" cy="50" r="30" />\n
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="582" y="51">#99e6ff</text></svg>

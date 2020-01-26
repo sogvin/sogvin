@@ -1,6 +1,8 @@
 package sogvin
 
 import (
+	"fmt"
+
 	"github.com/gregoryv/draw/shape"
 	"github.com/gregoryv/draw/shape/design"
 	. "github.com/gregoryv/web"
@@ -39,7 +41,9 @@ var ComponentsDiagram = Article(
 			`Use white as emphasizing color, works in both grayscale
 			 and colored diagrams`,
 		),
+		Li("Stick to one color scheme"),
 	),
+	colorSchemeDiagram(),
 )
 
 func newOverviewDiagram() *Element {
@@ -77,6 +81,43 @@ func newOverviewDiagram() *Element {
 	lineBetween(inet, client)
 
 	src := "img/overview.svg"
+	d.SaveAs("htdocs/" + src)
+	return Img(Src(src))
+}
+
+func colorSchemeDiagram() *Element {
+	var (
+		d      = design.NewDiagram()
+		colors = []string{
+			"#ffffff",
+			"#e2e2e2",
+			"#ffffcc",
+			"#ffcc99",
+			"#ff9999",
+			"#ccff99",
+			"#99e6ff",
+		}
+	)
+	var last shape.Shape
+	for i, color := range colors {
+		class := fmt.Sprintf("circle%v", i)
+		v := fmt.Sprintf(`stroke="#d3d3d3" stroke-width="1" fill="%s"`, color)
+		shape.ClassAttributes[class] = v
+		c := shape.NewCircle(30)
+		c.SetClass(class)
+		l := shape.NewLabel(color)
+		if last == nil {
+			d.Place(c).At(20, 20)
+		} else {
+			d.Place(c).RightOf(last)
+		}
+		last = c
+		d.Place(l).RightOf(c)
+		d.VAlignCenter(c, l)
+		shape.Move(l, 0, 15)
+	}
+
+	src := "img/color_scheme.svg"
 	d.SaveAs("htdocs/" + src)
 	return Img(Src(src))
 }
