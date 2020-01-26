@@ -1,4 +1,4 @@
-package notes
+package sogvin
 
 import (
 	"bytes"
@@ -190,7 +190,7 @@ func newOverviewDiagram() *Element {
 		ng       = shape.NewComponent("nginx")
 		inet     = shape.NewCircle(40)
 		client   = shape.NewComponent("client")
-		db       = shape.NewRect("postgres")
+		db       = shape.NewDatabase("postgres")
 		cloud    = shape.NewLabel("internet")
 	)
 	ng.SetClass("external")
@@ -200,6 +200,7 @@ func newOverviewDiagram() *Element {
 
 	d.Place(serviced).At(20, 20)
 	d.Place(db).RightOf(serviced)
+	d.HAlignCenter(serviced, db)
 	d.Place(ng).Below(serviced, 70)
 	d.VAlignCenter(serviced, ng)
 	d.Place(inet).RightOf(ng)

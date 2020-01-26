@@ -1,4 +1,4 @@
-package notes
+package sogvin
 
 import (
 	"testing"
