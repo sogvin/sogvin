@@ -171,7 +171,7 @@ var ComponentsDiagram = Article(
 
 		`The components diagram shows services and processes related
 		to one another. Good for system overviews and microservice
-		architectures. Highlight important components.`,
+		architectures.`,
 	),
 	Span(Class("Center"),
 		newOverviewDiagram(),
@@ -179,6 +179,25 @@ var ComponentsDiagram = Article(
 	P(
 		`Use lines between components unless you are conveying
 		signaling direction between them.`,
+	),
+	H2("General diagram tips"),
+	P(
+
+		`In general diagrams should be kept simple, 5-9 items is a
+		good rule (same as complexity in code).`,
+	),
+	Ul(
+		Li("Highlight important components"),
+		Li("Use arrows when direction is important otherwise plain lines"),
+		Li(
+			`Reflect on cognitive placement, ie. cloud components are
+			above others`,
+		),
+		Li(
+
+			`Use white as emphasizing color, works in both grayscale
+			 and colored diagrams`,
+		),
 	),
 )
 
