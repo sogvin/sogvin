@@ -232,7 +232,7 @@ var InlineTestHelpers = Article(
 var AlternateDesign = Article(
 	H1("Alternate design to simplify tests"),
 	P(
-		`Testing existing code you have options to write sleek
+		`Testing existing code you have several options to write sleek
 		tests. Table driven or inlined test helpers work nicely. When
 		writing new code however you have the option to choose a
 		design that will be easier to verify. One go idiom is to
@@ -241,30 +241,36 @@ var AlternateDesign = Article(
 	),
 	Ul(
 		Li("what if you always used panics?"),
-		Li("what if you only returned a struct with an optional error?"),
+		Li("what if you only returned a struct with an optional error field?"),
 	),
 	P(
 
-		`While working with inline helpers I found that functions,
-         which only returned an error, resulted in simpler and more
-         readable tests. With two assert functions, one for checking
-         for an error and the other for nil errors. Remember that
-         tests should focus on verifying logic, not data. In this case
-         the logic is simplified to either a function call was
-         successful or not.`,
+		`Don't let the idiom stop you from experimenting. While
+         working with inline helpers I found that functions, which
+         only return errors, resulted in simpler and more readable
+         tests. Two assert functions are needed, one for checking for
+         an error and the other for nil errors. Remember that tests
+         should focus on verifying logic, not data. In this case the
+         logic is binary, failed or not.`,
 	),
-	loadGoFile("./internal/testing/assert_test.go", 8, 0),
+	loadGoFile("./internal/testing/okbad/assert_test.go", 8, 0),
 	P(
 
-		`Revisiting the example of calculating double of an int. It's
-         initial design follows the go idiom of returning a value with
-         an error.`,
-	),
-	loadGoFile("./internal/testing/inline/double.go", 7, 0),
-	P(
+		`The initial design of the `, A(
+			Href("inline_test_helpers.html"),
+			"function double",
+		),
 
-		``,
+		`follows the go idiom of returning a value with an error.
+         Redesign the function to take the resulting argument and only
+         return an error adds a few more lines to the function. We
+         also added the check for nil result. The nil check may be
+         left out or removed once you have your tests.  `),
+	loadGoFile("./internal/testing/okbad/double.go", 7, 24), P(
+
+		`Let's use our new assert functions.`,
 	),
+	loadGoFile("./internal/testing/okbad/double_test.go", 7, 0),
 )
 
 var NexusPattern = Article(

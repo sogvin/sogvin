@@ -14,7 +14,7 @@ Software Engineering
 </a>
 </code></header><article>
 <h1>Alternate design to simplify tests</h1>
-<p>Testing existing code you have options to write sleek
+<p>Testing existing code you have several options to write sleek
 		tests. Table driven or inlined test helpers work nicely. When
 		writing new code however you have the option to choose a
 		design that will be easier to verify. One go idiom is to
@@ -23,15 +23,15 @@ Software Engineering
 </p>
 <ul>
 <li>what if you always used panics?</li>
-<li>what if you only returned a struct with an optional error?</li>
+<li>what if you only returned a struct with an optional error field?</li>
 </ul>
-<p>While working with inline helpers I found that functions,
-         which only returned an error, resulted in simpler and more
-         readable tests. With two assert functions, one for checking
-         for an error and the other for nil errors. Remember that
-         tests should focus on verifying logic, not data. In this case
-         the logic is simplified to either a function call was
-         successful or not.
+<p>Don't let the idiom stop you from experimenting. While
+         working with inline helpers I found that functions, which
+         only return errors, resulted in simpler and more readable
+         tests. Two assert functions are needed, one for checking for
+         an error and the other for nil errors. Remember that tests
+         should focus on verifying logic, not data. In this case the
+         logic is binary, failed or not.
 </p>
 <pre class="srcfile"><code class="go">func assertOk(t *testing.T) assertFunc {
 	return func(err error, msg ...string) {
@@ -64,27 +64,59 @@ func assert(t *testing.T) (ok, bad assertFunc) {
 }
 
 type assertFunc func(error, ...string)
-</code></pre><p>Revisiting the example of calculating double of an int. It's
-         initial design follows the go idiom of returning a value with
-         an error.
+</code></pre><p>The initial design of the <a href="inline_test_helpers.html">
+function double
+</a>
+follows the go idiom of returning a value with an error.
+         Redesign the function to take the resulting argument and only
+         return an error adds a few more lines to the function. We
+         also added the check for nil result. The nil check may be
+         left out or removed once you have your tests.  
 </p>
-<pre class="srcfile"><code class="go">// double returns the double of i if i is positive but never more than
-// max int
-func double(i int) (int, error) {
+<pre class="srcfile"><code class="go">// double sets the result to the double of i if i is positive but
+// never more than max int
+func double(result *int, i int) error {
+	if result == nil {
+		return fmt.Errorf("double: result cannot be nil")
+	}
 	if i < 0 {
-		return 0, fmt.Errorf("double: i must be positive")
+		*result = 0
+		return fmt.Errorf("double: i must be positive")
 	}
 	n := i * 2
 	if n < i {
-		return MAX, nil
+		*result = MAX
+		return nil
 	}
-	return n, nil
+	*result = n
+	return nil
 }
-
-const MAX int = int(^uint(0) >> 1)
-</code></pre><p>
+</code></pre><p>Let's use our new assert functions.
 </p>
+<pre class="srcfile"><code class="go">func Test_double(t *testing.T) {
+	var r int
+	ok, _k := assert(t) // ok and Not ok, shortened to _k to achieve alignment
+	ok(double(&r, 1))
+	ok(double(&r, 3))
+	ok(double(&r, MAX))
+	_k(double(&r, -2))
+	_k(double(nil, 2))
 
+	// verify data, some is good
+	check := func(i, exp int) {
+		t.Helper()
+		var got int
+		double(&got, i)
+		if got != exp {
+			t.Errorf("got %v, exp %v", got, exp)
+		}
+	}
+	check(0, 0)     // edge
+	check(1, 2)     // ok
+	check(MAX, MAX) // other edge
+	check(-1, 0)    // bad
+}
+</code></pre>
 </article><footer>Gregory Vin&ccaron;i&cacute;</footer>
 </body>
 </html>

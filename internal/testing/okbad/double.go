@@ -1,20 +1,26 @@
-package inline
+package okbad
 
 import (
 	"fmt"
 )
 
-// double returns the double of i if i is positive but never more than
-// max int
-func double(i int) (int, error) {
+// double sets the result to the double of i if i is positive but
+// never more than max int
+func double(result *int, i int) error {
+	if result == nil {
+		return fmt.Errorf("double: result cannot be nil")
+	}
 	if i < 0 {
-		return 0, fmt.Errorf("double: i must be positive")
+		*result = 0
+		return fmt.Errorf("double: i must be positive")
 	}
 	n := i * 2
 	if n < i {
-		return MAX, nil
+		*result = MAX
+		return nil
 	}
-	return n, nil
+	*result = n
+	return nil
 }
 
 const MAX int = int(^uint(0) >> 1)

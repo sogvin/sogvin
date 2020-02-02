@@ -1,4 +1,4 @@
-package testing
+package okbad
 
 import (
 	"strings"
