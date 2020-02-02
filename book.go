@@ -201,12 +201,20 @@ var Dictionary = Article(
 
 var InlineTestHelpers = Article(
 	H1("Inline test helpers"),
-	P(`Use inline test helpers to minimize indentation and have
-       failures point out failed cases directly.`),
+	P(
 
+		`Use inline test helpers to minimize indentation and have
+         failures point out failed cases directly. Given a function
+         calculating the double of an int.`,
+	),
+	loadGoFile("./internal/testing/inline/double.go", 7, 0),
+	P(
+
+		`The test would look like this.`,
+	),
 	boxnote("Inlined helper does not need t argument.", 0.8),
-	boxnote("Descriptive cases fail on correct line.", 5.6),
-	loadGoFile("./internal/testing/inline_test.go", 8, -1),
+	boxnote("Descriptive cases fail on correct line.", 4.6),
+	loadGoFile("./internal/testing/inline/double_test.go", 7, -1),
 	boxnote("Utmost 2 inlined helpers.", 0.2),
 
 	P(`Keep it simple and use utmost two inlined helpers. Compared to
@@ -252,7 +260,7 @@ var AlternateDesign = Article(
          initial design follows the go idiom of returning a value with
          an error.`,
 	),
-	loadGoFile("./internal/testing/okbad/double.go", 7, 0),
+	loadGoFile("./internal/testing/inline/double.go", 7, 0),
 	P(
 
 		``,

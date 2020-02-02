@@ -15,9 +15,26 @@ Software Engineering
 </code></header><article>
 <h1>Inline test helpers</h1>
 <p>Use inline test helpers to minimize indentation and have
-       failures point out failed cases directly.
+         failures point out failed cases directly. Given a function
+         calculating the double of an int.
 </p>
-<div class="boxnote" style="margin-top: 0.8cm">Inlined helper does not need t argument.</div><div class="boxnote" style="margin-top: 5.6cm">Descriptive cases fail on correct line.</div><pre class="srcfile"><code class="go">func Test_double(t *testing.T) {
+<pre class="srcfile"><code class="go">// double returns the double of i if i is positive but never more than
+// max int
+func double(i int) (int, error) {
+	if i < 0 {
+		return 0, fmt.Errorf("double: i must be positive")
+	}
+	n := i * 2
+	if n < i {
+		return MAX, nil
+	}
+	return n, nil
+}
+
+const MAX int = int(^uint(0) >> 1)
+</code></pre><p>The test would look like this.
+</p>
+<div class="boxnote" style="margin-top: 0.8cm">Inlined helper does not need t argument.</div><div class="boxnote" style="margin-top: 4.6cm">Descriptive cases fail on correct line.</div><pre class="srcfile"><code class="go">func Test_double(t *testing.T) {
 	ok := func(input, exp int) {
 		t.Helper()
 		got, err := double(input)
@@ -42,21 +59,6 @@ Software Engineering
 	}
 	bad(-2, 4)
 }
-
-// double returns the double of i if i is positive but never more than
-// max int
-func double(i int) (int, error) {
-	if i < 0 {
-		return 0, fmt.Errorf("double: i must be positive")
-	}
-	n := i * 2
-	if n < i {
-		return MAX, nil
-	}
-	return n, nil
-}
-
-const MAX int = int(^uint(0) >> 1)
 </code></pre><div class="boxnote" style="margin-top: 0.2cm">Utmost 2 inlined helpers.</div><p>Keep it simple and use utmost two inlined helpers. Compared to
        table-driven-tests inlined helpers declare the <em>how</em>
        before the cases.  If you have many cases, this style is more
