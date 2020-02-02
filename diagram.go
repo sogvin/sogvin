@@ -11,7 +11,6 @@ import (
 var ComponentsDiagram = Article(
 	H1("Components diagram"),
 	P(
-
 		`The components diagram shows services and processes related
 		to one another. Good for system overviews and microservice
 		architectures.`,
@@ -25,7 +24,6 @@ var ComponentsDiagram = Article(
 	),
 	H2("General diagram tips"),
 	P(
-
 		`In general diagrams should be kept simple, 5-9 items is a
 		good rule (same as complexity in code).`,
 	),
@@ -37,7 +35,6 @@ var ComponentsDiagram = Article(
 			above others`,
 		),
 		Li(
-
 			`Use white as emphasizing color, works in both grayscale
 			 and colored diagrams`,
 		),
@@ -59,12 +56,12 @@ func newOverviewDiagram() *Element {
 	)
 	shape.SetClass("external", ng, client, inet, db)
 
-	d.Place(serviced).At(20, 20)
+	d.Place(serviced).At(130, 20)
 	d.Place(db).RightOf(serviced)
 	d.HAlignCenter(serviced, db)
-	d.Place(ng).Below(serviced, 70)
+	d.Place(ng).Below(serviced, 40)
 	d.VAlignCenter(serviced, ng)
-	d.Place(inet).RightOf(ng)
+	d.Place(inet).LeftOf(ng, 70)
 	d.Place(cloud).RightOf(inet)
 	d.VAlignCenter(inet, cloud)
 

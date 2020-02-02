@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" type="text/css" href="theme.css"/>
+<link rel="stylesheet" type="text/css" href="a4.css"/>
+
+</head>
+<body>
+<header><code>Test - <a href="index.html">
+Software Engineering
+</a>
+</code></header><article>
+<h1>Alternate design to simplify tests</h1>
+<p>Testing existing code you have options to write sleek
+		tests. Table driven or inlined test helpers work nicely. When
+		writing new code however you have the option to choose a
+		design that will be easier to verify. One go idiom is to
+		return a value with an error. What if you didn't follow that
+		idiom?
+</p>
+<ul>
+<li>what if you always used panics?</li>
+<li>what if you only returned a struct with an optional error?</li>
+</ul>
+<p>While working with inline helpers I found that functions,
+         which only returned an error, resulted in simpler and more
+         readable tests. With two assert functions, one for checking
+         for an error and the other for nil errors. Remember that
+         tests should focus on verifying logic, not data. In this case
+         the logic is simplified to either a function call was
+         successful or not.
+</p>
+<pre class="srcfile"><code class="go">func assertOk(t *testing.T) assertFunc {
+	return func(err error, msg ...string) {
+		t.Helper()
+		if err != nil {
+			if len(msg) > 0 {
+				t.Error(strings.Join(msg, " ")+":", err)
+				return
+			}
+			t.Error(err)
+		}
+	}
+}
+
+func assertBad(t *testing.T) assertFunc {
+	return func(err error, msg ...string) {
+		t.Helper()
+		if err == nil {
+			if len(msg) > 0 {
+				t.Error(strings.Join(msg, " "), "should fail")
+				return
+			}
+			t.Error("should fail")
+		}
+	}
+}
+
+func assert(t *testing.T) (ok, bad assertFunc) {
+	return assertOk(t), assertBad(t)
+}
+
+type assertFunc func(error, ...string)
+</code></pre><p>Revisiting the example of calculating double of an int. It's
+         initial design follows the go idiom of returning a value with
+         an error.
+</p>
+<pre class="srcfile"><code class="go">// double returns the double of i if i is positive but never more than
+// max int
+func double(i int) (int, error) {
+	if i < 0 {
+		return 0, fmt.Errorf("double: i must be positive")
+	}
+	n := i * 2
+	if n < i {
+		return MAX, nil
+	}
+	return n, nil
+}
+
+const MAX int = int(^uint(0) >> 1)
+</code></pre><p>
+</p>
+
+</article><footer>Gregory Vin&ccaron;i&cacute;</footer>
+</body>
+</html>

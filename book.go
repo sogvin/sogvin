@@ -28,6 +28,7 @@ func NewBook() *Book {
 		H2("Test"),
 		Ul(Class("toc"),
 			book.AddPage("Test", InlineTestHelpers),
+			book.AddPage("Test", AlternateDesign),
 			gregoryv("golden", "simplify use of golden files"),
 			gregoryv("qual", "quality constraints"),
 			gregoryv("ex", "indented JSON or redirect handler response to stdout"),
@@ -218,6 +219,44 @@ var InlineTestHelpers = Article(
        directly.  <br>This style may be less readable if each case
        requires many values, though it depends on the lenght of the
        values combined.`),
+)
+
+var AlternateDesign = Article(
+	H1("Alternate design to simplify tests"),
+	P(
+		`Testing existing code you have options to write sleek
+		tests. Table driven or inlined test helpers work nicely. When
+		writing new code however you have the option to choose a
+		design that will be easier to verify. One go idiom is to
+		return a value with an error. What if you didn't follow that
+		idiom?`,
+	),
+	Ul(
+		Li("what if you always used panics?"),
+		Li("what if you only returned a struct with an optional error?"),
+	),
+	P(
+
+		`While working with inline helpers I found that functions,
+         which only returned an error, resulted in simpler and more
+         readable tests. With two assert functions, one for checking
+         for an error and the other for nil errors. Remember that
+         tests should focus on verifying logic, not data. In this case
+         the logic is simplified to either a function call was
+         successful or not.`,
+	),
+	loadGoFile("./internal/testing/assert_test.go", 8, 0),
+	P(
+
+		`Revisiting the example of calculating double of an int. It's
+         initial design follows the go idiom of returning a value with
+         an error.`,
+	),
+	loadGoFile("./internal/testing/okbad/double.go", 7, 0),
+	P(
+
+		``,
+	),
 )
 
 var NexusPattern = Article(
