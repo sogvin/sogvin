@@ -43,6 +43,6 @@ func toc(book *Book) {
 			gregoryv("find", "files by name or content"),
 		),
 	)
-	index := newPage("index.html", header(""), toc, Footer())
+	index := newPage("index.html", PageHeader(""), toc, Footer())
 	book.pages = append(book.pages, index)
 }

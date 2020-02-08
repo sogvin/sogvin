@@ -40,7 +40,7 @@ func (book *Book) AddPage(right string, article *Element) *Element {
 	filename := filenameFrom(findH1(article)) + ".html"
 	page := newPage(
 		filename,
-		header(right+" - "+A(Href("index.html"), "Software Engineering").String()),
+		PageHeader(right+" - "+A(Href("index.html"), "Software Engineering").String()),
 		article,
 		footer,
 	)
@@ -91,13 +91,13 @@ var (
 		Name("viewport"),
 		Content("width=device-width, initial-scale=1.0"),
 	)
-	theme  = stylesheet("theme.css")
-	a4     = stylesheet("a4.css")
+	theme  = Stylesheet("theme.css")
+	a4     = Stylesheet("a4.css")
 	footer = Footer(myname)
 	myname = "Gregory Vin&ccaron;i&cacute;"
 )
 
-func header(right string) *Element {
+func PageHeader(right string) *Element {
 	h := Header()
 	if right != "" {
 		h = h.With(Code(right))
@@ -105,11 +105,14 @@ func header(right string) *Element {
 	return h
 }
 
-func stylesheet(href string) *Element {
+// Stylesheet returns a link web element
+func Stylesheet(href string) *Element {
 	return Link(Rel("stylesheet"), Type("text/css"), Href(href))
 }
 
-func boxnote(txt string, cm float64) *Element {
+// Boxnote returns a small box aligned to the left with given top
+// margin in cm.
+func Boxnote(txt string, cm float64) *Element {
 	return Div(Class("boxnote"),
 		&Attribute{
 			Name: "style",
@@ -119,7 +122,9 @@ func boxnote(txt string, cm float64) *Element {
 	)
 }
 
-func loadGoFile(filename string, from, to int) *Element {
+// LoadGoFile returns a pre web element wrapping the contents from the
+// given file. If to == -1 all lines to the end of file are returned.
+func LoadGoFile(filename string, from, to int) *Element {
 	return goCode(internal.LoadFile(filename, from, to))
 }
 
@@ -136,6 +141,7 @@ func gregoryv(name, txt string) *Element {
 	)
 }
 
-func shellCommand(v string) *Element {
+// ShellCommand returns a web Element wrapping shell commands
+func ShellCommand(v string) *Element {
 	return Pre(Class("command"), Code(v))
 }

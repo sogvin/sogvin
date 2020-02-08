@@ -16,17 +16,17 @@ var embedVersionAndRevision = Article(
 	),
 	H2("Using -ldflags"),
 	P("First declare a variable, not constant, in the main package."),
-	loadGoFile("./internal/cmd/embedversion/main.go", 9, -1),
+	LoadGoFile("./internal/cmd/embedversion/main.go", 9, -1),
 	P(
 		`Then compile and change the version with`,
 	),
-	shellCommand(`go build -ldflags "-X main.version=0.1" ./cmd/app`),
+	ShellCommand(`go build -ldflags "-X main.version=0.1" ./cmd/app`),
 	P(
 
 		`You can also change multiple values in this way, let's add
 		the revision as well`,
 	),
-	shellCommand(
+	ShellCommand(
 
 		`go build -ldflags "-X main.version=0.1 -X main.revision=alpha" ./cmd/app`,
 	),
@@ -39,9 +39,9 @@ var gracefulServerShutdown = Article(
 	   an interrupt which tells a listening <code>http.Server</code>
 	   to shutdown.`),
 
-	boxnote("Register the graceful part of the server.", 4.8),
-	boxnote("Important to wait for graceful stop to end.", 7.8),
-	loadGoFile("./internal/cmd/graceful/graceful.go", 11, -1),
+	Boxnote("Register the graceful part of the server.", 4.8),
+	Boxnote("Important to wait for graceful stop to end.", 7.8),
+	LoadGoFile("./internal/cmd/graceful/graceful.go", 11, -1),
 	P(`Remember that you could expose the Shutdown func of your
        server through an URL to simplify clean shutdown. Useful for
        when you are doing continuous integration and
@@ -75,15 +75,15 @@ var inlineTestHelpers = Article(
          failures point out failed cases directly. Given a function
          calculating the double of an int.`,
 	),
-	loadGoFile("./internal/testing/inline/double.go", 7, 0),
+	LoadGoFile("./internal/testing/inline/double.go", 7, 0),
 	P(
 
 		`The test would look like this.`,
 	),
-	boxnote("Inlined helper does not need t argument.", 0.8),
-	boxnote("Descriptive cases fail on correct line.", 4.6),
-	loadGoFile("./internal/testing/inline/double_test.go", 7, -1),
-	boxnote("Utmost 2 inlined helpers.", 0.2),
+	Boxnote("Inlined helper does not need t argument.", 0.8),
+	Boxnote("Descriptive cases fail on correct line.", 4.6),
+	LoadGoFile("./internal/testing/inline/double_test.go", 7, -1),
+	Boxnote("Utmost 2 inlined helpers.", 0.2),
 
 	P(`Keep it simple and use utmost two inlined helpers. Compared to
        table-driven-tests inlined helpers declare the <em>how</em>
@@ -121,7 +121,7 @@ var alternateDesign = Article(
          should focus on verifying logic, not data. In this case the
          logic is binary, failed or not.`,
 	),
-	loadGoFile("./internal/testing/okbad/assert_test.go", 8, 0),
+	LoadGoFile("./internal/testing/okbad/assert_test.go", 8, 0),
 	P(
 
 		`The initial design of the `, A(
@@ -134,11 +134,11 @@ var alternateDesign = Article(
          return an error adds a few more lines to the function. We
          also added the check for nil result. The nil check may be
          left out or removed once you have your tests.  `),
-	loadGoFile("./internal/testing/okbad/double.go", 7, 24), P(
+	LoadGoFile("./internal/testing/okbad/double.go", 7, 24), P(
 
 		`Let's use our new assert functions.`,
 	),
-	loadGoFile("./internal/testing/okbad/double_test.go", 7, 0),
+	LoadGoFile("./internal/testing/okbad/double_test.go", 7, 0),
 )
 
 var nexusPattern = Article(
@@ -167,13 +167,13 @@ var nexusPattern = Article(
        return if it is set without doing anything. This way all
        subsequent calls are no-operations.`),
 
-	boxnote("The err field links operations.", 0.6),
-	boxnote("Each method sets x.err before returning.", 3.3),
-	loadGoFile("./internal/errhandling/nexus.go", 21, -1),
+	Boxnote("The err field links operations.", 0.6),
+	Boxnote("Each method sets x.err before returning.", 3.3),
+	LoadGoFile("./internal/errhandling/nexus.go", 21, -1),
 
 	`With the fileIO nexus inplace the CopyFile function is
 	readable and with only one error checking and handling needed.`,
-	loadGoFile("./internal/errhandling/nexus.go", 8, 19),
+	LoadGoFile("./internal/errhandling/nexus.go", 8, 19),
 )
 
 var purposeOfFuncMain = Article(
@@ -194,7 +194,7 @@ var purposeOfFuncMain = Article(
 	   actual work. The name of the galaxy would be such a flag and
 	   perhaps a verbosity flag for debugging purposes.`),
 
-	loadGoFile("./internal/cmd/countstars/main.go", 8, -1),
+	LoadGoFile("./internal/cmd/countstars/main.go", 8, -1),
 
 	P(`Now that you know what the main function should do, let us take
 	   a look at how it should be done, apart of the flag definition
@@ -209,8 +209,8 @@ var purposeOfFuncMain = Article(
 	   program you would note that second, the order of the flags are
 	   sorted in the same way as the help output.`),
 
-	boxnote("Cyclomatic complexity should be one.", -5.2),
-	boxnote("Flag order should match output.", -1.7),
+	Boxnote("Cyclomatic complexity should be one.", -5.2),
+	Boxnote("Flag order should match output.", -1.7),
 
 	H2("Benefits"),
 
