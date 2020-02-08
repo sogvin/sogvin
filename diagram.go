@@ -8,7 +8,7 @@ import (
 	. "github.com/gregoryv/web"
 )
 
-var ComponentsDiagram = Article(
+var componentsDiagram = Article(
 	H1("Components diagram"),
 	P(
 		`The components diagram shows services and processes related

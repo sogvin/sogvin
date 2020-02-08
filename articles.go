@@ -4,7 +4,7 @@ import (
 	. "github.com/gregoryv/web"
 )
 
-var EmbedVersionAndRevision = Article(
+var embedVersionAndRevision = Article(
 	H1("Embed version and revision"),
 	P(
 
@@ -32,7 +32,7 @@ var EmbedVersionAndRevision = Article(
 	),
 )
 
-var GracefulServerShutdown = Article(
+var gracefulServerShutdown = Article(
 	H1("Graceful server shutdown"),
 	P(`Avoid disrupting ongoing requests by shutting down
 	   gracefully. In the below example Ctrl-c can be used to signal
@@ -48,7 +48,7 @@ var GracefulServerShutdown = Article(
        deployment.`),
 )
 
-var Dictionary = Article(
+var dictionary = Article(
 	H1("Dictionary"),
 	P(`Short list of words/terms often used in software engineering
 	   and sometimes defined differently. Only domain agnostic terms
@@ -67,7 +67,7 @@ var Dictionary = Article(
 	),
 )
 
-var InlineTestHelpers = Article(
+var inlineTestHelpers = Article(
 	H1("Inline test helpers"),
 	P(
 
@@ -97,7 +97,7 @@ var InlineTestHelpers = Article(
        values combined.`),
 )
 
-var AlternateDesign = Article(
+var alternateDesign = Article(
 	H1("Alternate design to simplify tests"),
 	P(
 		`Testing existing code you have several options to write sleek
@@ -141,7 +141,7 @@ var AlternateDesign = Article(
 	loadGoFile("./internal/testing/okbad/double_test.go", 7, 0),
 )
 
-var NexusPattern = Article(
+var nexusPattern = Article(
 	H1("Nexus pattern"),
 	P(
 		"The word nexus is defined as",
@@ -176,7 +176,7 @@ var NexusPattern = Article(
 	loadGoFile("./internal/errhandling/nexus.go", 8, 19),
 )
 
-var PurposeOfFuncMain = Article(
+var purposeOfFuncMain = Article(
 	H1("Purpose of <code>func main()</code>"),
 
 	P(`The purpose of <code>func main()</code> is to <b>translate

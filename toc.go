@@ -9,10 +9,10 @@ func toc(book *Book) {
 
 		H2("Design"),
 		Ul(
-			book.AddPage("Design", PurposeOfFuncMain),
-			book.AddPage("Design", NexusPattern),
-			book.AddPage("Design", GracefulServerShutdown),
-			book.AddPage("Design", ComponentsDiagram),
+			book.AddPage("Design", purposeOfFuncMain),
+			book.AddPage("Design", nexusPattern),
+			book.AddPage("Design", gracefulServerShutdown),
+			book.AddPage("Design", componentsDiagram),
 		),
 		H3("Go packages"),
 		Ul(
@@ -22,8 +22,8 @@ func toc(book *Book) {
 
 		H2("Test"),
 		Ul(
-			book.AddPage("Test", InlineTestHelpers),
-			book.AddPage("Test", AlternateDesign),
+			book.AddPage("Test", inlineTestHelpers),
+			book.AddPage("Test", alternateDesign),
 		),
 		H3("Go packages"),
 		Ul(
@@ -35,7 +35,7 @@ func toc(book *Book) {
 
 		H2("Build"),
 		Ul(
-			book.AddPage("Build", EmbedVersionAndRevision),
+			book.AddPage("Build", embedVersionAndRevision),
 		),
 		H3("Go packages"),
 		Ul(
