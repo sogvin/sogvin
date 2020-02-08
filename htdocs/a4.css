@@ -64,11 +64,15 @@ code.go {
     margin-left: -4cm;
 }
 
-ul.toc {
+article.toc h3 {
+    margin-left: 0;
+}
+
+article.toc ul {
       padding: 0px;
 }
 
-ul.toc li {
+article.toc ul li {
       padding: 0px;
       list-style: none;
 }
