@@ -54,7 +54,11 @@ code.go {
     background-position: right top;
     display: block;
 }
-
+.command {
+    background-color: #eaeaea;
+    border-left: 7px #727272 solid;
+    padding: .6em 1.6em .6em 1.6em;
+}
 .boxnote {
     border: 3px double black;
     width: 3.3cm;

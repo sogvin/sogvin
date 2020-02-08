@@ -42,9 +42,9 @@ func NewBook() *Book {
 		),
 
 		H2("Build"),
-		/*		Ul(
-				book.AddPage("Build", EmbedVersionAndRevision),
-			),*/
+		Ul(
+			book.AddPage("Build", EmbedVersionAndRevision),
+		),
 		H3("Go packages"),
 		Ul(
 			gregoryv("stamp", "build information code generator"),
@@ -161,11 +161,11 @@ func boxnote(txt string, cm float64) *Element {
 }
 
 func loadGoFile(filename string, from, to int) *Element {
-	return Pre(Class("srcfile"),
-		Code(Class("go"),
-			internal.LoadFile(filename, from, to),
-		),
-	)
+	return goCode(internal.LoadFile(filename, from, to))
+}
+
+func goCode(v string) *Element {
+	return Pre(Class("srcfile"), Code(Class("go"), v))
 }
 
 func gregoryv(name, txt string) *Element {
@@ -175,4 +175,8 @@ func gregoryv(name, txt string) *Element {
 			name, name, txt,
 		),
 	)
+}
+
+func shellCommand(v string) *Element {
+	return Pre(Class("command"), Code(v))
 }
