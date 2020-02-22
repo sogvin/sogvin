@@ -5,6 +5,7 @@ import . "github.com/gregoryv/web"
 func toc(book *Book) {
 	toc := Article(Class("toc"),
 		H1("Software Engineering"),
+		Img(Src("img/office.jpg")),
 		P("Notes by ", myname),
 
 		H2("Design"),
