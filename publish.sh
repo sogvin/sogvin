@@ -1,4 +1,4 @@
 #!/bin/bash
 
 find . -name "*~" -delete
-rsync -avC ./htdocs/ /var/www/www.sogvin.com/
+rsync -avC ./htdocs/ warmachine.local:/var/www/www.sogvin.com/
