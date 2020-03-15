@@ -125,11 +125,12 @@ func Boxnote(txt string, cm float64) *Element {
 // LoadGoFile returns a pre web element wrapping the contents from the
 // given file. If to == -1 all lines to the end of file are returned.
 func LoadGoFile(filename string, from, to int) *Element {
-	return goCode(internal.LoadFile(filename, from, to))
-}
-
-func goCode(v string) *Element {
-	return Pre(Class("srcfile"), Code(Class("go"), v))
+	v := internal.LoadFile(filename, from, to)
+	class := "srcfile"
+	if from == 0 && to == -1 {
+		class += " complete"
+	}
+	return Pre(Class(class), Code(Class("go"), v))
 }
 
 func gregoryv(name, txt string) *Element {

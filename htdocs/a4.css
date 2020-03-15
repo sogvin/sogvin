@@ -54,6 +54,11 @@ code.go {
     background-position: right top;
     display: block;
 }
+
+.complete {
+    border: 1px solid #727272;
+}
+
 .command {
     background-color: #eaeaea;
     border-left: 7px #727272 solid;
