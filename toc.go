@@ -3,6 +3,10 @@ package sogvin
 import . "github.com/gregoryv/web"
 
 func toc(book *Book) {
+
+	// drafts
+	book.AddPage("Basics", gettingStartedWithProgramming)
+
 	toc := Article(Class("toc"),
 		H1("Software Engineering"),
 		Img(Src("img/office.jpg")),
