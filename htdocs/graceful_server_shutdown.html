@@ -19,7 +19,7 @@ Software Engineering
 	   an interrupt which tells a listening <code>http.Server</code>
 	   to shutdown.
 </p>
-<div class="boxnote" style="margin-top: 4.8cm">Register the graceful part of the server.</div><div class="boxnote" style="margin-top: 7.8cm">Important to wait for graceful stop to end.</div><pre class="srcfile"><code class="go">func main() {
+<div class="sidenote" style="margin-top: 4.8cm">Register the graceful part of the server.</div><div class="sidenote" style="margin-top: 7.8cm">Important to wait for graceful stop to end.</div><pre class="srcfile"><code class="go">func main() {
 	done := make(chan bool)
 	graceful := func() {
 		// close everything before signaling done

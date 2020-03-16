@@ -67,7 +67,7 @@ var stylingConventions = Section(
 	"whereas partial content is without borders.",
 	LoadGoFile("internal/learn/main.go", 3, -1),
 
-	Boxnote("Side note; emphasizing an important concept.", 0.0),
+	Sidenote("Side note; emphasizing an important concept.", 0.0),
 	P(`There is a lot to learn and you whenever a section includes a
 	many concepts or longer explanations I'll add a side note with the
 	Most important thing. Also the material is formated in such a way

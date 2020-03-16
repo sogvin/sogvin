@@ -112,8 +112,8 @@ func Stylesheet(href string) *Element {
 
 // Boxnote returns a small box aligned to the left with given top
 // margin in cm.
-func Boxnote(txt string, cm float64) *Element {
-	return Div(Class("boxnote"),
+func Sidenote(txt string, cm float64) *Element {
+	return Div(Class("sidenote"),
 		&Attribute{
 			Name: "style",
 			Val:  fmt.Sprintf("margin-top: %vcm", cm),

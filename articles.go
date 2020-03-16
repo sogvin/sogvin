@@ -39,8 +39,8 @@ var gracefulServerShutdown = Article(
 	   an interrupt which tells a listening <code>http.Server</code>
 	   to shutdown.`),
 
-	Boxnote("Register the graceful part of the server.", 4.8),
-	Boxnote("Important to wait for graceful stop to end.", 7.8),
+	Sidenote("Register the graceful part of the server.", 4.8),
+	Sidenote("Important to wait for graceful stop to end.", 7.8),
 	LoadGoFile("./internal/cmd/graceful/graceful.go", 11, -1),
 	P(`Remember that you could expose the Shutdown func of your
        server through an URL to simplify clean shutdown. Useful for
@@ -80,10 +80,10 @@ var inlineTestHelpers = Article(
 
 		`The test would look like this.`,
 	),
-	Boxnote("Inlined helper does not need t argument.", 0.8),
-	Boxnote("Descriptive cases fail on correct line.", 4.6),
+	Sidenote("Inlined helper does not need t argument.", 0.8),
+	Sidenote("Descriptive cases fail on correct line.", 4.6),
 	LoadGoFile("./internal/testing/inline/double_test.go", 7, -1),
-	Boxnote("Utmost 2 inlined helpers.", 0.2),
+	Sidenote("Utmost 2 inlined helpers.", 0.2),
 
 	P(`Keep it simple and use utmost two inlined helpers. Compared to
        table-driven-tests inlined helpers declare the <em>how</em>
@@ -167,8 +167,8 @@ var nexusPattern = Article(
        return if it is set without doing anything. This way all
        subsequent calls are no-operations.`),
 
-	Boxnote("The err field links operations.", 0.6),
-	Boxnote("Each method sets x.err before returning.", 3.3),
+	Sidenote("The err field links operations.", 0.6),
+	Sidenote("Each method sets x.err before returning.", 3.3),
 	LoadGoFile("./internal/errhandling/nexus.go", 21, -1),
 
 	`With the fileIO nexus inplace the CopyFile function is
@@ -209,8 +209,8 @@ var purposeOfFuncMain = Article(
 	   program you would note that second, the order of the flags are
 	   sorted in the same way as the help output.`),
 
-	Boxnote("Cyclomatic complexity should be one.", -5.2),
-	Boxnote("Flag order should match output.", -1.7),
+	Sidenote("Cyclomatic complexity should be one.", -5.2),
+	Sidenote("Flag order should match output.", -1.7),
 
 	H2("Benefits"),
 
