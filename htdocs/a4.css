@@ -11,7 +11,9 @@ body {
 header {
     text-align: right;
 }
-
+p {
+    line-height: 1.4em;
+}
 span.left {
     float: left;
 }
@@ -38,12 +40,13 @@ h1 code, h2 code {
     font-weight: normal;
     margin-left: 8px;
 }
+
 code.go {
     -moz-tab-size: 4;
     tab-size: 4;
 }
 
-.srcfile {
+.command, .srcfile {
     margin-top: 1.6em;
     margin-bottom: 1.6em;
     padding-left: 1.6em;
@@ -65,7 +68,6 @@ code.go {
 }
 
 .command {
-    background-color: #eaeaea;
     border-left: 7px #727272 solid;
     padding: .6em 1.6em .6em 1.6em;
 }

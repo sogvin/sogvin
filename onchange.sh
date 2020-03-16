@@ -12,3 +12,8 @@ case $extension in
 esac
 go test -coverprofile /tmp/c.out ./...
 uncover /tmp/c.out
+browser=$(xdotool search --name "@cgDISVMf")
+back=$(xdotool getactivewindow)
+xdotool windowactivate --sync $browser
+xdotool key --window $browser --clearmodifiers "CTRL+R"
+xdotool windowactivate --sync $back
