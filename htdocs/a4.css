@@ -59,6 +59,11 @@ code.go {
     border: 1px solid #727272;
 }
 
+.filename {
+    text-align: right;
+    margin-bottom: -1.6em;
+}
+
 .command {
     background-color: #eaeaea;
     border-left: 7px #727272 solid;

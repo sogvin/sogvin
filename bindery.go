@@ -133,6 +133,20 @@ func LoadGoFile(filename string, from, to int) *Element {
 	return Pre(Class(class), Code(Class("go"), v))
 }
 
+// AnyFile returns a pre web element wrapping the contents from the
+// given file. If to == -1 all lines to the end of file are returned.
+func AnyFile(filename, showas string, from, to int) *Element {
+	v := internal.LoadFile(filename, from, to)
+	class := "srcfile"
+	if from == 0 && to == -1 {
+		class += " complete"
+	}
+	return Div(
+		Div(Class("filename"), showas),
+		Pre(Class(class), Code(Class("go"), v)),
+	)
+}
+
 func gregoryv(name, txt string) *Element {
 	return Li(
 		fmt.Sprintf(

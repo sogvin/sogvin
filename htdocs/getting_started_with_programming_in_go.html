@@ -14,6 +14,7 @@ Software Engineering
 </a>
 </code></header><article>
 <h1>Getting started with programming in Go</h1>
+<h2>Text editor</h2>
 <p>Programming involves reading and writing code, you do this in
        an text editor. There are plenty to choose from. Below is a
        short list of editors to choose from. The important thing is,
@@ -38,6 +39,7 @@ Sublime
 </a>
 </li>
 </ul>
+<h2>Install language</h2>
 <p>Download the latest version from<a href="https://golang.org/dl">
 https://golang.org/dl
 </a>
@@ -49,27 +51,45 @@ carefully and make sure it
 </p>
 <h2>Styling conventions</h2>
 <p>On these pages; commands are indicated with a gray background
-	   with a darker left border.
+	   with a darker left border. Commands start with the '$'
+	   character and other lines are the output if any.
 </p>
-<pre class="command"><code>go version</code></pre>Source code is presented in two ways; an entire files have a gray
-      background with a solid border<pre class="srcfile complete"><code class="go">package main
+<pre class="command"><code>$ go version
+go version go1.14 linux/amd64</code></pre>Source code is presented in two ways; an entire file has a gray
+     background with a solid border.<pre class="srcfile complete"><code class="go">package main
+
+func main() {}
+</code></pre>whereas partial content is without borders.<pre class="srcfile"><code class="go">func main() {}
+</code></pre><h2>Setup working directory</h2>
+<p>Once a program is written you'll want to execute it. Without a
+       graphical user interface you do this in a terminal. The
+       terminal is a small program which enables you to type
+       commands. When you hit the enter key the command is
+       executed. The go compiler that you installed earlier is such a
+       command. If you followed the installation instructions
+       thoroughly, you should already have used the terminal so I
+       assume you know where to find it.
+</p>
+<p>First; use the terminal and create a folder where you will be
+       working.
+</p>
+<pre class="command"><code>$ cd $HOME
+$ mkdir go-learn
+$ cd go-learn</code></pre><h2>Your first program</h2>
+<p>Now create a file with the following content and save it as
+	<code>hello_world.go</code>
+</p>
+<pre class="srcfile complete"><code class="go">package main
+
+import "fmt"
 
 func main() {
-
+	fmt.Println("Hello, world!")
 }
-</code></pre>whereas partial code is without borders.<pre class="srcfile"><code class="go">func main() {
-
-}
-</code></pre><h2>The terminal</h2>
-<p>Once a program is written you'll want to execute it. Without a
-       graphical user interface you do this in a terminal. These are
-       small programs which enable you to type commands and when you
-       hit the enter key they are executed. The go compiler that you
-       installed earlier is such a command. If you followed the
-       installation instructions thoroughly, you should already have
-       used the terminal so I assume you know where to find it.
+</code></pre><p>What does this program do? execute it with the following command
 </p>
-
+<pre class="command"><code>$ go run hello_world.go
+Hello, world!</code></pre>
 </article><footer>Gregory Vin&ccaron;i&cacute;</footer>
 </body>
 </html>
