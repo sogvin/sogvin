@@ -124,7 +124,11 @@ func Sidenote(txt string, cm float64) *Element {
 
 // LoadGoFile returns a pre web element wrapping the contents from the
 // given file. If to == -1 all lines to the end of file are returned.
-func LoadGoFile(filename string, from, to int) *Element {
+func LoadGoFile(filename string, span ...int) *Element {
+	from, to := 0, -1
+	if len(span) == 2 {
+		from, to = span[0], span[1]
+	}
 	v := internal.LoadFile(filename, from, to)
 	class := "srcfile"
 	if from == 0 && to == -1 {
