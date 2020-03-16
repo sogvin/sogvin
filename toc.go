@@ -12,10 +12,6 @@ func toc(book *Book) {
 		Img(Src("img/office.jpg")),
 		P("Notes by ", myname),
 
-		H2("Basics"),
-		Ul(
-			book.AddPage("Basics", gettingStartedWithProgramming),
-		),
 		H2("Design"),
 		Ul(
 			book.AddPage("Design", purposeOfFuncMain),
