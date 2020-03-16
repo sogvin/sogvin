@@ -45,6 +45,11 @@ var gettingStartedWithProgramming = Article(
        thoroughly, you should already have used the terminal so I
        assume you know where to find it.`),
 
+	stylingConventions,
+	setupWorkingDirectory,
+)
+
+var stylingConventions = Section(
 	H2("Styling conventions"),
 
 	P(`On these pages; commands are indicated with a gray background
@@ -59,11 +64,20 @@ var gettingStartedWithProgramming = Article(
 	   with a solid border.`),
 
 	LoadGoFile("internal/learn/main.go", 0, -1),
-
 	"whereas partial content is without borders.",
-
 	LoadGoFile("internal/learn/main.go", 3, -1),
 
+	Boxnote("Side note; emphasizing an important concept.", 0.0),
+	P(`There is a lot to learn and you whenever a section includes a
+	many concepts or longer explanations I'll add a side note with the
+	Most important thing. Also the material is formated in such a way
+	that if you choose to print it out there is room for your own
+	notes on the left hand side.<br> Ok, you have the tools up and
+	running and you understand how to read this material. It's time
+	to learn programming.`),
+)
+
+var setupWorkingDirectory = Section(
 	H2("Setup working directory"),
 
 	P(`First; use the terminal and create a folder where you will be
