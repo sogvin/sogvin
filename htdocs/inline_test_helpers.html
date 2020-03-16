@@ -34,7 +34,7 @@ func double(i int) (int, error) {
 const MAX int = int(^uint(0) >> 1)
 </code></pre><p>The test would look like this.
 </p>
-<div class="sidenote" style="margin-top: 0.8cm">Inlined helper does not need t argument.</div><div class="sidenote" style="margin-top: 4.6cm">Descriptive cases fail on correct line.</div><pre class="srcfile"><code class="go">func Test_double(t *testing.T) {
+<div class="sidenote" style="margin-top: 0.8cm"><div class="inner">Inlined helper does not need t argument.</div></div><div class="sidenote" style="margin-top: 4.6cm"><div class="inner">Descriptive cases fail on correct line.</div></div><pre class="srcfile"><code class="go">func Test_double(t *testing.T) {
 	ok := func(input, exp int) {
 		t.Helper()
 		got, err := double(input)
@@ -59,7 +59,7 @@ const MAX int = int(^uint(0) >> 1)
 	}
 	bad(-2, 4)
 }
-</code></pre><div class="sidenote" style="margin-top: 0.2cm">Utmost 2 inlined helpers.</div><p>Keep it simple and use utmost two inlined helpers. Compared to
+</code></pre><div class="sidenote" style="margin-top: 0.2cm"><div class="inner">Utmost 2 inlined helpers.</div></div><p>Keep it simple and use utmost two inlined helpers. Compared to
        table-driven-tests inlined helpers declare the <em>how</em>
        before the cases.  If you have many cases, this style is more
        readable as you first tell the reader the meaning of

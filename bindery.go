@@ -118,7 +118,7 @@ func Sidenote(txt string, cm float64) *Element {
 			Name: "style",
 			Val:  fmt.Sprintf("margin-top: %vcm", cm),
 		},
-		txt,
+		Div(Class("inner"), txt),
 	)
 }
 

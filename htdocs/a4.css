@@ -72,12 +72,16 @@ code.go {
     padding: .6em 1.6em .6em 1.6em;
 }
 .sidenote {
-    border: 3px double black;
+    border: 1px solid black;
     width: 3.3cm;
-    padding: 0.1cm;
+    padding: 1px 1px;
     font-size: 0.8em;
     position: absolute;
     margin-left: -4cm;
+}
+.inner {
+    padding: 0.1cm;
+    border: 1px solid black;
 }
 
 article.toc h3 {

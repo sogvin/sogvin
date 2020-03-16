@@ -27,7 +27,7 @@ sequential function calls.
        return if it is set without doing anything. This way all
        subsequent calls are no-operations.
 </p>
-<div class="sidenote" style="margin-top: 0.6cm">The err field links operations.</div><div class="sidenote" style="margin-top: 3.3cm">Each method sets x.err before returning.</div><pre class="srcfile"><code class="go">type fileIO struct {
+<div class="sidenote" style="margin-top: 0.6cm"><div class="inner">The err field links operations.</div></div><div class="sidenote" style="margin-top: 3.3cm"><div class="inner">Each method sets x.err before returning.</div></div><pre class="srcfile"><code class="go">type fileIO struct {
 	err error
 }
 
