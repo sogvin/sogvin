@@ -10,8 +10,9 @@ import (
 )
 
 type Book struct {
-	Title string
-	pages []*Page
+	Title  string
+	Author string
+	pages  []*Page
 }
 
 // Saves all pages and table of contents
@@ -40,23 +41,35 @@ func (book *Book) AddPage(right string, article *Element) *Element {
 		stripTags(title)+" - "+book.Title,
 		PageHeader(right+" - "+A(Href("index.html"), book.Title).String()),
 		article,
-		footer,
+		Footer(book.Author),
 	)
 	book.pages = append(book.pages, page)
 	return linkToPage(page)
 }
 
-func linkToPage(page *Page) *Element {
-	return Li(A(Href(page.Filename), findH1(page.Element)))
-}
-
 func newPage(filename, title string, header, article, footer *Element) *Page {
 	return NewPage(filename,
-		Html(en,
-			Head(utf8, viewport, theme, a4, Title(title)),
-			Body(header, article, footer),
+		Html(Lang("en"),
+			Head(
+				Meta(Charset("utf-8")),
+				Meta(
+					Name("viewport"),
+					Content("width=device-width, initial-scale=1.0"),
+				),
+				Stylesheet("theme.css"),
+				Stylesheet("a4.css"),
+				Title(title)),
+			Body(
+				header,
+				article,
+				footer,
+			),
 		),
 	)
+}
+
+func linkToPage(page *Page) *Element {
+	return Li(A(Href(page.Filename), findH1(page.Element)))
 }
 
 func stripTags(in string) string {
@@ -100,19 +113,6 @@ func filenameFrom(in string) string {
 	}
 	return tidy.String()
 }
-
-var (
-	en       = Lang("en")
-	utf8     = Meta(Charset("utf-8"))
-	viewport = Meta(
-		Name("viewport"),
-		Content("width=device-width, initial-scale=1.0"),
-	)
-	theme  = Stylesheet("theme.css")
-	a4     = Stylesheet("a4.css")
-	footer = Footer(myname)
-	myname = "Gregory Vin&ccaron;i&cacute;"
-)
 
 func PageHeader(right string) *Element {
 	h := Header()

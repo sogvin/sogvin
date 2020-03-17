@@ -7,6 +7,7 @@ import (
 func NewSoftwareEngineeringBook() *Book {
 	book := new(Book)
 	book.Title = "Software Engineering"
+	book.Author = "Gregory Vin&ccaron;i&cacute;"
 
 	// drafts
 	book.AddPage("Basics", gettingStartedWithProgramming)
@@ -14,7 +15,7 @@ func NewSoftwareEngineeringBook() *Book {
 	toc := Article(Class("toc"),
 		H1(book.Title),
 		Img(Src("img/office.jpg")),
-		P("Notes by ", myname),
+		P("Notes by ", book.Author),
 
 		H2("Design"),
 		Ul(
