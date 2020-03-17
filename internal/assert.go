@@ -2,10 +2,14 @@ package internal
 
 import (
 	"strings"
-	"testing"
 )
 
-func assertOk(t *testing.T) assertFunc {
+type T interface {
+	Helper()
+	Error(args ...interface{})
+}
+
+func assertOk(t T) assertFunc {
 	return func(err error, msg ...string) {
 		t.Helper()
 		if err != nil {
@@ -18,7 +22,7 @@ func assertOk(t *testing.T) assertFunc {
 	}
 }
 
-func assertBad(t *testing.T) assertFunc {
+func assertBad(t T) assertFunc {
 	return func(err error, msg ...string) {
 		t.Helper()
 		if err == nil {
@@ -31,7 +35,7 @@ func assertBad(t *testing.T) assertFunc {
 	}
 }
 
-func Assert(t *testing.T) (ok, bad assertFunc) {
+func Assert(t T) (ok, bad assertFunc) {
 	return assertOk(t), assertBad(t)
 }
 
