@@ -1,14 +1,18 @@
 package sogvin
 
-import . "github.com/gregoryv/web"
+import (
+	. "github.com/gregoryv/web"
+)
 
-func toc(book *Book) {
+func NewSoftwareEngineeringBook() *Book {
+	book := new(Book)
+	book.Title = "Software Engineering"
 
 	// drafts
 	book.AddPage("Basics", gettingStartedWithProgramming)
 
 	toc := Article(Class("toc"),
-		H1("Software Engineering"),
+		H1(book.Title),
 		Img(Src("img/office.jpg")),
 		P("Notes by ", myname),
 
@@ -48,6 +52,8 @@ func toc(book *Book) {
 			gregoryv("find", "files by name or content"),
 		),
 	)
-	index := newPage("index.html", PageHeader(""), toc, Footer())
+	index := newPage("index.html", findH1(toc), PageHeader(""), toc, Footer())
 	book.pages = append(book.pages, index)
+
+	return book
 }

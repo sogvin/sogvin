@@ -9,13 +9,8 @@ import (
 	. "github.com/gregoryv/web"
 )
 
-func NewBook() *Book {
-	book := Book{}
-	toc(&book)
-	return &book
-}
-
 type Book struct {
+	Title string
 	pages []*Page
 }
 
@@ -37,9 +32,13 @@ func findH1(article *Element) string {
 }
 
 func (book *Book) AddPage(right string, article *Element) *Element {
-	filename := filenameFrom(findH1(article)) + ".html"
+	title := findH1(article)
+	// todo strip title from tags
+	filename := filenameFrom(title) + ".html"
+
 	page := newPage(
 		filename,
+		stripTags(title)+" - "+book.Title,
 		PageHeader(right+" - "+A(Href("index.html"), "Software Engineering").String()),
 		article,
 		footer,
@@ -52,13 +51,32 @@ func linkToPage(page *Page) *Element {
 	return Li(A(Href(page.Filename), findH1(page.Element)))
 }
 
-func newPage(filename string, header, article, footer *Element) *Page {
+func newPage(filename, title string, header, article, footer *Element) *Page {
 	return NewPage(filename,
 		Html(en,
-			Head(utf8, viewport, theme, a4),
+			Head(utf8, viewport, theme, a4, Title(title)),
 			Body(header, article, footer),
 		),
 	)
+}
+
+func stripTags(in string) string {
+	var buf bytes.Buffer
+	var inside bool
+	for _, r := range in {
+		switch r {
+		case '<':
+			inside = true
+		case '>':
+			inside = false
+		default:
+			if inside {
+				continue
+			}
+			buf.WriteRune(r)
+		}
+	}
+	return buf.String()
 }
 
 func filenameFrom(in string) string {
