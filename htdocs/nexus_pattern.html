@@ -7,28 +7,23 @@
 <link rel="stylesheet" type="text/css" href="theme.css"/>
 <link rel="stylesheet" type="text/css" href="a4.css"/>
 <title>Nexus pattern - Software Engineering</title>
-
 </head>
 <body>
-<header><code>Design - <a href="index.html">
-Software Engineering
-</a>
-</code></header><article>
+<header><code>Design - <a href="index.html">Software Engineering</a></code></header><article>
 <h1>Nexus pattern</h1>
-<p>The word nexus is defined as<quote>&#34;The means of connection between things linked in series&#34;</quote>The pattern is useful in<a href="https://go.googlesource.com/proposal/+/master/design/go2draft-error-handling-overview.md">
-error handling
-</a>
-sequential function calls.
-</p>
+<p>The word nexus is defined as<quote>&#34;The means of connection between things linked in series&#34;</quote>The pattern is useful in<a href="https://go.googlesource.com/proposal/+/master/design/go2draft-error-handling-overview.md">error handling</a>sequential function calls.</p>
 <h2>Example <code>CopyFile(from, to string)</code></h2>
 <p>Copying a file, if done all in one function, is unreadable due
        to multiple error checking and handling.  With the nexus
        pattern you define a <code>type fileIO struct</code> with the
        error field. Each method must check the previous error and
        return if it is set without doing anything. This way all
-       subsequent calls are no-operations.
-</p>
-<div class="sidenote" style="margin-top: 0.6cm"><div class="inner">The err field links operations.</div></div><div class="sidenote" style="margin-top: 3.3cm"><div class="inner">Each method sets x.err before returning.</div></div><pre class="srcfile"><code class="go">type fileIO struct {
+       subsequent calls are no-operations.</p>
+<div class="sidenote" style="margin-top: 0.6cm"><div class="inner">The err field links operations.</div>
+</div>
+<div class="sidenote" style="margin-top: 3.3cm"><div class="inner">Each method sets x.err before returning.</div>
+</div>
+<pre class="srcfile"><code class="go">type fileIO struct {
 	err error
 }
 
@@ -78,7 +73,6 @@ func (x *fileIO) Copy(w io.WriteCloser, r io.Reader) (n int64) {
 	r.Close()
 	return x.err
 }
-</code></pre>
-</article><footer>Gregory Vin&ccaron;i&cacute;</footer>
-</body>
+</code></pre></article>
+<footer>Gregory Vin&ccaron;i&cacute;</footer></body>
 </html>

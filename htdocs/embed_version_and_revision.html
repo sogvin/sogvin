@@ -7,23 +7,17 @@
 <link rel="stylesheet" type="text/css" href="theme.css"/>
 <link rel="stylesheet" type="text/css" href="a4.css"/>
 <title>Embed version and revision - Software Engineering</title>
-
 </head>
 <body>
-<header><code>Build - <a href="index.html">
-Software Engineering
-</a>
-</code></header><article>
+<header><code>Build - <a href="index.html">Software Engineering</a></code></header><article>
 <h1>Embed version and revision</h1>
 <p>When is this valuable? When publishing software for
          traceability and referenc.  I.e. for bug reports or
          documentation reference. Your applications can use flags such
          as -v or -version for this purpose. One way to modify
-         variables during the build is via -ldflags.
-</p>
+         variables during the build is via -ldflags.</p>
 <h2>Using -ldflags</h2>
-<p>First declare a variable, not constant, in the main package.
-</p>
+<p>First declare a variable, not constant, in the main package.</p>
 <pre class="srcfile"><code class="go">var (
 	version  = "0.0"
 	revision = "dev"
@@ -38,12 +32,9 @@ func main() {
 		os.Exit(0)
 	}
 }
-</code></pre><p>Then compile and change the version with
-</p>
+</code></pre><p>Then compile and change the version with</p>
 <pre class="command"><code>go build -ldflags "-X main.version=0.1" ./cmd/app</code></pre><p>You can also change multiple values in this way, let's add
-		the revision as well
-</p>
-<pre class="command"><code>go build -ldflags "-X main.version=0.1 -X main.revision=alpha" ./cmd/app</code></pre>
-</article><footer>Gregory Vin&ccaron;i&cacute;</footer>
-</body>
+		the revision as well</p>
+<pre class="command"><code>go build -ldflags "-X main.version=0.1 -X main.revision=alpha" ./cmd/app</code></pre></article>
+<footer>Gregory Vin&ccaron;i&cacute;</footer></body>
 </html>

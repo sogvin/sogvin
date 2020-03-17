@@ -7,28 +7,22 @@
 <link rel="stylesheet" type="text/css" href="theme.css"/>
 <link rel="stylesheet" type="text/css" href="a4.css"/>
 <title>Purpose of func main() - Software Engineering</title>
-
 </head>
 <body>
-<header><code>Design - <a href="index.html">
-Software Engineering
-</a>
-</code></header><article>
+<header><code>Design - <a href="index.html">Software Engineering</a></code></header><article>
 <h1>Purpose of <code>func main()</code></h1>
 <p>The purpose of <code>func main()</code> is to <b>translate
        commandline arguments to application startup state</b>. Once
        the state is prepared a specific entry function is called. More
        often than not, logging verbosity is one such state that needs
        to be configured early on.  <br> Use the builtin flag package
-       to define, document and parse the arguments.
-</p>
+       to define, document and parse the arguments.</p>
 <h2>Example <code>CountStars(galaxy string)</code></h2>
 <p>Imagine an application that counts the stars in a named
 	   galaxy. The main function should then make sure the flags are
 	   correct and forward them as arguments to the function doing the
 	   actual work. The name of the galaxy would be such a flag and
-	   perhaps a verbosity flag for debugging purposes.
-</p>
+	   perhaps a verbosity flag for debugging purposes.</p>
 <pre class="srcfile"><code class="go">func main() {
 	galaxy := "milkyway"
 	flag.StringVar(
@@ -55,9 +49,12 @@ Software Engineering
 	   application with valid flags and all lines are covered, leaving
 	   all other code for unittesting.<br> Also, if you execute the
 	   program you would note that second, the order of the flags are
-	   sorted in the same way as the help output.
-</p>
-<div class="sidenote" style="margin-top: -5.2cm"><div class="inner">Cyclomatic complexity should be one.</div></div><div class="sidenote" style="margin-top: -1.7cm"><div class="inner">Flag order should match output.</div></div><h2>Benefits</h2>
+	   sorted in the same way as the help output.</p>
+<div class="sidenote" style="margin-top: -5.2cm"><div class="inner">Cyclomatic complexity should be one.</div>
+</div>
+<div class="sidenote" style="margin-top: -1.7cm"><div class="inner">Flag order should match output.</div>
+</div>
+<h2>Benefits</h2>
 <p>Adhering to the &ldquo;keep it simple principle&rdquo; and only
 	   doing one thing in each function, works out nicely for the main
 	   function as well. One could argue that, if you moved everything
@@ -70,14 +67,11 @@ Software Engineering
 	   of a poor test.<br> You could potentially refactor main and
 	   separate the flag definitions into smaller functions for
 	   readability but you still wouldn't need to write unittests for
-	   them.
-</p>
+	   them.</p>
 <p>Keep main simple, constrain it to only set global startup state
 	   before calling the one function that does the actual
 	   work.<br>This works great for services and simpler commands
-	   that only do one thing.
-</p>
-
-</article><footer>Gregory Vin&ccaron;i&cacute;</footer>
-</body>
+	   that only do one thing.</p>
+</article>
+<footer>Gregory Vin&ccaron;i&cacute;</footer></body>
 </html>

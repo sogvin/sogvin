@@ -7,20 +7,19 @@
 <link rel="stylesheet" type="text/css" href="theme.css"/>
 <link rel="stylesheet" type="text/css" href="a4.css"/>
 <title>Graceful server shutdown - Software Engineering</title>
-
 </head>
 <body>
-<header><code>Design - <a href="index.html">
-Software Engineering
-</a>
-</code></header><article>
+<header><code>Design - <a href="index.html">Software Engineering</a></code></header><article>
 <h1>Graceful server shutdown</h1>
 <p>Avoid disrupting ongoing requests by shutting down
 	   gracefully. In the below example Ctrl-c can be used to signal
 	   an interrupt which tells a listening <code>http.Server</code>
-	   to shutdown.
-</p>
-<div class="sidenote" style="margin-top: 4.8cm"><div class="inner">Register the graceful part of the server.</div></div><div class="sidenote" style="margin-top: 7.8cm"><div class="inner">Important to wait for graceful stop to end.</div></div><pre class="srcfile"><code class="go">func main() {
+	   to shutdown.</p>
+<div class="sidenote" style="margin-top: 4.8cm"><div class="inner">Register the graceful part of the server.</div>
+</div>
+<div class="sidenote" style="margin-top: 7.8cm"><div class="inner">Important to wait for graceful stop to end.</div>
+</div>
+<pre class="srcfile"><code class="go">func main() {
 	done := make(chan bool)
 	graceful := func() {
 		// close everything before signaling done
@@ -54,9 +53,7 @@ func stopOn(srv *http.Server, signals ...os.Signal) {
 </code></pre><p>Remember that you could expose the Shutdown func of your
        server through an URL to simplify clean shutdown. Useful for
        when you are doing continuous integration and
-       deployment.
-</p>
-
-</article><footer>Gregory Vin&ccaron;i&cacute;</footer>
-</body>
+       deployment.</p>
+</article>
+<footer>Gregory Vin&ccaron;i&cacute;</footer></body>
 </html>
