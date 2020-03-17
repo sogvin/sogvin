@@ -16,7 +16,7 @@ var embedVersionAndRevision = Article(
 	),
 	H2("Using -ldflags"),
 	P("First declare a variable, not constant, in the main package."),
-	LoadGoFile("./internal/cmd/embedversion/main.go", 9, -1),
+	LoadFile("./internal/cmd/embedversion/main.go", 9, -1),
 	P(
 		`Then compile and change the version with`,
 	),
@@ -41,7 +41,7 @@ var gracefulServerShutdown = Article(
 
 	Sidenote("Register the graceful part of the server.", 4.8),
 	Sidenote("Important to wait for graceful stop to end.", 7.8),
-	LoadGoFile("./internal/cmd/graceful/graceful.go", 11, -1),
+	LoadFile("./internal/cmd/graceful/graceful.go", 11, -1),
 	P(`Remember that you could expose the Shutdown func of your
        server through an URL to simplify clean shutdown. Useful for
        when you are doing continuous integration and
@@ -75,14 +75,14 @@ var inlineTestHelpers = Article(
          failures point out failed cases directly. Given a function
          calculating the double of an int.`,
 	),
-	LoadGoFile("./internal/testing/inline/double.go", 7, 0),
+	LoadFile("./internal/testing/inline/double.go", 7, 0),
 	P(
 
 		`The test would look like this.`,
 	),
 	Sidenote("Inlined helper does not need t argument.", 0.8),
 	Sidenote("Descriptive cases fail on correct line.", 4.6),
-	LoadGoFile("./internal/testing/inline/double_test.go", 7, -1),
+	LoadFile("./internal/testing/inline/double_test.go", 7, -1),
 	Sidenote("Utmost 2 inlined helpers.", 0.2),
 
 	P(`Keep it simple and use utmost two inlined helpers. Compared to
@@ -121,7 +121,7 @@ var alternateDesign = Article(
          should focus on verifying logic, not data. In this case the
          logic is binary, failed or not.`,
 	),
-	LoadGoFile("./internal/testing/okbad/assert_test.go", 8, 0),
+	LoadFile("./internal/testing/okbad/assert_test.go", 8, 0),
 	P(
 
 		`The initial design of the `, A(
@@ -134,11 +134,11 @@ var alternateDesign = Article(
          return an error adds a few more lines to the function. We
          also added the check for nil result. The nil check may be
          left out or removed once you have your tests.  `),
-	LoadGoFile("./internal/testing/okbad/double.go", 7, 24), P(
+	LoadFile("./internal/testing/okbad/double.go", 7, 24), P(
 
 		`Let's use our new assert functions.`,
 	),
-	LoadGoFile("./internal/testing/okbad/double_test.go", 7, 0),
+	LoadFile("./internal/testing/okbad/double_test.go", 7, 0),
 )
 
 var nexusPattern = Article(
@@ -169,11 +169,11 @@ var nexusPattern = Article(
 
 	Sidenote("The err field links operations.", 0.6),
 	Sidenote("Each method sets x.err before returning.", 3.3),
-	LoadGoFile("./internal/errhandling/nexus.go", 21, -1),
+	LoadFile("./internal/errhandling/nexus.go", 21, -1),
 
 	`With the fileIO nexus inplace the CopyFile function is
 	readable and with only one error checking and handling needed.`,
-	LoadGoFile("./internal/errhandling/nexus.go", 8, 19),
+	LoadFile("./internal/errhandling/nexus.go", 8, 19),
 )
 
 var purposeOfFuncMain = Article(
@@ -194,7 +194,7 @@ var purposeOfFuncMain = Article(
 	   actual work. The name of the galaxy would be such a flag and
 	   perhaps a verbosity flag for debugging purposes.`),
 
-	LoadGoFile("./internal/cmd/countstars/main.go", 8, -1),
+	LoadFile("./internal/cmd/countstars/main.go", 8, -1),
 
 	P(`Now that you know what the main function should do, let us take
 	   a look at how it should be done, apart of the flag definition

@@ -1,59 +1,169 @@
 package sogvin
 
 import (
+	"bytes"
+	"fmt"
+	"strings"
+
+	"github.com/gregoryv/sogvin/internal"
 	. "github.com/gregoryv/web"
 )
 
-func NewSoftwareEngineeringBook() *Book {
-	book := new(Book)
-	book.Title = "Software Engineering"
+type Book struct {
+	Title string
+	pages []*Page
+}
 
-	// drafts
-	book.AddPage("Basics", gettingStartedWithProgramming)
+// Saves all pages and table of contents
+func (book *Book) SaveTo(base string) error {
+	for _, page := range book.pages {
+		page.SaveTo(base)
+	}
+	return nil
+}
 
-	toc := Article(Class("toc"),
-		H1(book.Title),
-		Img(Src("img/office.jpg")),
-		P("Notes by ", myname),
+func findH1(article *Element) string {
+	var buf bytes.Buffer
+	w := NewHtmlWriter(&buf)
+	w.WriteHtml(article)
+	from := bytes.Index(buf.Bytes(), []byte("<h1>")) + 4
+	to := bytes.Index(buf.Bytes(), []byte("</h1>"))
+	return strings.TrimSpace(string(buf.Bytes()[from:to]))
+}
 
-		H2("Design"),
-		Ul(
-			book.AddPage("Design", purposeOfFuncMain),
-			book.AddPage("Design", nexusPattern),
-			book.AddPage("Design", gracefulServerShutdown),
-			book.AddPage("Design", componentsDiagram),
-		),
-		H3("Go packages"),
-		Ul(
-			gregoryv("draw", "software engineering diagrams"),
-			gregoryv("web", "html generation"),
-		),
+func (book *Book) AddPage(right string, article *Element) *Element {
+	title := findH1(article)
+	filename := filenameFrom(title) + ".html"
 
-		H2("Test"),
-		Ul(
-			book.AddPage("Test", inlineTestHelpers),
-			book.AddPage("Test", alternateDesign),
-		),
-		H3("Go packages"),
-		Ul(
-			gregoryv("golden", "simplify use of golden files"),
-			gregoryv("qual", "quality constraints"),
-			gregoryv("ex", "indented JSON or redirect handler response to stdout"),
-			gregoryv("uncover", "paths that need more testing"),
-		),
+	page := newPage(
+		filename,
+		stripTags(title)+" - "+book.Title,
+		PageHeader(right+" - "+A(Href("index.html"), book.Title).String()),
+		article,
+		footer,
+	)
+	book.pages = append(book.pages, page)
+	return linkToPage(page)
+}
 
-		H2("Build"),
-		Ul(
-			book.AddPage("Build", embedVersionAndRevision),
-		),
-		H3("Go packages"),
-		Ul(
-			gregoryv("stamp", "build information code generator"),
-			gregoryv("find", "files by name or content"),
+func linkToPage(page *Page) *Element {
+	return Li(A(Href(page.Filename), findH1(page.Element)))
+}
+
+func newPage(filename, title string, header, article, footer *Element) *Page {
+	return NewPage(filename,
+		Html(en,
+			Head(utf8, viewport, theme, a4, Title(title)),
+			Body(header, article, footer),
 		),
 	)
-	index := newPage("index.html", findH1(toc), PageHeader(""), toc, Footer())
-	book.pages = append(book.pages, index)
+}
 
-	return book
+func stripTags(in string) string {
+	var buf bytes.Buffer
+	var inside bool
+	for _, r := range in {
+		switch r {
+		case '<':
+			inside = true
+		case '>':
+			inside = false
+		default:
+			if inside {
+				continue
+			}
+			buf.WriteRune(r)
+		}
+	}
+	return buf.String()
+}
+
+func filenameFrom(in string) string {
+	tidy := bytes.NewBufferString("")
+	var inside bool
+	for _, c := range in {
+		switch c {
+		case '(', ')':
+			continue
+		case ' ':
+			tidy.WriteRune('_')
+		case '<':
+			inside = true
+		case '>':
+			inside = false
+		default:
+			if inside {
+				continue
+			}
+			tidy.WriteString(strings.ToLower(string(c)))
+		}
+	}
+	return tidy.String()
+}
+
+var (
+	en       = Lang("en")
+	utf8     = Meta(Charset("utf-8"))
+	viewport = Meta(
+		Name("viewport"),
+		Content("width=device-width, initial-scale=1.0"),
+	)
+	theme  = Stylesheet("theme.css")
+	a4     = Stylesheet("a4.css")
+	footer = Footer(myname)
+	myname = "Gregory Vin&ccaron;i&cacute;"
+)
+
+func PageHeader(right string) *Element {
+	h := Header()
+	if right != "" {
+		h = h.With(Code(right))
+	}
+	return h
+}
+
+// Stylesheet returns a link web element
+func Stylesheet(href string) *Element {
+	return Link(Rel("stylesheet"), Type("text/css"), Href(href))
+}
+
+// Boxnote returns a small box aligned to the left with given top
+// margin in cm.
+func Sidenote(txt string, cm float64) *Element {
+	return Div(Class("sidenote"),
+		&Attribute{
+			Name: "style",
+			Val:  fmt.Sprintf("margin-top: %vcm", cm),
+		},
+		Div(Class("inner"), txt),
+	)
+}
+
+// LoadFile returns a pre web element wrapping the contents from the
+// given file. If to == -1 all lines to the end of file are returned.
+func LoadFile(filename string, span ...int) *Element {
+	from, to := 0, -1
+	if len(span) == 2 {
+		from, to = span[0], span[1]
+	}
+	v := internal.LoadFile(filename, from, to)
+	class := "srcfile"
+	if from == 0 && to == -1 {
+		class += " complete"
+	}
+	return Pre(Class(class), Code(Class("go"), v))
+}
+
+func gregoryv(name, txt string) *Element {
+	return Li(
+		fmt.Sprintf(
+			`<a href="https://github.com/gregoryv/%s">%s</a> - %s`,
+			name, name, txt,
+		),
+	)
+}
+
+// ShellCommand returns a web Element wrapping shell commands
+func ShellCommand(v string) *Element {
+	return Pre(Class("command"), Code(v))
 }

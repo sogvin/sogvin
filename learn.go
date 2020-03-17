@@ -63,9 +63,9 @@ var stylingConventions = Section(
 	   presented in two ways; an entire file has a gray background
 	   with a solid border.`),
 
-	LoadGoFile("internal/learn/main.go"),
+	LoadFile("internal/learn/main.go"),
 	"whereas partial content is without borders.",
-	LoadGoFile("internal/learn/main.go", 3, -1),
+	LoadFile("internal/learn/main.go", 3, -1),
 
 	Sidenote("Side note; emphasizing an important concept.", 0.0),
 	P(`There is a lot to learn and you whenever a section includes a
@@ -91,7 +91,7 @@ $ cd go-learn`),
 	P(`Now create a file with the following content and save it as
 	<code>hello_world.go</code>`),
 
-	LoadGoFile("internal/learn/hello_world.xgo"),
+	LoadFile("internal/learn/hello_world.xgo"),
 
 	P(`What does this program do? execute it with the following command`),
 	ShellCommand("$ go run hello_world.go\nHello, world!"),
