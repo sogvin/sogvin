@@ -30,19 +30,19 @@ func Benchmark_double3(b *testing.B) {
 
 func Test_doubles(t *testing.T) {
 	var r int
-	ok, _k := internal.Assert(t)
+	ok, bad := internal.Assert(t)
 	_, err := double1(2)
 	ok(err)
 	_, err = double1(MAX)
 	ok(err)
 	_, err = double1(-1)
-	_k(err)
+	bad(err)
 
 	for _, i := range []int{0, 4, MAX} {
 		ok(double2(&r, i))
 		ok(double3(&r, i))
 	}
-	_k(double2(&r, -1))
-	_k(double3(&r, -1))
-	_k(double3(nil, 8))
+	bad(double2(&r, -1))
+	bad(double3(&r, -1))
+	bad(double3(nil, 8))
 }
