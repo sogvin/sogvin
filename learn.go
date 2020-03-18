@@ -98,8 +98,7 @@ $ cd go-learn`),
 	ShellCommand("$ go run .\nHello, world!"),
 
 	P(`The first line tells the compiler that this file is part of a
-       package called main. The third line imports the `, Code("fmt"),
-		` package which we use on line six to print a string. Inside
-       main package you have to have one main function which the
-       compiler will use a starting point of execution, we declare it
-       on line five with the keyword func.`))
+       package called main. The keyword func declares a function which
+       we call main. Inside main package you have to have one main
+       function which the compiler will use a starting point of
+       execution.`))
