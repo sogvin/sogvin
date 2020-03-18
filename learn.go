@@ -88,11 +88,18 @@ $ mkdir go-learn
 $ cd go-learn`),
 
 	H2("Your first program"),
-	P(`Now create a file with the following content and save it as
-	<code>main.go</code>`),
 
+	P(`Now create a file with the following content and save it as `,
+		Code("main.go"),
+	),
 	LoadFile("example/no2/main.go"),
 
-	P(`What does this program do? execute it with the following command`),
+	P(`Run this program in the terminal with the following command`),
 	ShellCommand("$ go run .\nHello, world!"),
-)
+
+	P(`The first line tells the compiler that this file is part of a
+       package called main. The third line imports the `, Code("fmt"),
+		` package which we use on line six to print a string. Inside
+       main package you have to have one main function which the
+       compiler will use a starting point of execution, we declare it
+       on line five with the keyword func.`))
