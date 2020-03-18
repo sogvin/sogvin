@@ -88,17 +88,19 @@ $ mkdir go-learn
 $ cd go-learn`),
 
 	H2("Your first program"),
-
-	P(`Now create a file with the following content and save it as `,
-		Code("main.go"),
-	),
 	LoadFile("example/no2/main.go"),
 
-	P(`Run this program in the terminal with the following command`),
+	P(`Create a file, name it <code>main.go</code>, and then type in the above
+		code. Save it and run the program in the terminal as shown
+		below.`),
+
 	ShellCommand("$ go run .\nHello, world!"),
 
-	P(`The first line tells the compiler that this file is part of a
-       package called main. The keyword func declares a function which
-       we call main. Inside main package you have to have one main
-       function which the compiler will use a starting point of
-       execution.`))
+	P(`Let's step through each line in the program. The first line
+       tells the compiler that this file is part of a package called
+       main. Go uses packages to group files in larger projects. The
+       main package is special in that it also indicates this should
+       be compiled into a executable command. The keyword func
+       declares a function which we call main. Inside main package you
+       have to have one main function which the compiler uses as a
+       starting point when running your command.`))

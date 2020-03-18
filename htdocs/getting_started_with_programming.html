@@ -71,19 +71,23 @@ func main() {}
 <pre class="command"><code>$ cd $HOME
 $ mkdir go-learn
 $ cd go-learn</code></pre><h2>Your first program</h2>
-<p>Now create a file with the following content and save it as <code>main.go</code></p>
 <pre class="srcfile complete"><code class="go">package main
 
 func main() {
 	print("Hello, world!\n")
 }
-</code></pre><p>Run this program in the terminal with the following command</p>
+</code></pre><p>Create a file, name it <code>main.go</code>, and then type in the above
+		code. Save it and run the program in the terminal as shown
+		below.</p>
 <pre class="command"><code>$ go run .
-Hello, world!</code></pre><p>The first line tells the compiler that this file is part of a
-       package called main. The keyword func declares a function which
-       we call main. Inside main package you have to have one main
-       function which the compiler will use a starting point of
-       execution.</p>
+Hello, world!</code></pre><p>Let's step through each line in the program. The first line
+       tells the compiler that this file is part of a package called
+       main. Go uses packages to group files in larger projects. The
+       main package is special in that it also indicates this should
+       be compiled into a executable command. The keyword func
+       declares a function which we call main. Inside main package you
+       have to have one main function which the compiler uses as a
+       starting point when running your command.</p>
 </section>
 </article>
 <footer>Gregory Vin&ccaron;i&cacute;</footer></body>
