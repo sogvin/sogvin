@@ -76,9 +76,9 @@ $ cd go-learn</code></pre><h2>Your first program</h2>
 func main() {
 	print("Hello, world!\n")
 }
-</code></pre><p>Create a file, name it <code>main.go</code>, and then type in the above
-		code. Save it and run the program in the terminal as shown
-		below.</p>
+</code></pre><p>Create a file in your editor and then type in the above
+	   code. Save it as <code>main.go</code> and run the program in
+	   the terminal as shown below.</p>
 <pre class="command"><code>$ go run .
 Hello, world!</code></pre><p>Let's step through each line in the program. The first line
        tells the compiler that this file is part of a package called
@@ -88,7 +88,15 @@ Hello, world!</code></pre><p>Let's step through each line in the program. The fi
        declares a function which we call main. Inside main package you
        have to have one main function which the compiler uses as a
        starting point when running your command.</p>
-</section>
+<p>In the above example there code is nicely formatted for easy
+       reading but it does not have to be. These variations work just
+       fine</p>
+<pre class="srcfile complete"><code class="go">package main; func main() { print("Hello, world!\n") }
+</code></pre><pre class="srcfile complete"><code class="go">package main
+func main() {
+print("Hello, world!\n")
+}
+</code></pre></section>
 </article>
 <footer>Gregory Vin&ccaron;i&cacute;</footer></body>
 </html>

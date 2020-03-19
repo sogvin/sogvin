@@ -90,9 +90,9 @@ $ cd go-learn`),
 	H2("Your first program"),
 	LoadFile("example/no2/main.go"),
 
-	P(`Create a file, name it <code>main.go</code>, and then type in the above
-		code. Save it and run the program in the terminal as shown
-		below.`),
+	P(`Create a file in your editor and then type in the above
+	   code. Save it as <code>main.go</code> and run the program in
+	   the terminal as shown below.`),
 
 	ShellCommand("$ go run .\nHello, world!"),
 
@@ -103,4 +103,12 @@ $ cd go-learn`),
        be compiled into a executable command. The keyword func
        declares a function which we call main. Inside main package you
        have to have one main function which the compiler uses as a
-       starting point when running your command.`))
+       starting point when running your command.`),
+
+	P(`In the above example there code is nicely formatted for easy
+       reading but it does not have to be. These variations work just
+       fine`),
+
+	LoadFile("example/no3/main.go"),
+	LoadFile("example/no4/main.go"),
+)
