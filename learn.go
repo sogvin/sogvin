@@ -113,4 +113,13 @@ $ cd go-learn`),
 
 	LoadFile("example/no3/main.go"),
 	LoadFile("example/no4/main.go"),
+
+	P(`You don't want to spend to much time adding spaces and tabs so
+	   your code looks good, let the computer do it for you. For this
+	   you will use the <code>gofmt</code> command.`),
+
+	ShellCommand("$ gofmt -w main.go"),
+
+	P(`Replace <code>main.go</code> with the name of whatever file you
+	   want to format.`),
 )
