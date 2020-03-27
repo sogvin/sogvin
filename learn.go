@@ -105,8 +105,8 @@ $ cd go-learn`),
        have to have one main function which the compiler uses as a
        starting point when running your command.`),
 
-	P(`In the above example there code is nicely formatted for easy
-       reading but it does not have to be. These variations work just
+	P(`In the above example the code is nicely formatted for easy
+       reading but it doesn't have to be. These variations work just
        fine`),
 
 	LoadFile("example/no3/main.go"),
