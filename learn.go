@@ -30,10 +30,10 @@ var gettingStartedWithProgramming = Article(
 	),
 
 	P(`COMPILER: You'll be using the Go programming language. It and
-		the compiler are available from`,
+		the compiler are available from `,
 		A(Href("https://golang.org/dl"), "https://golang.org/dl"),
 		`. Follow the `, A(Href("https://golang.org/doc/install"),
-			`installation instructions`), `carefully and make sure it
+			`installation instructions`), ` carefully and make sure it
 		works.`),
 
 	P(`TERMINAL: Once a program is written you'll want to execute
@@ -52,9 +52,10 @@ var gettingStartedWithProgramming = Article(
 var stylingConventions = Section(
 	H2("Styling conventions"),
 
-	P(`On these pages; commands are indicated with a gray background
-	   with a darker left border. Commands start after the <code>$</code>
-	   character, and other lines are the output of the command. `),
+	P(`Throughout this material; commands are indicated with a gray
+	   background with a darker left border. Commands start after the
+	   <code>$</code> character, and other lines are the output of the
+	   command.`),
 
 	ShellCommand("$ go version\ngo version go1.14 linux/amd64"),
 
@@ -68,13 +69,14 @@ var stylingConventions = Section(
 	LoadFile("example/no1/main.go", 3, -1),
 
 	Sidenote("Side note; emphasizing an important concept.", 0.0),
-	P(`There is a lot to learn and you whenever a section includes a
-	many concepts or longer explanations I'll add a side note with the
-	Most important thing. Also the material is formated in such a way
-	that if you choose to print it out there is room for your own
-	notes on the left hand side.<br> Ok, you have the tools up and
-	running and you understand how to read this material. It's time
-	to learn programming.`),
+
+	P(`There is a lot to learn and whenever a section includes many
+	   concepts or longer explanations I'll add a side note with the
+	   Most important thing. Also the material is formated in such a
+	   way that if you choose to print it out there is room for your
+	   own notes on the left hand side.<br> Ok, you have the tools up
+	   and running and you understand how to read this material. It's
+	   time to learn programming.`),
 )
 
 var setupWorkingDirectory = Section(
