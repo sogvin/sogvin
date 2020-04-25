@@ -23,6 +23,7 @@ func NewSoftwareEngineeringBook() *Book {
 			book.AddPage("Design", nexusPattern),
 			book.AddPage("Design", gracefulServerShutdown),
 			book.AddPage("Design", componentsDiagram),
+			book.AddPage("Design", strictMode),
 		),
 		H3("Go packages"),
 		Ul(

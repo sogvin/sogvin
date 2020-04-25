@@ -4,16 +4,58 @@ import (
 	. "github.com/gregoryv/web"
 )
 
+var strictMode = Article(
+	H1("Strict mode"),
+
+	P(`Failing early is good for many reasons and strict mode design
+       makes this very helpful during testing. An http client is a
+       good place for this design.`),
+
+	H2("Client"),
+
+	P(`HTTP clients issue requests to some service, mainly by the Do
+       method. Define the Strict interface to match that of the
+       familiar testing T.Fatal.`),
+
+	LoadFile("./internal/strictClient.go", 8, 20),
+
+	P(`Once the client has the strict ability it can be used in it's
+	  methods. Default the client to a lax mode where the Fatal method
+	  does nothing.  `),
+
+	LoadFile("./internal/strictClient.go", 22, 28),
+
+	P(`Let's assume your service only accepts json and expects each
+       request to set the correct header.  A simple wrapper around
+       http.DefaultClient could look like this.  `),
+
+	Sidenote("Use the strict wrapper in public methods.", 1.2),
+	Sidenote("Private funcs just return errors as usual.", 5.7),
+	LoadFile("./internal/strictClient.go", 30, -1),
+
+	P(`Any error from the sending of the request will be checked by
+	  the strict interface. This adds no real benefit to the client
+	  itself but it makes a difference when testing.`),
+
+	LoadFile("./internal/strictClient_test.go", 8, 13),
+
+	ShellCommand(`$ go test
+--- FAIL: TestClient (0.00s)
+    strictClient.go:32: checkContentType: "" must be application/json
+`),
+
+	P(`Descriptive error messages make tests short and concise.  Use
+	   <em>check</em> prefix to distinguish from asserts.`))
+
 var embedVersionAndRevision = Article(
 	H1("Embed version and revision"),
-	P(
 
-		`When is this valuable? When publishing software for
-         traceability and referenc.  I.e. for bug reports or
-         documentation reference. Your applications can use flags such
-         as -v or -version for this purpose. One way to modify
-         variables during the build is via -ldflags.`,
-	),
+	P(`When is this valuable? When publishing software for
+       traceability and referenc.  I.e. for bug reports or
+       documentation reference. Your applications can use flags such
+       as -v or -version for this purpose. One way to modify variables
+       during the build is via -ldflags.`),
+
 	H2("Using -ldflags"),
 	P("First declare a variable, not constant, in the main package."),
 	LoadFile("./internal/cmd/embedversion/main.go", 9, -1),
