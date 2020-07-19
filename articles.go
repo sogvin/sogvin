@@ -37,7 +37,7 @@ var strictMode = Article(
 	  the strict interface. This adds no real benefit to the client
 	  itself but it makes a difference when testing.`),
 
-	LoadFile("./internal/strictClient_test.go", 8, 13),
+	LoadFile("./internal/strictClient_xtest.go", 8, 13),
 
 	ShellCommand(`$ go test
 --- FAIL: TestClient (0.00s)

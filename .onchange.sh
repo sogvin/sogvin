@@ -12,4 +12,4 @@ case $extension in
 	uncover /tmp/c.out
         ;;
 esac
-reloadsurf.sh
+reloadsurf.sh > /dev/null 2>&1
