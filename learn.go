@@ -120,6 +120,11 @@ $ cd go-learn`),
 
 	ShellCommand("$ gofmt -w main.go"),
 
+	Sidenote(`Keep code perceptible!`, 0.0),
+
 	P(`Replace <code>main.go</code> with the name of whatever file you
-	   want to format.`),
-)
+	   want to format. Keep your code nicely formattted, it improves
+	   readability for you and others. As you get more experienced
+	   you'll notice that most of your time is spend on reading code
+	   than writing it, so readability is a key point in being
+	   productive. Make it a habit to always keep code perceptible.`))
