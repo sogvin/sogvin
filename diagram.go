@@ -3,8 +3,9 @@ package sogvin
 import (
 	"fmt"
 
+	"github.com/gregoryv/draw"
+	"github.com/gregoryv/draw/design"
 	"github.com/gregoryv/draw/shape"
-	"github.com/gregoryv/draw/shape/design"
 	. "github.com/gregoryv/web"
 )
 
@@ -44,7 +45,7 @@ var componentsDiagram = Article(
 )
 
 func newOverviewDiagram() *Element {
-	shape.ClassAttributes["external"] = `stroke="#d3d3d3" fill="#e2e2e2"`
+	draw.ClassAttributes["external"] = `stroke="#d3d3d3" fill="#e2e2e2"`
 	var (
 		d        = design.NewClassDiagram()
 		serviced = shape.NewComponent("serviced")
@@ -99,7 +100,7 @@ func colorSchemeDiagram() *Element {
 	for i, color := range colors {
 		class := fmt.Sprintf("circle%v", i)
 		v := fmt.Sprintf(`stroke="#d3d3d3" stroke-width="1" fill="%s"`, color)
-		shape.ClassAttributes[class] = v
+		draw.ClassAttributes[class] = v
 		c := shape.NewCircle(30)
 		c.SetClass(class)
 		l := shape.NewLabel(color)

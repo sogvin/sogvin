@@ -274,4 +274,19 @@ var purposeOfFuncMain = Article(
 	   before calling the one function that does the actual
 	   work.<br>This works great for services and simpler commands
 	   that only do one thing.`),
+
+	H2("More advanced commands"),
+
+	P(`When the commands get more complex with many more options the
+	   above approach has its limits. Number of arguments to
+	   CountStars will grow and become hard to verify. Turn the
+	   CountStars func into a command. Below example uses alternative
+	   packages for command line option parsing and logging.`),
+
+	Sidenote("Run is now testable and complexity can grow slightly", 7),
+	Sidenote("Default to command line call.", 17.2),
+	LoadFile("./example/app/starcounter.go"),
+
+	P(`Testing complex patterns is straight forward.`),
+	LoadFile("./example/app/starcounter_test.go"),
 )
