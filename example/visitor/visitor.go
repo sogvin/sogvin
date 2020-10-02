@@ -5,6 +5,21 @@ Use this pattern when you need to allow to extend type behavior
 without changing each type. The geometric shapes square, circle and
 rectangle in this example all accept behaviors area and middle.
 
+The behaviors can be used directly onto any shape but the
+perceptibility is not as good as providing a method, compare;
+
+    var area Area
+    circle = Circle{radius: 10}
+
+    // using directly and less perceptible
+    circle.Accept(area) // ?? what does this mean
+    circleArea := float64(area) // conversion required
+
+With provided func which returns the correct type directly
+
+    circle := Circle{radius: 12}
+    area = CalcArea(circle)
+
 */
 package visitor
 
