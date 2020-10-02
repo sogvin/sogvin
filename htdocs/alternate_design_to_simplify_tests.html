@@ -54,12 +54,8 @@ func assertBad(t *testing.T) assertFunc {
 	}
 }
 
-func assert(t *testing.T) (ok, bad assertFunc) {
-	return assertOk(t), assertBad(t)
-}
-
 type assertFunc func(error, ...string)
-</code></pre><p>The initial design of the <a href="inline_test_helpers.html">function double</a>follows the go idiom of returning a value with an error.
+</code></pre><p>The initial design of the <a href="inline_test_helpers.html">function double</a> follows the go idiom of returning a value with an error.
          Redesign the function to take the resulting argument and only
          return an error adds a few more lines to the function. We
          also added the check for nil result. The nil check may be
@@ -85,10 +81,12 @@ func double(result *int, i int) error {
 </code></pre><p>Let's use our new assert functions.</p>
 <pre class="srcfile"><code class="go">func Test_double(t *testing.T) {
 	var r int
-	ok, _k := assert(t) // ok and Not ok, shortened to _k to achieve alignment
+	ok := assertOk(t)
 	ok(double(&r, 1))
 	ok(double(&r, 3))
 	ok(double(&r, MAX))
+
+	_k := assertBad(t)
 	_k(double(&r, -2))
 	_k(double(nil, 2))
 

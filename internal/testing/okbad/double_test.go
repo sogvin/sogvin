@@ -6,10 +6,12 @@ import (
 
 func Test_double(t *testing.T) {
 	var r int
-	ok, _k := assert(t) // ok and Not ok, shortened to _k to achieve alignment
+	ok := assertOk(t)
 	ok(double(&r, 1))
 	ok(double(&r, 3))
 	ok(double(&r, MAX))
+
+	_k := assertBad(t)
 	_k(double(&r, -2))
 	_k(double(nil, 2))
 

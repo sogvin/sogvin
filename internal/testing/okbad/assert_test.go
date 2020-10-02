@@ -31,8 +31,4 @@ func assertBad(t *testing.T) assertFunc {
 	}
 }
 
-func assert(t *testing.T) (ok, bad assertFunc) {
-	return assertOk(t), assertBad(t)
-}
-
 type assertFunc func(error, ...string)

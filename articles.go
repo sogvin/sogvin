@@ -171,7 +171,7 @@ var alternateDesign = Article(
 			"function double",
 		),
 
-		`follows the go idiom of returning a value with an error.
+		` follows the go idiom of returning a value with an error.
          Redesign the function to take the resulting argument and only
          return an error adds a few more lines to the function. We
          also added the check for nil result. The nil check may be
