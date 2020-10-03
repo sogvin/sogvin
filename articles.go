@@ -279,14 +279,18 @@ var purposeOfFuncMain = Article(
 
 	P(`When the commands get more complex with many more options the
 	   above approach has its limits. Number of arguments to
-	   CountStars will grow and become hard to verify. Turn the
-	   CountStars func into a command. Below example uses alternative
-	   packages for command line option parsing and logging.`),
+	   CountStars will grow and become hard to verify. Turn func
+	   CountStars into a command. Advanced commands may also have
+	   logic for combination of flags which would suggest you should
+	   verify command execution with various flags. This is impossible
+	   to do with the above approach while tracking coverage.`),
 
-	Sidenote("Run is now testable and complexity can grow slightly", 7),
-	Sidenote("Default to command line call.", 17.2),
-	LoadFile("./example/app/starcounter.go"),
+	Sidenote("Run is now testable and complexity can grow slightly", 5),
+	LoadFile("./example/cmd/starcounter/starcounter.go"),
 
 	P(`Testing complex patterns is straight forward.`),
-	LoadFile("./example/app/starcounter_test.go"),
+	LoadFile("./example/cmd/starcounter/starcounter_test.go"),
+
+	P(`Complexity of func main still remains at one, looking like`),
+	LoadFile("./example/cmd/starcounter/main.go"),
 )

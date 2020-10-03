@@ -10,5 +10,6 @@ require (
 	github.com/gregoryv/logger v0.2.0
 	github.com/gregoryv/qual v0.3.2
 	github.com/gregoryv/web v0.8.2
+	github.com/gregoryv/wolf v0.2.0
 	github.com/gregoryv/workdir v0.2.0
 )

@@ -75,105 +75,117 @@
 <h2>More advanced commands</h2>
 <p>When the commands get more complex with many more options the
 	   above approach has its limits. Number of arguments to
-	   CountStars will grow and become hard to verify. Turn the
-	   CountStars func into a command. Below example uses alternative
-	   packages for command line option parsing and logging.</p>
-<div class="sidenote" style="margin-top: 7cm"><div class="inner">Run is now testable and complexity can grow slightly</div>
-</div>
-<div class="sidenote" style="margin-top: 17.2cm"><div class="inner">Default to command line call.</div>
+	   CountStars will grow and become hard to verify. Turn func
+	   CountStars into a command. Advanced commands may also have
+	   logic for combination of flags which would suggest you should
+	   verify command execution with various flags. This is impossible
+	   to do with the above approach while tracking coverage.</p>
+<div class="sidenote" style="margin-top: 5cm"><div class="inner">Run is now testable and complexity can grow slightly</div>
 </div>
 <pre class="srcfile complete"><code class="go">package main
 
 import (
-	"io"
-	"os"
+	"fmt"
 
 	"github.com/gregoryv/cmdline"
 	"github.com/gregoryv/fox"
+	"github.com/gregoryv/wolf"
 )
 
-func main() {
-	if err := NewStarCounter(os.Args...).Run(); err != nil {
-		os.Exit(1)
-	}
-}
-
-// Run starts the application and waits for it to complete.
-func (me *StarCounter) Run() error {
-
-	// Parse command line options
-	cli := cmdline.New(me.Args...)
-	me.sizeFilter = cli.Option("-size").String("all")
-	me.weightFilter = cli.Option("-weight").String("all")
-	help := cli.Flag("-h, -help")
-
-	if help {
-		cli.WriteUsageTo(me.Stdout)
-		return nil
-	}
-	if err := cli.Error(); err != nil {
-		me.Log(err, ", try -help")
-		return err
-	}
-	return me.countStars()
-}
-
-// countStars writes the result using the configured Stdout writer
-func (me *StarCounter) countStars() error {
-	// count stars using filters
-	return nil
-}
-
-// NewStarCounter returns an app, called from the operating system.
-func NewStarCounter(args ...string) *StarCounter {
-	wd, _ := os.Getwd()
+// NewStarCounter returns a new star counter command with logging
+// enabled to cmd.Stderr.
+func NewStarCounter(cmd wolf.Command) *StarCounter {
 	return &StarCounter{
-		Env:    os.Environ(),
-		Path:   args[0],
-		Args:   args,
-		Dir:    wd,
-		Stdin:  os.Stdin,
-		Stdout: os.Stdout,
-		Stderr: os.Stderr,
-
-		Logger: fox.NewSyncLog(os.Stderr).FilterEmpty(),
+		Command: cmd,
+		Logger:  fox.NewSyncLog(cmd.Stderr()).FilterEmpty(),
 	}
 }
 
 type StarCounter struct {
-	Env    []string // environment variables
-	Path   string   // path to executable that was invoked
-	Args   []string // name and arguments
-	Dir    string   // working directory
-	Stdin  io.Reader
-	Stdout io.Writer
-	Stderr io.Writer
-
-	fox.Logger // for logging
+	wolf.Command
+	fox.Logger
 
 	// star filters
 	sizeFilter   string
 	weightFilter string
 }
+
+// Run starts the application and waits for it to complete. Returns
+// exit code 0 if completed ok, 1 otherwise.
+func (me *StarCounter) Run() int {
+	// Parse command line options
+	cli := cmdline.New(me.Args()...)
+	me.sizeFilter = cli.Option("-size").String("all")
+	me.weightFilter = cli.Option("-weight").String("all")
+	help := cli.Flag("-h, --help")
+
+	if help {
+		cli.WriteUsageTo(me.Stdout())
+		return 0
+	}
+	if err := cli.Error(); err != nil {
+		me.Log(err, ", try -help")
+		return 1
+	}
+	if err := me.countStars(); err != nil {
+		return 1
+	}
+	return 0
+}
+
+// countStars writes the result using the configured Stdout writer
+func (me *StarCounter) countStars() error {
+	// count stars using filters
+	if me.weightFilter != "all" {
+		return fmt.Errorf("bad weight")
+	}
+	return nil
+}
 </code></pre><p>Testing complex patterns is straight forward.</p>
 <pre class="srcfile complete"><code class="go">package main
 
 import (
+	"strings"
 	"testing"
 
-	"github.com/gregoryv/asserter"
+	"github.com/gregoryv/wolf"
 )
 
 func TestStarCounter(t *testing.T) {
-	ok, bad := asserter.NewErrors(t)
+	exp := func(exitCode int, args ...string) {
+		tc := strings.Join(args, " ")
+		t.Run(tc, func(t *testing.T) {
+			cmd := wolf.NewTCmd(args...).Use(t)
+			defer cmd.Cleanup()
+			sc := NewStarCounter(cmd)
+			got := sc.Run()
+			if got != exitCode {
+				t.Error(args, "got", got, "expected", exitCode)
+			}
+		})
+	}
 
-	ok(NewStarCounter("name").Run())
-	ok(NewStarCounter("name", "-h").Run())
-	ok(NewStarCounter("name", "-help").Run())
-	ok(NewStarCounter("name", "-size", "small").Run())
-	ok(NewStarCounter("name", "-weight", "heavy").Run())
+	exp(0, "name")
+	exp(0, "name", "-h")
+	exp(0, "name", "--help")
+	exp(0, "name", "-size", "small")
+	exp(1, "name", "-weight", "heavy")
+	exp(1, "", "-nosuch")
+}
+</code></pre><p>Complexity of func main still remains at one, looking like</p>
+<pre class="srcfile complete"><code class="go">package main
 
-	bad(NewStarCounter("", "-nosuch").Run())
+import (
+	"os"
+
+	"github.com/gregoryv/wolf"
+)
+
+func main() {
+	cmd := wolf.NewOSCmd()
+	sc := NewStarCounter(cmd)
+	exitCode := sc.Run()
+	os.Exit(exitCode)
 }
 </code></pre></article>
 <footer>Gregory Vin&ccaron;i&cacute;</footer></body>
