@@ -5,7 +5,7 @@ import (
 )
 
 var gettingStartedWithProgramming = Article(
-	H1("Getting started with programming"),
+	H1("Golang getting started"),
 
 	P(`Are you an aspiring software developer in need of guidance?
 	   then this material is for you. First you'll learn the basics of

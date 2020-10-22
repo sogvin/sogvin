@@ -9,13 +9,15 @@ func NewSoftwareEngineeringBook() *Book {
 	book.Title = "Software Engineering"
 	book.Author = "Gregory Vin&ccaron;i&cacute;"
 
-	// drafts
-	book.AddPage("Basics", gettingStartedWithProgramming)
-
 	toc := Article(Class("toc"),
 		H1(book.Title),
 		Img(Src("img/office.jpg")),
 		P("Notes by ", book.Author),
+
+		H2("Start"),
+		Ul(
+			book.AddPage("Start", gettingStartedWithProgramming),
+		),
 
 		H2("Design"),
 		Ul(
