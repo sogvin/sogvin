@@ -21,28 +21,32 @@ type StarCounter struct {
 	wolf.Command
 	fox.Logger
 
-	// star filters
-	sizeFilter   string
-	weightFilter string
+	size   string
+	weight string
 }
 
 // Run starts the application and waits for it to complete. Returns
 // exit code 0 if completed ok, 1 otherwise.
 func (me *StarCounter) Run() int {
 	// Parse command line options
-	cli := cmdline.New(me.Args()...)
-	me.sizeFilter = cli.Option("-size").String("all")
-	me.weightFilter = cli.Option("-weight").String("all")
-	help := cli.Flag("-h, --help")
+	var (
+		cli    = cmdline.New(me.Args()...)
+		size   = cli.Option("-size").String("all")
+		weight = cli.Option("-weight").String("all")
+		help   = cli.Flag("-h, --help")
+	)
 
-	if help {
+	switch {
+	case help:
 		cli.WriteUsageTo(me.Stdout())
 		return 0
-	}
-	if err := cli.Error(); err != nil {
-		me.Log(err, ", try -help")
+
+	case !cli.Ok():
+		me.Log(cli.Error(), ", try --help")
 		return 1
 	}
+	me.size = size
+	me.weight = weight
 	if err := me.countStars(); err != nil {
 		return 1
 	}
@@ -52,7 +56,7 @@ func (me *StarCounter) Run() int {
 // countStars writes the result using the configured Stdout writer
 func (me *StarCounter) countStars() error {
 	// count stars using filters
-	if me.weightFilter != "all" {
+	if me.weight != "all" {
 		return fmt.Errorf("bad weight")
 	}
 	return nil

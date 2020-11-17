@@ -9,67 +9,79 @@ var purposeOfFuncMain = Article(
        commandline arguments to application startup state</b>. Once
        the state is prepared a specific entry function is called. More
        often than not, logging verbosity is one such state that needs
-       to be configured early on.  <br> Use the builtin flag package
-       to define, document and parse the arguments.`),
+       to be configured early on.  <br> Go provides the builtin flag
+       package to define, document and parse the arguments.`),
 
 	H2("Example <code>CountStars(galaxy string)</code>"),
 
 	P(`Imagine an application that counts the stars in a named
-	   galaxy. The main function should then make sure the flags are
+	   galaxy. The main function should then make sure the options are
 	   correct and forward them as arguments to the function doing the
-	   actual work. The name of the galaxy would be such a flag and
+	   actual work. The name of the galaxy would be such an option and
 	   perhaps a verbosity flag for debugging purposes.`),
 
 	LoadFile("./internal/cmd/countstars/main.go", 8, -1),
 
 	P(`Now that you know what the main function should do, let us take
-	   a look at how it should be done, apart of the flag definition
+	   a look at how to do it, apart of the option definition
 	   and argument passing.<br> First, the cyclomatic complexity of
 	   the main function is one. Ie. there is only one path through
 	   this program.  There are however two exit points, apart from
 	   the obvious one <code>flag.Parse()</code> exits if the parsed
-	   flags do not match the predefined. The single pathway means
+	   options do not match the predefined. The single pathway means
 	   that testing the main function is simple. Execute this
-	   application with valid flags and all lines are covered, leaving
+	   application with valid arguments and all lines are covered, leaving
 	   all other code for unittesting.<br> Also, if you execute the
-	   program you would note that second, the order of the flags are
+	   program you would note that second, the order of the options are
 	   sorted in the same way as the help output.`),
 
 	Sidenote("Cyclomatic complexity should be one.", -5.2),
-	Sidenote("Flag order should match output.", -1.7),
+	Sidenote("Option order should match output.", -1.7),
 
 	H2("Benefits"),
 
 	P(`Adhering to the &ldquo;keep it simple principle&rdquo; and only
 	   doing one thing in each function, works out nicely for the main
 	   function as well. One could argue that, if you moved everything
-	   inside main into a start function, the flag definitions would
+	   inside main into a start function, the option definitions would
 	   also be tested.  Think about it for a minute and figure out
 	   what exactly you would be testing. If the flag package already
 	   makes sure it's functions work as expected the only thing left
-	   is testing which flags you have defined.  They would need to
-	   be updated each time you add or remove a flag which is a sign
-	   of a poor test.<br> You could potentially refactor main and
-	   separate the flag definitions into smaller functions for
-	   readability but you still wouldn't need to write unittests for
-	   them.`),
+	   is testing which options you have defined.  They would need to be
+	   updated each time you add or remove an option  which is a sign of a
+	   poor test.<br> You could potentially refactor main and separate
+	   the option definitions into smaller functions for readability but
+	   you still wouldn't need to write unittests for them. However,
+	   when your application grows and command line arguments start
+	   having relations you ought to verify that. More on this in the
+	   next section.`),
 
-	P(`Keep main simple, constrain it to only set global startup state
-	   before calling the one function that does the actual
-	   work.<br>This works great for services and simpler commands
-	   that only do one thing.`),
+	P(`But start of and keep main simple, constrain it to only set
+	   global startup state before calling the one function that does
+	   the actual work.<br>This works great for services and simpler
+	   commands that only do one thing.`),
 
 	H2("More advanced commands"),
 
 	P(`When the commands get more complex with many more options the
 	   above approach has its limits. Number of arguments to
-	   CountStars will grow and become hard to verify. Turn func
-	   CountStars into a command. Advanced commands may also have
-	   logic for combination of flags which would suggest you should
-	   verify command execution with various flags. This is impossible
-	   to do with the above approach while tracking coverage.`),
+	   CountStars will grow and become hard to verify any relations
+	   between them. One solution is to turn func CountStars into a
+	   command. Advanced commands may also have logic for combination
+	   of options which would suggest you should verify command
+	   execution with various options. This is impossible to do with
+	   the above approach while tracking coverage.`),
 
 	Sidenote("Run is now testable and complexity can grow slightly", 5),
+	Sidenote(
+		Span("Alternate ",
+			A(
+				Href("https://godoc.org/github.com/gregoryv/cmdline"), "cmdline"),
+			" package for parsing arguments.",
+		),
+		13,
+	),
+
 	LoadFile("./example/cmd/starcounter/starcounter.go"),
 
 	P(`Testing complex patterns is straight forward.`),

@@ -15,13 +15,13 @@
        commandline arguments to application startup state</b>. Once
        the state is prepared a specific entry function is called. More
        often than not, logging verbosity is one such state that needs
-       to be configured early on.  <br> Use the builtin flag package
-       to define, document and parse the arguments.</p>
+       to be configured early on.  <br> Go provides the builtin flag
+       package to define, document and parse the arguments.</p>
 <h2>Example <code>CountStars(galaxy string)</code></h2>
 <p>Imagine an application that counts the stars in a named
-	   galaxy. The main function should then make sure the flags are
+	   galaxy. The main function should then make sure the options are
 	   correct and forward them as arguments to the function doing the
-	   actual work. The name of the galaxy would be such a flag and
+	   actual work. The name of the galaxy would be such an option and
 	   perhaps a verbosity flag for debugging purposes.</p>
 <pre class="srcfile"><code class="go">func main() {
 	galaxy := "milkyway"
@@ -39,48 +39,53 @@
 	CountStars(os.Stdout, galaxy)
 }
 </code></pre><p>Now that you know what the main function should do, let us take
-	   a look at how it should be done, apart of the flag definition
+	   a look at how to do it, apart of the option definition
 	   and argument passing.<br> First, the cyclomatic complexity of
 	   the main function is one. Ie. there is only one path through
 	   this program.  There are however two exit points, apart from
 	   the obvious one <code>flag.Parse()</code> exits if the parsed
-	   flags do not match the predefined. The single pathway means
+	   options do not match the predefined. The single pathway means
 	   that testing the main function is simple. Execute this
-	   application with valid flags and all lines are covered, leaving
+	   application with valid arguments and all lines are covered, leaving
 	   all other code for unittesting.<br> Also, if you execute the
-	   program you would note that second, the order of the flags are
+	   program you would note that second, the order of the options are
 	   sorted in the same way as the help output.</p>
 <div class="sidenote" style="margin-top: -5.2cm"><div class="inner">Cyclomatic complexity should be one.</div>
 </div>
-<div class="sidenote" style="margin-top: -1.7cm"><div class="inner">Flag order should match output.</div>
+<div class="sidenote" style="margin-top: -1.7cm"><div class="inner">Option order should match output.</div>
 </div>
 <h2>Benefits</h2>
 <p>Adhering to the &ldquo;keep it simple principle&rdquo; and only
 	   doing one thing in each function, works out nicely for the main
 	   function as well. One could argue that, if you moved everything
-	   inside main into a start function, the flag definitions would
+	   inside main into a start function, the option definitions would
 	   also be tested.  Think about it for a minute and figure out
 	   what exactly you would be testing. If the flag package already
 	   makes sure it's functions work as expected the only thing left
-	   is testing which flags you have defined.  They would need to
-	   be updated each time you add or remove a flag which is a sign
-	   of a poor test.<br> You could potentially refactor main and
-	   separate the flag definitions into smaller functions for
-	   readability but you still wouldn't need to write unittests for
-	   them.</p>
-<p>Keep main simple, constrain it to only set global startup state
-	   before calling the one function that does the actual
-	   work.<br>This works great for services and simpler commands
-	   that only do one thing.</p>
+	   is testing which options you have defined.  They would need to be
+	   updated each time you add or remove an option  which is a sign of a
+	   poor test.<br> You could potentially refactor main and separate
+	   the option definitions into smaller functions for readability but
+	   you still wouldn't need to write unittests for them. However,
+	   when your application grows and command line arguments start
+	   having relations you ought to verify that. More on this in the
+	   next section.</p>
+<p>But start of and keep main simple, constrain it to only set
+	   global startup state before calling the one function that does
+	   the actual work.<br>This works great for services and simpler
+	   commands that only do one thing.</p>
 <h2>More advanced commands</h2>
 <p>When the commands get more complex with many more options the
 	   above approach has its limits. Number of arguments to
-	   CountStars will grow and become hard to verify. Turn func
-	   CountStars into a command. Advanced commands may also have
-	   logic for combination of flags which would suggest you should
-	   verify command execution with various flags. This is impossible
-	   to do with the above approach while tracking coverage.</p>
+	   CountStars will grow and become hard to verify any relations
+	   between them. One solution is to turn func CountStars into a
+	   command. Advanced commands may also have logic for combination
+	   of options which would suggest you should verify command
+	   execution with various options. This is impossible to do with
+	   the above approach while tracking coverage.</p>
 <div class="sidenote" style="margin-top: 5cm"><div class="inner">Run is now testable and complexity can grow slightly</div>
+</div>
+<div class="sidenote" style="margin-top: 13cm"><div class="inner"><span>Alternate <a href="https://godoc.org/github.com/gregoryv/cmdline">cmdline</a> package for parsing arguments.</span></div>
 </div>
 <pre class="srcfile complete"><code class="go">package main
 
@@ -105,28 +110,32 @@ type StarCounter struct {
 	wolf.Command
 	fox.Logger
 
-	// star filters
-	sizeFilter   string
-	weightFilter string
+	size   string
+	weight string
 }
 
 // Run starts the application and waits for it to complete. Returns
 // exit code 0 if completed ok, 1 otherwise.
 func (me *StarCounter) Run() int {
 	// Parse command line options
-	cli := cmdline.New(me.Args()...)
-	me.sizeFilter = cli.Option("-size").String("all")
-	me.weightFilter = cli.Option("-weight").String("all")
-	help := cli.Flag("-h, --help")
+	var (
+		cli    = cmdline.New(me.Args()...)
+		size   = cli.Option("-size").String("all")
+		weight = cli.Option("-weight").String("all")
+		help   = cli.Flag("-h, --help")
+	)
 
-	if help {
+	switch {
+	case help:
 		cli.WriteUsageTo(me.Stdout())
 		return 0
-	}
-	if err := cli.Error(); err != nil {
-		me.Log(err, ", try -help")
+
+	case !cli.Ok():
+		me.Log(cli.Error(), ", try --help")
 		return 1
 	}
+	me.size = size
+	me.weight = weight
 	if err := me.countStars(); err != nil {
 		return 1
 	}
@@ -136,7 +145,7 @@ func (me *StarCounter) Run() int {
 // countStars writes the result using the configured Stdout writer
 func (me *StarCounter) countStars() error {
 	// count stars using filters
-	if me.weightFilter != "all" {
+	if me.weight != "all" {
 		return fmt.Errorf("bad weight")
 	}
 	return nil
@@ -182,10 +191,12 @@ import (
 )
 
 func main() {
-	cmd := wolf.NewOSCmd()
-	sc := NewStarCounter(cmd)
-	exitCode := sc.Run()
-	os.Exit(exitCode)
+	var (
+		cmd  = wolf.NewOSCmd()
+		sc   = NewStarCounter(cmd)
+		code = sc.Run()
+	)
+	os.Exit(code)
 }
 </code></pre></article>
 <footer>Gregory Vin&ccaron;i&cacute;</footer></body>

@@ -7,8 +7,10 @@ import (
 )
 
 func main() {
-	cmd := wolf.NewOSCmd()
-	sc := NewStarCounter(cmd)
-	exitCode := sc.Run()
-	os.Exit(exitCode)
+	var (
+		cmd  = wolf.NewOSCmd()
+		sc   = NewStarCounter(cmd)
+		code = sc.Run()
+	)
+	os.Exit(code)
 }
