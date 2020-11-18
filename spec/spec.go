@@ -22,16 +22,27 @@ func NewSpecification() *Page {
 			H2("Areas"),
 
 			P(`This specification is divided into four main
-			areas. Each area supports people in different ways
-			depending on their role in the space flight.  Astronauts
-			need to practice their skills with the spaceship and
-			controllers different aspects of the monitoring
-			system. Each area is further describe with possible scenes
-			to highlight and elicitate requirements of the final
-			system.`),
+			areas. Each area supports people differently based on
+			their role in the space endeavour. A set of scenes
+			describe various use cases to highlight and elicitate
+			requirements of the final system.`),
 
 			Section(
 				H3("Simulation"),
+
+				P(`Simulations enable people to build experience in
+				handling stressful situations.`),
+
+				Scene(`An incident occurs during reentry. The
+				controller talks to astronaut working out the
+				situation.`),
+
+				Feature("Radio communication"),
+				Ul(
+					Li("Voice/audio is prefered way of communicating."),
+					Li("Texting alternative when there is radio interference"),
+				),
+				//
 			),
 			Section(
 				H3("Automation"),
@@ -44,16 +55,9 @@ func NewSpecification() *Page {
 			),
 		),
 
-		/*
-
-			// roles interacting with the system
-			Role("Astronaut"),
-			Role("Controller"),
-			Role("Engineer"),
-
-			// problems concerning the purpose
-			Problem(`Stear precisely using thrusters.`),
-			Problem(`Adapt course for unforseen circumstance.`),*/
+		// problems concerning the purpose
+		//			Problem(`Stear precisely using thrusters.`),
+		//			Problem(`Adapt course for unforseen circumstance.`),*/
 	)
 	//CheckRoles(spec, t.Error)
 
@@ -70,4 +74,20 @@ func NewSpecification() *Page {
 		),
 	)
 	return page
+}
+
+func Role(role string) *Element {
+	return Span(Class("role"), role)
+}
+
+func Feature(c ...interface{}) *Element {
+	return Span(Class("feature")).With(c...)
+}
+
+func Scene(c ...interface{}) *Element {
+	return P(Class("scene")).With(c...)
+}
+
+func Requirement(c ...interface{}) *Element {
+	return Span(Class("requirement")).With(c...)
 }

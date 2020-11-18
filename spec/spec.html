@@ -2,13 +2,16 @@
 
 <html>
 <head>
-<style>html, body {
+<style>@import url('https://fonts.googleapis.com/css?family=Inconsolata|Source+Sans+Pro');
+html, body {
 margin: 0 0;
 body: 0 0;
+font-family: 'Source Sans Pro', sans-serif;
 }
 body {
 padding: 1em 1.618em 1em 1.618em;
 max-width: 21cm;
+line-height: 1.3em;
 }
 h1:first-child {
 margin-top: 0;
@@ -19,6 +22,18 @@ padding-left: 0;
 }
 li.h3 {
 margin-left: 1.618em;
+}
+.role {
+font-weight: bold;
+}
+.feature::before {
+content: "FEATURE: ";
+}
+.scene::before {
+content: "SCENE: ";
+}
+.requirement::before {
+content: "REQUIREMENT: ";
 }
 </style>
 </head>
@@ -40,15 +55,21 @@ margin-left: 1.618em;
 <section>
 <h2 id="areas"><a href="#areas">Areas</a></h2>
 <p>This specification is divided into four main
-			areas. Each area supports people in different ways
-			depending on their role in the space flight.  Astronauts
-			need to practice their skills with the spaceship and
-			controllers different aspects of the monitoring
-			system. Each area is further describe with possible scenes
-			to highlight and elicitate requirements of the final
-			system.</p>
+			areas. Each area supports people differently based on
+			their role in the space endeavour. A set of scenes
+			describe various use cases to highlight and elicitate
+			requirements of the final system.</p>
 <section>
 <h3 id="simulation"><a href="#simulation">Simulation</a></h3>
+<p>Simulations enable people to build experience in
+				handling stressful situations.</p>
+<p class="scene">An incident occurs during reentry. The
+				controller talks to astronaut working out the
+				situation.</p>
+<span class="feature">Radio communication</span><ul>
+<li>Voice/audio is prefered way of communicating.</li>
+<li>Texting alternative when there is radio interference</li>
+</ul>
 </section>
 <section>
 <h3 id="automation"><a href="#automation">Automation</a></h3>

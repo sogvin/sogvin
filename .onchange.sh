@@ -9,7 +9,7 @@ case $extension in
     go)
         goimports -w $path
 	go test -coverprofile /tmp/c.out ./...
-	uncover /tmp/c.out
+	#uncover /tmp/c.out
         ;;
 esac
 
