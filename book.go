@@ -25,8 +25,8 @@ func (book *Book) SaveTo(base string) error {
 
 func findH1(article *Element) string {
 	var buf bytes.Buffer
-	w := NewHtmlWriter(&buf)
-	w.WriteHtml(article)
+	enc := NewHtmlEncoder(&buf)
+	enc.Encode(article)
 	from := bytes.Index(buf.Bytes(), []byte("<h1>")) + 4
 	to := bytes.Index(buf.Bytes(), []byte("</h1>"))
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
@@ -48,7 +48,7 @@ func (book *Book) AddPage(right string, article *Element) *Element {
 }
 
 func newPage(filename, title string, header, article, footer *Element) *Page {
-	return NewPage(filename,
+	return NewFile(filename,
 		Html(Lang("en"),
 			Head(
 				Meta(Charset("utf-8")),
