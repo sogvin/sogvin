@@ -30,7 +30,7 @@ func NewSpecification() *Page {
 			Section(
 				H3("Simulation"),
 
-				P(`Simulations enable people to build experience in
+				P(`Through simulations, people to build experience in
 				handling stressful situations.`),
 
 				Scene(`An incident occurs during reentry. The
