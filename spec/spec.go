@@ -12,24 +12,16 @@ func NewSpecification() *Page {
 		H1("Spaceship navigation system"),
 		Em(`Purpose; provide safe travel through space.`),
 
-		P(`The navigation system provides people a way to plot a
-           course through space or manually steer a ship.  People
-           depend on its accuracy and automation to safely navigate
-           through space.`),
+		P(`Through the navigation system people can plot a
+           course manually steer a ship.  People depend on its
+           accuracy and automation to safely navigate through space.`),
 
 		nav,
 		Section(
-			H2("Domain"),
 
-			P(`This specification is divided into domains. Each
-			supports people differently based on their role in the
-			space endeavour. A set of scenes describe various use
-			cases to highlight and elicitate requirements of the final
-			system.`),
+			H2("Navigation"),
 
-			H3("Navigation"),
-
-			H4(Scene(`Plot new course`)),
+			H3(Scene(`Plot new course`)),
 
 			P(`Standing at the bridge, the captain asks for the
 			closest viable planets for some time at the beach. Selects
@@ -47,9 +39,6 @@ func NewSpecification() *Page {
 			changes.`),
 			//
 
-			H3("Control"),
-
-			P(`Manual override`),
 		),
 	)
 	//CheckRoles(spec, t.Error)
@@ -67,20 +56,4 @@ func NewSpecification() *Page {
 		),
 	)
 	return page
-}
-
-func Role(role string) *Element {
-	return Span(Class("role"), role)
-}
-
-func Feature(c ...interface{}) *Element {
-	return Span(Class("feature")).With(c...)
-}
-
-func Scene(c ...interface{}) *Element {
-	return P(Class("scene")).With(c...)
-}
-
-func Requirement(c ...interface{}) *Element {
-	return Span(Class("requirement")).With(c...)
 }
