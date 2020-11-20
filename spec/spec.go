@@ -19,13 +19,13 @@ func NewSpecification() *Page {
 
 		nav,
 		Section(
-			H2("Areas"),
+			H2("Domain"),
 
-			P(`This specification is divided into four main
-			areas. Each area supports people differently based on
-			their role in the space endeavour. A set of scenes
-			describe various use cases to highlight and elicitate
-			requirements of the final system.`),
+			P(`This specification is divided into four domains. Each
+			supports people differently based on their role in the
+			space endeavour. A set of scenes describe various use
+			cases to highlight and elicitate requirements of the final
+			system.`),
 
 			Section(
 				H3("Simulation"),
