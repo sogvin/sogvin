@@ -32,9 +32,6 @@ func Theme() *CSS {
 	css.Style(".feature::before",
 		`content: "FEATURE: "`,
 	)
-	css.Style(".scene::before",
-		`content: "SCENE: "`,
-	)
 	css.Style(".requirement::before",
 		`content: "REQUIREMENT: "`,
 	)

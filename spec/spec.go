@@ -9,55 +9,48 @@ func NewSpecification() *Page {
 
 	nav := Nav()
 	spec := Article(
-		H1("Spaceship control system"),
-		Em(`Purpose; provide safe navigation through space.`),
+		H1("Spaceship navigation system"),
+		Em(`Purpose; provide safe travel through space.`),
 
-		P(`The control system of a spaceship is at the heart of the
-		ship. Everything on the ship is somehow monitored or
-		controlled by the system. People depend on its accuracy and
-		automation to safely navigate through space.`),
+		P(`The navigation system provides people a way to plot a
+           course through space or manually steer a ship.  People
+           depend on its accuracy and automation to safely navigate
+           through space.`),
 
 		nav,
 		Section(
 			H2("Domain"),
 
-			P(`This specification is divided into four domains. Each
+			P(`This specification is divided into domains. Each
 			supports people differently based on their role in the
 			space endeavour. A set of scenes describe various use
 			cases to highlight and elicitate requirements of the final
 			system.`),
 
-			Section(
-				H3("Simulation"),
+			H3("Navigation"),
 
-				P(`Through simulations, people to build experience in
-				handling stressful situations.`),
+			H4(Scene(`Plot new course`)),
 
-				Scene(`An incident occurs during reentry. The
-				controller talks to astronaut working out the
-				situation.`),
+			P(`Standing at the bridge, the captain asks for the
+			closest viable planets for some time at the beach. Selects
+			the one with the nicest beaches and views and tells the
+			system to plot the course. The plot details show there
+			route goes through uncharted space. The captain selects
+			another of the viable planets and tells the system to plot
+			the course again. Once satisfied, he tells the system to
+			engage.`),
 
-				Feature("Radio communication"),
-				Ul(
-					Li("Voice/audio is prefered way of communicating."),
-					Li("Texting alternative when there is radio interference"),
-				),
-				//
-			),
-			Section(
-				H3("Automation"),
-			),
-			Section(
-				H3("Remote control"),
-			),
-			Section(
-				H3("Maintenance"),
-			),
+			P(`The journey is estimated to five days. On the second
+			day however an interference is detected in space and the
+			ship adapts the course accordingly. The captain is
+			notified through his personal communicator of the
+			changes.`),
+			//
+
+			H3("Control"),
+
+			P(`Manual override`),
 		),
-
-		// problems concerning the purpose
-		//			Problem(`Stear precisely using thrusters.`),
-		//			Problem(`Adapt course for unforseen circumstance.`),*/
 	)
 	//CheckRoles(spec, t.Error)
 
