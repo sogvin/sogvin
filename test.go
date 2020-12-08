@@ -2,7 +2,6 @@ package sogvin
 
 import . "github.com/gregoryv/web"
 
-
 var inlineTestHelpers = Article(
 	H1("Inline test helpers"),
 	P(
@@ -76,4 +75,3 @@ var alternateDesign = Article(
 	),
 	LoadFile("./internal/testing/okbad/double_test.go", 7, 0),
 )
-
