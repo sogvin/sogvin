@@ -5,23 +5,23 @@ import (
 	"github.com/gregoryv/web/toc"
 )
 
-func NewSpecification() *Page {
+func NewNavigationSpec() *Element {
 
 	nav := Nav()
 	spec := Article(
-		H1("Spaceship navigation system"),
+		H1("Spaceship navigation system specification"),
 		Em(`Purpose; provide safe travel through space.`),
-
-		P(`Through the navigation system people can plot a
-           course manually steer a ship.  People depend on its
-           accuracy and automation to safely navigate through space.`),
 
 		nav,
 		Section(
 
-			H2("Navigation"),
+			H2("Background"),
 
-			H3(Scene(`Plot new course`)),
+			P(`Through the navigation system people can plot a course
+            or manually steer a ship.  People depend on its accuracy
+            and automation to safely navigate through space.`),
+
+			H3(`Plot new course`),
 
 			P(`Standing at the bridge, the captain asks for the
 			closest viable planets for some time at the beach. Selects
@@ -41,19 +41,7 @@ func NewSpecification() *Page {
 
 		),
 	)
-	//CheckRoles(spec, t.Error)
 
 	toc.MakeTOC(nav, spec, "h2", "h3")
-
-	page := NewPage(
-		Html(
-			Head(
-				Style(Theme()),
-			),
-			Body(
-				spec,
-			),
-		),
-	)
-	return page
+	return spec
 }

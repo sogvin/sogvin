@@ -5,5 +5,15 @@ import (
 )
 
 func Test_specification(t *testing.T) {
-	NewSpecification().SaveAs("spec.html")
+	page := NewPage(
+		Html(
+			Head(
+				Style(Theme()),
+			),
+			Body(
+				NewNavigationSpec(),
+			),
+		),
+	).SaveAs("navsys.html")
+
 }
