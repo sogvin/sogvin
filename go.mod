@@ -9,7 +9,7 @@ require (
 	github.com/gregoryv/fox v0.5.0
 	github.com/gregoryv/logger v0.2.0
 	github.com/gregoryv/qual v0.3.2
-	github.com/gregoryv/web v0.14.1-0.20201118184959-6f63b08c61cc
+	github.com/gregoryv/web v0.14.1-0.20201209052910-c8aa18b35196
 	github.com/gregoryv/wolf v0.2.0
 	github.com/gregoryv/workdir v0.2.0
 )

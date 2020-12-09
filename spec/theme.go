@@ -26,14 +26,9 @@ func Theme() *CSS {
 	css.Style("li.h3",
 		"margin-left: 1.618em",
 	)
-	css.Style(".role",
-		"font-weight: bold",
+	css.Style("li.h4",
+		"margin-left: 3.236em",
 	)
-	css.Style(".feature::before",
-		`content: "FEATURE: "`,
-	)
-	css.Style(".requirement::before",
-		`content: "REQUIREMENT: "`,
-	)
+
 	return css
 }
