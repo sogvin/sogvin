@@ -1,6 +1,7 @@
 package spec
 
 import (
+	"strings"
 	"testing"
 
 	. "github.com/gregoryv/web"
@@ -12,6 +13,8 @@ func Test_specification(t *testing.T) {
 	nav := Nav()
 	spec := NewNavigationSpec(n)
 	features := NewElicitedFeatures(n)
+
+	LinkAll(features, "navigation story", "navigationsystem")
 
 	body := Body(
 		H1("Spaceship system specification"),
@@ -30,4 +33,22 @@ func Test_specification(t *testing.T) {
 		),
 	).SaveAs("navsys.html")
 
+}
+
+func LinkAll(el *Element, txt string, toId string) {
+
+	for cIndex, c := range el.Children {
+		switch c := c.(type) {
+		case string:
+			i := strings.Index(c, txt)
+			if i >= 0 {
+				before := c[:i]
+				lnk := A(Href("#"+toId), txt)
+				after := c[i+len(txt):]
+				el.Children[cIndex] = Span(before, lnk, after)
+			}
+		case *Element:
+			LinkAll(c, txt, toId) // recursive
+		}
+	}
 }

@@ -6,8 +6,7 @@ import (
 
 func NewNavigationSpec(n *Hn) *Element {
 	spec := Article(
-		n.H1("Navigation system"),
-		Em(`Purpose; provide safe travel through space.`),
+		n.H1("Navigating to a nearby planet"),
 
 		Section(
 			n.H2("Background"),
