@@ -74,6 +74,8 @@ github.com/gregoryv/web v0.14.1-0.20201208135302-d4fe955b5abd h1:1uldqxtwvsxUprR
 github.com/gregoryv/web v0.14.1-0.20201208135302-d4fe955b5abd/go.mod h1:rQLMOfw2Hny0Nvb24COmX96jKJyhNOfC/jAHITBn3vc=
 github.com/gregoryv/web v0.14.1-0.20201209052910-c8aa18b35196 h1:gx7avnnE3S/Eqwjj+4/tE7autbLO3Of8KbLNJMGzcaM=
 github.com/gregoryv/web v0.14.1-0.20201209052910-c8aa18b35196/go.mod h1:rQLMOfw2Hny0Nvb24COmX96jKJyhNOfC/jAHITBn3vc=
+github.com/gregoryv/web v0.14.1-0.20201209083231-aa3cd2ea60f5 h1:niZrxj41JkKvup/4RCqGDUF2SUHQwxJU3pHda4hIBoI=
+github.com/gregoryv/web v0.14.1-0.20201209083231-aa3cd2ea60f5/go.mod h1:rQLMOfw2Hny0Nvb24COmX96jKJyhNOfC/jAHITBn3vc=
 github.com/gregoryv/wolf v0.1.0 h1:468P3jyDNKiVgPlJCEehQAUK16NkGj+JakBtyow/ypA=
 github.com/gregoryv/wolf v0.1.0/go.mod h1:LzWtB+U4NNVEWQskvah9wvoFOT4DUuB13nh79V526lE=
 github.com/gregoryv/wolf v0.2.0 h1:eR4DAvAKI+ai7A/Sc0sqLwCqHfKjinXjuRNUUDEFqfo=

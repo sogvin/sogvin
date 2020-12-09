@@ -5,8 +5,8 @@ import (
 )
 
 func NewNavigationSpec(n *Hn) *Element {
-	spec := Article(
-		n.H1("Navigating to a nearby planet"),
+	return Article(
+		n.H1("To the beach"),
 
 		Section(
 			n.H2("Background"),
@@ -43,13 +43,4 @@ func NewNavigationSpec(n *Hn) *Element {
 			//
 		),
 	)
-	return spec
-}
-
-func Features(v ...string) *Element {
-	ul := Ul(Class("features"))
-	for _, f := range v {
-		ul.With(Li(f))
-	}
-	return ul
 }
