@@ -43,14 +43,6 @@ func NewNavigationSpec(n *Hn) *Element {
 
 			//
 		),
-		Section(
-			n.H2("Elicited features"),
-			Features(
-				"voice control by multiple people",
-				"show route details",
-				"find destination",
-			),
-		),
 	)
 	return spec
 }
