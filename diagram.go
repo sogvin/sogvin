@@ -10,7 +10,6 @@ import (
 )
 
 func newOverviewDiagram() *Element {
-	draw.ClassAttributes["external"] = `stroke="#d3d3d3" fill="#e2e2e2"`
 	var (
 		d        = design.NewClassDiagram()
 		serviced = shape.NewComponent("serviced")
@@ -65,7 +64,7 @@ func colorSchemeDiagram() *Element {
 	for i, color := range colors {
 		class := fmt.Sprintf("circle%v", i)
 		v := fmt.Sprintf(`stroke="#d3d3d3" stroke-width="1" fill="%s"`, color)
-		draw.ClassAttributes[class] = v
+		draw.DefaultClassAttributes[class] = v
 		c := shape.NewCircle(30)
 		c.SetClass(class)
 		l := shape.NewLabel(color)
