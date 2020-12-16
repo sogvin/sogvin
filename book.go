@@ -94,12 +94,17 @@ func stripTags(in string) string {
 func filenameFrom(in string) string {
 	tidy := bytes.NewBufferString("")
 	var inside bool
+	var last rune
 	for _, c := range in {
 		switch c {
-		case '(', ')':
+		case '(', ')', '-':
 			continue
 		case ' ':
-			tidy.WriteRune('_')
+			if last == '_' {
+				continue // skip two consecutive spaces
+			}
+			last = '_'
+			tidy.WriteRune(last)
 		case '<':
 			inside = true
 		case '>':
@@ -108,7 +113,8 @@ func filenameFrom(in string) string {
 			if inside {
 				continue
 			}
-			tidy.WriteString(strings.ToLower(string(c)))
+			last = rune(strings.ToLower(string(c))[0])
+			tidy.WriteRune(last)
 		}
 	}
 	return tidy.String()
