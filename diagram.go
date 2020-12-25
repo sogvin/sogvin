@@ -43,7 +43,7 @@ func newOverviewDiagram() *Element {
 	lineBetween(inet, client)
 
 	src := "img/overview.svg"
-	d.SaveAs("htdocs/" + src)
+	d.SaveAs("docs/" + src)
 	return Img(Src(src))
 }
 
@@ -80,6 +80,6 @@ func colorSchemeDiagram() *Element {
 	}
 
 	src := "img/color_scheme.svg"
-	d.SaveAs("htdocs/" + src)
+	d.SaveAs("docs/" + src)
 	return Img(Src(src))
 }
