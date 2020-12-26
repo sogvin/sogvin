@@ -94,11 +94,11 @@ var purposeOfFuncMain = Article(
 var nexusPattern = Article(
 	H1("Nexus pattern"),
 	P(
-		"The word nexus is defined as",
+		"The word nexus is defined as ",
 		Quote(
 			"&#34;The means of connection between things linked in series&#34;",
 		),
-		"The pattern is useful in",
+		". The pattern is useful in ",
 		A(
 			Href(
 				"https://go.googlesource.com/proposal/+/master/design"+
@@ -106,7 +106,7 @@ var nexusPattern = Article(
 			),
 			"error handling",
 		),
-		"sequential function calls.",
+		" sequential function calls.",
 	),
 
 	H2("Example <code>CopyFile(from, to string)</code>"),
