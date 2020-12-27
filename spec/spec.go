@@ -37,7 +37,15 @@ func NewExploreRequirementsEngineering(n *Hn) *Element {
 		stakeholders should be able to digest it easily, not only
 		developers.`),
 
-		P(``),
+		P(`In this fictive process the customer is an internal
+		departement, the ones building the space ship, John is their
+		tech lead. They talk to engineers responsible for the
+		software in our story it's Jane.`),
+
+		John(`Hello, Jane! ready to start working on the control
+		system?`),
+
+		Jane(`Good morning, John! ready as can be, let's sit down.`),
 		//
 	)
 }
@@ -106,4 +114,12 @@ func NewNavigationSystemSpec(n *Hn) *Element {
 
 		//
 	)
+}
+
+func John(el ...interface{}) *Element {
+	return Div("&#8213; John: ").With(el...)
+}
+
+func Jane(el ...interface{}) *Element {
+	return Div("&#8213; Jane: ").With(el...)
 }

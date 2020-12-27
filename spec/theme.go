@@ -16,6 +16,9 @@ func Theme() *CSS {
 		"max-width: 21cm",
 		"line-height: 1.3em",
 	)
+	css.Style("article",
+		"margin-bottom: 3.236em",
+	)
 	css.Style("h1:first-child",
 		"margin-top: 0",
 	)
