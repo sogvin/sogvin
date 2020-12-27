@@ -4,7 +4,45 @@ import (
 	. "github.com/gregoryv/web"
 )
 
-func NewNavigationSpec(n *Hn) *Element {
+func NewExploreRequirementsEngineering(n *Hn) *Element {
+	return Article(
+		n.H1("Exploring requirements engineering"),
+
+		P(`An exercise in elicitating requirements, imho. still one of
+        the most difficult task in software engineering.`),
+
+		P(`As a software engineer you are tasked to produce software
+		systems to fulfill the need of a stakeholder. I use the term
+		software engineer, or just engineer, for all roles used today
+		in the industry that somehow contribute to producing
+		software. The reason is they all have one thing incommon, they
+		have to understand the purpose of their work. Without it, the
+		end result will never be as good as envisioned by the
+		stakeholder.`),
+
+		P(`As an engineer I solve problems. One reoccuring problem is
+		the difficulty of conveying knowledge from stakeholders to the
+		engineer, in such a manner that it is easily understood.
+		There are many reasons for this and hopefully with this
+		exercise I'll highlight some of them and provide some
+		solutions, being an engineer and all.`),
+
+		P(`Throughout this exercise you will follow along a fiction
+		story of an enterprise developing a space ship control
+		system. In parts I'll use dialog form between stakeholders and
+		engineers to highlight the iterative process required to
+		produce easily digested specifications and requirements for
+		software developers in particular. The specification can and
+		is often a base which agreements are founded upon, so all
+		stakeholders should be able to digest it easily, not only
+		developers.`),
+
+		P(``),
+		//
+	)
+}
+
+func NewBeachStory(n *Hn) *Element {
 	return Article(
 		n.H1("To the beach"),
 
@@ -30,7 +68,6 @@ func NewNavigationSpec(n *Hn) *Element {
 			ship adapts the course accordingly. The captain is
 			notified through his personal communicator of the
 			changes.`),
-			//
 
 			n.H3(`Manual control`),
 
@@ -39,8 +76,34 @@ func NewNavigationSpec(n *Hn) *Element {
 	 	    manually steer the ship. He wants to find a suitable spot
 	 	    on the crowded beach, before letting the passengers leave
 	 	    the ship.`),
-
 			//
 		),
+	)
+}
+
+func NewElicitedFeatures(n *Hn) *Element {
+	return Article(
+		n.H1("Elicited features"),
+
+		P(`These features have been elicitated from the navigation story`),
+
+		n.H2("voice control"),
+		n.H2("show route details"),
+		n.H2("find destination"),
+	)
+}
+
+func NewNavigationSystemSpec(n *Hn) *Element {
+
+	return Article(
+		n.H1("Navigation system"),
+
+		Em(`Purpose; provide safe travel through space.`),
+
+		P(`Through the navigation system people can plot a course or
+        manually steer a ship.  People depend on its accuracy and
+        automation to safely navigate through space.`),
+
+		//
 	)
 }
