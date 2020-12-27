@@ -23,7 +23,7 @@ func Test_index(t *testing.T) {
 			),
 			body,
 		),
-	).SaveAs("index.html")
+	).SaveAs("docs/index.html")
 }
 
 func Test_specification(t *testing.T) {

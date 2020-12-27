@@ -8,11 +8,11 @@ func NewExploreRequirementsEngineering(n *Hn) *Element {
 	return Article(
 		n.H1("Exploring requirements engineering"),
 
-		P(`An exercise in elicitating requirements, still one of the
-        most difficult task in software engineering.`),
+		P(`An exercise in elicitating requirements, imho. still one of
+        the most difficult task in software engineering.`),
 
 		P(`As a software engineer you are tasked to produce software
-		systems to fulfill a need of a stakeholder. I use the term
+		systems to fulfill the need of a stakeholder. I use the term
 		software engineer, or just engineer, for all roles used today
 		in the industry that somehow contribute to producing
 		software. The reason is they all have one thing incommon, they
@@ -28,10 +28,14 @@ func NewExploreRequirementsEngineering(n *Hn) *Element {
 		solutions, being an engineer and all.`),
 
 		P(`Throughout this exercise you will follow along a fiction
-		story of an enterprise developing a control system for a space
-		ship. In parts I'll use dialog form between stakeholders and
+		story of an enterprise developing a space ship control
+		system. In parts I'll use dialog form between stakeholders and
 		engineers to highlight the iterative process required to
-		produce easily digested specifications and requirements.`),
+		produce easily digested specifications and requirements for
+		software developers in particular. The specification can and
+		is often a base which agreements are founded upon, so all
+		stakeholders should be able to digest it easily, not only
+		developers.`),
 		//
 	)
 }
