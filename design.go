@@ -36,7 +36,7 @@ var purposeOfFuncMain = Article(
 	   sorted in the same way as the help output.`),
 
 	Sidenote("Cyclomatic complexity should be one.", -5.2),
-	Sidenote("Option order should match output.", -1.7),
+	Sidenote("Option order should match output.", -2.3),
 
 	H2("Benefits"),
 
