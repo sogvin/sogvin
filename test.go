@@ -2,6 +2,33 @@ package sogvin
 
 import . "github.com/gregoryv/web"
 
+var setupTeardown = Article(
+	H1("Setup and teardown"),
+
+	P(`When your test suits grow large you may need to optimize its
+    execution in order to maintain a productive development
+    environment. One way is to adapt tests to respect the
+    testing.Short flag. Another way is to look for repetitive setups
+    that are time consuming. Setups can be applied at different
+    levels; either before a set of sub tests or an entire package.`),
+
+	P(`For an entire package use the special function TestMain. This
+	is appropriate for setting up databases and after a test run
+	tearing them down.`),
+
+	LoadFile("./internal/testing/setup/setup_test.go", 8, -1),
+
+	P(`Be mindful of what you consider to be global setup. The shared
+	setup will force you to design tests with less coupling with other
+	tests. Say you decide to create a database with an initial schema
+	inplace in the setup. Then write operations in your tests must not
+	conflict. This is a good thing, as it allows your tests to be
+	executed against other setups. Cleaning up after each test is also
+	not needed.`),
+
+	//
+)
+
 var inlineTestHelpers = Article(
 	H1("Inline test helpers"),
 	P(

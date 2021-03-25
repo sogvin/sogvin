@@ -37,6 +37,7 @@ func NewSoftwareEngineeringBook() *Book {
 		Ul(
 			book.AddPage("Test", inlineTestHelpers),
 			book.AddPage("Test", alternateDesign),
+			book.AddPage("Test", setupTeardown),
 		),
 		H3("Go packages"),
 		Ul(
