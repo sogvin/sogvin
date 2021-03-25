@@ -1,4 +1,7 @@
 #!/bin/bash
 
+# cleanup
 find . -name "*~" -delete
-rsync -avC ./docs/ kard.local:/var/www/www.sogvin.com/
+
+# deploy
+rsync -avC ./docs/ www.7de.se:/var/www/www.sogvin.com/
