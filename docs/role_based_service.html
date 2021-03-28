@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" type="text/css" href="theme.css"/>
+<link rel="stylesheet" type="text/css" href="a4.css"/>
+<title>Role based service - Software Engineering</title>
+</head>
+<body>
+<header><code>Design - <a href="index.html">Software Engineering</a></code></header>
+<article>
+<h1>Role based service</h1>
+<p>Servers provide a service through some protocol, often the
+	protocol is HTTP. Services like this are often sizeable
+	applications and without a design they become hard to maintain
+	over time. Moreover services and their features need protecting
+	from unauthorized access. One approach is to provide role based
+	access.</p>
+<div class="sidenote" style="margin-top: 2cm"><div class="inner">Use different nam- es for package, commands and DNS.</div>
+</div>
+<p>Let's assume we are writing a service for spaceflight. This
+    service will be hosted on <code>galaxytravel.future.now</code>. The domain logic is <em>spaceflight</em> i.e. the package
+    name. The application providing this service via HTTP, we name <em>htspace</em>.<br/>Don't name the application the same as
+    the domain logic package. Also refrain from naming it same as the
+    DNS name where it's hosted. The DNS will remain for a long time
+    whereas your service will evolve, be split up into smaller
+    applications with specific responsibilities. The domain logic
+    however will probably remain the same. The directory layout looks
+    like this</p>
+<pre class="command"><code>$ tree spaceflight
+spaceflight
+├── cmd
+│   └── htspace
+│       ├── main.go
+│       └── router.go
+├── resource.go
+├── role.go
+└── service.go
+
+2 directories, 5 files
+</code></pre><p>The service is the main abstraction the spaceflight package
+	provides. It's responsible for synchronizing database access and
+	other domain related configuration. There would usually only exist
+	one instance of the service.</p>
+<div class="filename">spaceflight/service.go</div>
+<pre class="srcfile complete"><code class="go">package spaceflight
+
+// Service provides logic for reading and writing spaceflight related
+// resources.
+type Service struct {
+	// e.g. database, sync mutexes
+}
+
+// Use provides the given role access to the service.
+func (me *Service) Use(role Role) {
+	var u user
+	u.setService(me)
+	role.setUser(&u)
+}
+</code></pre><p>Roles expose access to user methods. Fairly often we talk about
+	what we can do with a service, referring to you and me as
+	users.</p>
+<em>- Pilots plan routes</em><br/><em>- Passengers and pilots view routes</em><p>This translates to PlanRoute is implemented by type user and
+	accessible via the pilot role. Also ListRoutes is implemented by
+	type user but accessible by both roles pilot and passenger.</p>
+<div class="filename">spaceflight/role.go</div>
+<pre class="srcfile complete"><code class="go">package spaceflight
+
+type Role struct {
+	*user
+}
+
+func (me *Role) setUser(v *user) { me.user = v }
+
+type Pilot Role
+type Passenger Role
+
+// ----------------------------------------
+
+// user implements domain logic for operations on the service and
+// should be used through a role.
+type user struct {
+	srv *Service
+}
+
+func (me *user) setService(v *Service) { me.srv = v }
+
+// ----------------------------------------
+
+// PlanRoute stores the given route. Fails if route already exists.
+func (me *Pilot) PlanRoute(v Route) error { return me.planRoute(v) }
+
+func (me *user) planRoute(route Route) error {
+	// implement...
+	return nil
+}
+
+// ----------------------------------------
+
+// ListRoutes returns all routes in the system.
+func (me *Pilot) ListRoutes() []Route     { return me.listRoutes() }
+func (me *Passenger) ListRoutes() []Route { return me.listRoutes() }
+
+func (me *user) listRoutes() []Route {
+	// implement list routes
+	return nil
+}
+</code></pre><p>This design provides well defined places to implement future
+	features. Assume the spaceflight service should provide planet
+	information to users.</p>
+<ol>
+<li>Define resource Planet</li>
+<li>Implement read write methods on type user, e.g.<ul>
+<li><code>viewPlanet(name string)</code></li>
+<li><code>savePlanet(v Planet) error</code></li>
+</ul>
+</li>
+<li>Expose user methods to selected roles</li>
+</ol>
+<p>Once you need authentication you have the option to make it
+	part of this service, by extending the Service.Use() method with
+	e.g. credentials argument.</p>
+</article>
+<footer>Gregory Vin&ccaron;i&cacute;</footer></body>
+</html>

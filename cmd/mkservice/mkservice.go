@@ -61,8 +61,8 @@ func run(cmd wolf.Command) {
 	// role.go
 	buf.Reset()
 	p.Println("package ", domain)
-	p.Println("type Role interface {")
-	p.Println("setUser(*user)")
+	p.Println("type Role struct {")
+	p.Println("*user")
 	p.Println("}")
 	writeGoFile(
 		filepath.Join(domain, "role.go"),
@@ -80,6 +80,16 @@ func run(cmd wolf.Command) {
 		filepath.Join(domain, "user.go"),
 		buf.Bytes(),
 	)
+
+	// resource.go
+	buf.Reset()
+	p.Println("package ", domain)
+	p.Println("// Define resource types for this domain")
+	writeGoFile(
+		filepath.Join(domain, "resource.go"),
+		buf.Bytes(),
+	)
+
 }
 
 func writeGoFile(filename string, content []byte) {

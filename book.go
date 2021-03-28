@@ -172,7 +172,8 @@ func LoadFile(filename string, span ...int) *Element {
 	if from == 0 && to == -1 {
 		class += " complete"
 	}
-	return Pre(Class(class), Code(Class("go"), v))
+	ext := filepath.Ext(filename)
+	return Pre(Class(class), Code(Class(ext[1:]), v))
 }
 
 func gregoryv(name, txt string) *Element {

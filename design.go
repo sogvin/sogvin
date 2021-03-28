@@ -1,6 +1,10 @@
 package sogvin
 
-import . "github.com/gregoryv/web"
+import (
+	_ "embed"
+
+	. "github.com/gregoryv/web"
+)
 
 var purposeOfFuncMain = Article(
 	H1("Purpose of <code>func main()</code>"),
@@ -220,3 +224,76 @@ var strictMode = Article(
 	P(`Descriptive error messages make tests short and concise.  Use
 	   <em>check</em> prefix to distinguish from asserts.`),
 )
+
+// ----------------------------------------
+
+var roleBasedService = Article(
+	H1("Role based service"),
+
+	P(`Servers provide a service through some protocol, often the
+	protocol is HTTP. Services like this are often sizeable
+	applications and without a design they become hard to maintain
+	over time. Moreover services and their features need protecting
+	from unauthorized access. One approach is to provide role based
+	access.`),
+
+	Sidenote(`Use different nam- es for package, commands and DNS.`,
+		2.0),
+
+	P(`Let's assume we are writing a service for spaceflight. This
+    service will be hosted on `, Code("galaxytravel.future.now"),
+		`. The domain logic is `, Em("spaceflight"), ` i.e. the package
+    name. The application providing this service via HTTP, we name `,
+		Em("htspace"), ".", Br(), `Don't name the application the same as
+    the domain logic package. Also refrain from naming it same as the
+    DNS name where it's hosted. The DNS will remain for a long time
+    whereas your service will evolve, be split up into smaller
+    applications with specific responsibilities. The domain logic
+    however will probably remain the same. The directory layout looks
+    like this`),
+
+	ShellCommand("$ tree spaceflight\n"+spaceflightTree),
+	//
+
+	P(`The service is the main abstraction the spaceflight package
+	provides. It's responsible for synchronizing database access and
+	other domain related configuration. There would usually only exist
+	one instance of the service.`),
+
+	LoadFullFile("", "./example/spaceflight/service.go"),
+
+	P(`Roles expose access to user methods. Fairly often we talk about
+	what we can do with a service, referring to you and me as
+	users.`),
+
+	Em(`- Pilots plan routes`), Br(),
+	Em(`- Passengers and pilots view routes`),
+
+	P(`This translates to PlanRoute is implemented by type user and
+	accessible via the pilot role. Also ListRoutes is implemented by
+	type user but accessible by both roles pilot and passenger.`),
+
+	LoadFullFile("", "./example/spaceflight/role.go"),
+
+	P(`This design provides well defined places to implement future
+	features. Assume the spaceflight service should provide planet
+	information to users.`),
+
+	Ol(
+		Li("Define resource Planet"),
+		Li("Implement read write methods on type user, e.g.",
+			Ul(
+				Li(Code("viewPlanet(name string)")),
+				Li(Code("savePlanet(v Planet) error")),
+			),
+		),
+		Li("Expose user methods to selected roles"),
+	),
+
+	P(`Once you need authentication you have the option to make it
+	part of this service, by extending the Service.Use() method with
+	e.g. credentials argument.`),
+)
+
+//go:embed "example/spaceflight.tree"
+var spaceflightTree string

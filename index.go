@@ -26,6 +26,7 @@ func NewSoftwareEngineeringBook() *Book {
 			book.AddPage("Design", gracefulServerShutdown),
 			book.AddPage("Design", componentsDiagram),
 			book.AddPage("Design", strictMode),
+			book.AddPage("Design", roleBasedService),
 		),
 		H3("Go packages"),
 		Ul(
