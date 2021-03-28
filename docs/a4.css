@@ -63,8 +63,10 @@ code.go {
 }
 
 .filename {
-    text-align: right;
+    display: block;
     margin-bottom: -1.6em;
+    font-family: mono;
+    font-size: 12px;
 }
 
 .command {

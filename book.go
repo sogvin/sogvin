@@ -3,6 +3,8 @@ package sogvin
 import (
 	"bytes"
 	"fmt"
+	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/gregoryv/sogvin/internal"
@@ -142,6 +144,19 @@ func Sidenote(el interface{}, cm float64) *Element {
 			Val:  fmt.Sprintf("margin-top: %vcm", cm),
 		},
 		Div(Class("inner"), el),
+	)
+}
+
+// LoadFullFile returns a wrapped element with label and file contents.
+// If label is empty string the filename last part is used.
+func LoadFullFile(label, filename string) *Element {
+	if label == "" {
+		dir := filepath.Base(filepath.Dir(filename))
+		label = path.Join(dir, filepath.Base(filename))
+	}
+	return Wrap(
+		Div(Class("filename"), label),
+		LoadFile(filename, 0, -1),
 	)
 }
 
