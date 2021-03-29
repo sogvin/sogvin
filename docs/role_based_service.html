@@ -22,7 +22,7 @@
 </div>
 <p>Let's assume we are writing a service for spaceflight. This
     service will be hosted on <code>galaxytravel.future.now</code>. The domain logic is <em>spaceflight</em> i.e. the package
-    name. The application providing this service via HTTP, we name <em>htspace</em>.<br/>Don't name the application the same as
+    name. We'll name the application providing this service via HTTP, <em>htspace</em>.<br/>Don't name the application the same as
     the domain logic package. Also refrain from naming it same as the
     DNS name where it's hosted. The DNS will remain for a long time
     whereas your service will evolve, be split up into smaller
@@ -37,14 +37,14 @@ spaceflight
 │       └── router.go
 ├── resource.go
 ├── role.go
-└── service.go
+└── system.go
 
 2 directories, 5 files
-</code></pre><p>The service is the main abstraction the spaceflight package
+</code></pre><p>The system is the main abstraction the spaceflight package
 	provides. It's responsible for synchronizing database access and
 	other domain related configuration. There would usually only exist
-	one instance of the service.</p>
-<div class="filename">spaceflight/service.go</div>
+	one instance of the system.</p>
+<div class="filename">spaceflight/system.go</div>
 <pre class="srcfile complete"><code class="go">package spaceflight
 
 // System provides logic for reading and writing spaceflight related
@@ -60,7 +60,7 @@ func (me *System) Use(role Role) {
 	role.setUser(&u)
 }
 </code></pre><p>Roles expose access to user methods. Fairly often we talk about
-	what we can do with a service, referring to you and me as
+	what we can do with a system, referring to you and me as
 	users.</p>
 <em>- Pilots plan routes</em><br/><em>- Passengers and pilots view routes</em><p>This translates to PlanRoute is implemented by type user and
 	accessible via the pilot role. Also ListRoutes is implemented by

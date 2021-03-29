@@ -247,7 +247,7 @@ var roleBasedService = Article(
 	P(`Let's assume we are writing a service for spaceflight. This
     service will be hosted on `, Code("galaxytravel.future.now"),
 		`. The domain logic is `, Em("spaceflight"), ` i.e. the package
-    name. The application providing this service via HTTP, we name `,
+    name. We'll name the application providing this service via HTTP, `,
 		Em("htspace"), ".", Br(), `Don't name the application the same as
     the domain logic package. Also refrain from naming it same as the
     DNS name where it's hosted. The DNS will remain for a long time
@@ -259,15 +259,15 @@ var roleBasedService = Article(
 	ShellCommand("$ tree spaceflight\n"+spaceflightTree),
 	//
 
-	P(`The service is the main abstraction the spaceflight package
+	P(`The system is the main abstraction the spaceflight package
 	provides. It's responsible for synchronizing database access and
 	other domain related configuration. There would usually only exist
-	one instance of the service.`),
+	one instance of the system.`),
 
-	LoadFullFile("", "./example/spaceflight/service.go"),
+	LoadFullFile("", "./example/spaceflight/system.go"),
 
 	P(`Roles expose access to user methods. Fairly often we talk about
-	what we can do with a service, referring to you and me as
+	what we can do with a system, referring to you and me as
 	users.`),
 
 	Em(`- Pilots plan routes`), Br(),
