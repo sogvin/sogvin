@@ -53,8 +53,8 @@ func (book *Book) AddPage(right string, article *Element) *Element {
 	return linkToPage(page)
 }
 
-func (me *Book) AddTheme(v *CSS) {
-	me.themes = append(me.themes, v)
+func (me *Book) AddThemes(v ...*CSS) {
+	me.themes = append(me.themes, v...)
 }
 
 func newPage(filename, title string, header, article, footer *Element) *Page {
