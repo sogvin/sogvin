@@ -7,7 +7,7 @@ nameonly="${filename%.*}"
 
 pushd example
 find . -name "*~" -delete
-tree spaceflight > spaceflight.tree
+tree -I "*_test.go" spaceflight > spaceflight.tree
 popd
 
 case $extension in

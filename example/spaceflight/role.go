@@ -1,13 +1,16 @@
 package spaceflight
 
-type Role struct {
-	*user
+type Role interface {
+	setUser(v *user)
 }
 
-func (me *Role) setUser(v *user) { me.user = v }
+type Pilot struct{ *user }
 
-type Pilot Role
-type Passenger Role
+func (me *Pilot) setUser(v *user) { me.user = v }
+
+type Passenger struct{ *user }
+
+func (me *Passenger) setUser(v *user) { me.user = v }
 
 // ----------------------------------------
 
