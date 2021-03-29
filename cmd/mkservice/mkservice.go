@@ -20,7 +20,7 @@ func main() {
 
 func run(cmd wolf.Command) {
 	var (
-		cli    = cmdline.New(cmd.Args()...)
+		cli    = cmdline.NewParser(cmd.Args()...)
 		domain = cli.Option("-d, --domain").String("booking")
 		name   = cli.Option("-n, --name").String("bookme")
 	)

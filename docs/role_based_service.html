@@ -36,11 +36,12 @@ spaceflight
 │       ├── application.go
 │       └── htspace
 │           └── main.go
+├── package.go
 ├── resource.go
 ├── role.go
 └── system.go
 
-3 directories, 5 files
+3 directories, 6 files
 </code></pre><p>The system is the most prominent abstraction the spaceflight
 	package provides. It's responsible for synchronizing database
 	access and other domain related configuration. There would usually
@@ -48,17 +49,14 @@ spaceflight
 <div class="filename">spaceflight/system.go</div>
 <pre class="srcfile complete"><code class="go">package spaceflight
 
+func NewSystem() *System {
+	return &System{}
+}
+
 // System provides logic for reading and writing spaceflight related
 // resources.
 type System struct {
 	// e.g. database, sync mutexes
-}
-
-// Use provides the given role access to the service.
-func (me *System) Use(role Role) {
-	var u user
-	u.setSystem(me)
-	role.setUser(&u)
 }
 </code></pre><p>Roles expose access to user methods. Fairly often we talk about
 	what we can do with a system, referring to you and me as
@@ -69,70 +67,86 @@ func (me *System) Use(role Role) {
 <div class="figure"><svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  font-family="Arial,Helvetica,sans-serif" width="395" height="264">
-<path stroke="black" stroke-dasharray="5,5,5" d="M284,142 L220,72" />
-<g transform="rotate(227 220 72)"><path stroke="black" fill="#ffffff" d="M220,72 l-8,-4 l 0,8 Z" /></g>
+  font-family="Arial,Helvetica,sans-serif" width="395" height="334">
+<path stroke="black" stroke-dasharray="5,5,5" d="M272,174 L225,104" />
+<g transform="rotate(236 225 104)"><path stroke="black" fill="#ffffff" d="M225,104 l-8,-4 l 0,8 Z" /></g>
 
-<path stroke="black" stroke-dasharray="5,5,5" d="M115,142 L175,72" />
-<g transform="rotate(-49 175 72)"><path stroke="black" fill="#ffffff" d="M175,72 l-8,-4 l 0,8 Z" /></g>
+<path stroke="black" stroke-dasharray="5,5,5" d="M122,174 L169,104" />
+<g transform="rotate(-56 169 104)"><path stroke="black" fill="#ffffff" d="M169,104 l-8,-4 l 0,8 Z" /></g>
 
-<rect stroke="#d3d3d3" fill="#ffffff" x="120" y="20" width="154" height="52"/>
-<line stroke="#d3d3d3" x1="120" y1="46" x2="274" y2="46"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="62">setUser()</text>
+<rect stroke="#d3d3d3" fill="#ffffff" x="120" y="20" width="154" height="84"/>
+<line stroke="#d3d3d3" x1="120" y1="46" x2="274" y2="46"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="62">ListRoutes()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="78">PlanRoute()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="94">setUser()</text>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="36">spaceflight.Role interface</text>
-<rect stroke="#d3d3d3" fill="#ffffff" x="20" y="142" width="134" height="68"/>
-<line stroke="#d3d3d3" x1="20" y1="168" x2="154" y2="168"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="184">ListRoutes()</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="200">PlanRoute()</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="158">spaceflight.Pilot struct</text>
-<rect stroke="#d3d3d3" fill="#ffffff" x="224" y="142" width="169" height="52"/>
-<line stroke="#d3d3d3" x1="224" y1="168" x2="393" y2="168"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="184">ListRoutes()</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="158">spaceflight.Passenger struct</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="78" y="257">Different roles provide
+<rect stroke="#d3d3d3" fill="#ffffff" x="20" y="174" width="134" height="106"/>
+<line stroke="#d3d3d3" x1="20" y1="200" x2="154" y2="200"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="216">User</text>
+<line stroke="#d3d3d3" x1="20" y1="222" x2="154" y2="222"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="238">ListRoutes()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="254">PlanRoute()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="270">Use()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="190">spaceflight.Pilot struct</text>
+<rect stroke="#d3d3d3" fill="#ffffff" x="224" y="174" width="169" height="106"/>
+<line stroke="#d3d3d3" x1="224" y1="200" x2="393" y2="200"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="216">User</text>
+<line stroke="#d3d3d3" x1="224" y1="222" x2="393" y2="222"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="238">ListRoutes()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="254">PlanRoute()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="270">Use()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="190">spaceflight.Passenger struct</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="78" y="327">Different roles provide
 		different methods</text></svg></div>
 <div class="filename">spaceflight/role.go</div>
 <pre class="srcfile complete"><code class="go">package spaceflight
 
+import "errors"
+
 type Role interface {
-	setUser(v *user)
+	setUser(v *User)
+	PlanRoute(route Route) error
+	ListRoutes() ([]Route, error)
 }
 
-type Pilot struct{ *user }
+type Pilot struct{ *User }
 
-func (me *Pilot) setUser(v *user) { me.user = v }
+func (me *Pilot) setUser(v *User) { me.User = v }
 
-type Passenger struct{ *user }
-
-func (me *Passenger) setUser(v *user) { me.user = v }
+func (me *Pilot) PlanRoute(v Route) error      { return me.planRoute(v) }
+func (me *Pilot) ListRoutes() ([]Route, error) { return me.listRoutes() }
 
 // ----------------------------------------
 
-// user implements domain logic for operations on the System and
+type Passenger struct{ *User }
+
+func (me *Passenger) setUser(v *User) { me.User = v }
+
+func (me *Passenger) PlanRoute(v Route) error      { return ErrUnauthorized }
+func (me *Passenger) ListRoutes() ([]Route, error) { return me.listRoutes() }
+
+// ----------------------------------------
+
+// User implements domain logic for operations on the System and
 // should be used through a role.
-type user struct {
+type User struct {
 	sys *System
 }
 
-func (me *user) setSystem(v *System) { me.sys = v }
+func (me *User) Use(v *System, role Role) Role {
+	me.sys = v
+	role.setUser(me)
+	return role
+}
 
-// ----------------------------------------
-
-// PlanRoute stores the given route. Fails if route already exists.
-func (me *Pilot) PlanRoute(v Route) error { return me.planRoute(v) }
-
-func (me *user) planRoute(route Route) error {
+func (me *User) planRoute(route Route) error {
 	// implement...
 	return nil
 }
 
+func (me *User) listRoutes() ([]Route, error) {
+	// implement list routes
+	return nil, nil
+}
+
 // ----------------------------------------
 
-// ListRoutes returns all routes in the system.
-func (me *Pilot) ListRoutes() []Route     { return me.listRoutes() }
-func (me *Passenger) ListRoutes() []Route { return me.listRoutes() }
-
-func (me *user) listRoutes() []Route {
-	// implement list routes
-	return nil
-}
+var ErrUnauthorized = errors.New("unauthorized")
 </code></pre><p>This design provides well defined places to implement future
 	features. Assume the spaceflight service should provide planet
 	information to users.</p>
@@ -154,13 +168,14 @@ func (me *user) listRoutes() []Route {
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.</p>
 <div class="filename">htspace/application.go</div>
-<pre class="srcfile complete"><code class="go">package htspace
+<pre class="srcfile complete"><code class="go">// Package htspace exposes the spaceflight system via HTTP.
+package htspace
 
 import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/gregoryv/sogvin/example/spaceflight"
+	"github.com/gregoryv/spaceflight"
 )
 
 func NewApplication(sys *spaceflight.System) *Application {
@@ -181,11 +196,20 @@ func (me *Application) Router() *http.ServeMux {
 
 func (me *Application) serveRoutes(w http.ResponseWriter, r *http.Request) {
 	// Default to the passenger role
-	var role spaceflight.Passenger
-	me.sys.Use(&role)
+	var user spaceflight.User
+	role := user.Use(me.sys, getRole(r))
 
-	routes := role.ListRoutes()
+	routes, _ := role.ListRoutes()
 	json.NewEncoder(w).Encode(routes)
+}
+
+func getRole(r *http.Request) spaceflight.Role {
+	switch r.URL.Query().Get("role") {
+	case "pilot":
+		return &spaceflight.Pilot{}
+	default:
+		return &spaceflight.Passenger{}
+	}
 }
 </code></pre><p>A request from a client such as a browser would follow the
 	below sequence.</p>

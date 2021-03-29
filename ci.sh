@@ -9,6 +9,6 @@ case $1 in
 	rsync -avC ./docs/ www.7de.se:/var/www/www.sogvin.com/
 	;;
     *)
-	echo "Usage: $0 deploy"
+	echo "Usage: $0 publish"
 	;;
 esac

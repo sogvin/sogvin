@@ -4,8 +4,8 @@ import (
 	_ "embed"
 	"net/http"
 
-	"github.com/gregoryv/sogvin/example/spaceflight"
-	"github.com/gregoryv/sogvin/example/spaceflight/cmd/htspace"
+	"github.com/gregoryv/spaceflight"
+	"github.com/gregoryv/spaceflight/cmd/htspace"
 
 	"github.com/gregoryv/draw/design"
 	"github.com/gregoryv/draw/shape"
@@ -266,7 +266,7 @@ var roleBasedService = Article(
 	access and other domain related configuration. There would usually
 	only exist one instance of the system.`),
 
-	LoadFullFile("", "./example/spaceflight/system.go"),
+	LoadFullFile("", "../spaceflight/system.go"),
 
 	P(`Roles expose access to user methods. Fairly often we talk about
 	what we can do with a system, referring to you and me as
@@ -282,7 +282,7 @@ var roleBasedService = Article(
 	Div(Class("figure"), spaceflightDiagram(`Different roles provide
 		different methods`).Inline()),
 
-	LoadFullFile("", "./example/spaceflight/role.go"),
+	LoadFullFile("", "../spaceflight/role.go"),
 
 	P(`This design provides well defined places to implement future
 	features. Assume the spaceflight service should provide planet
@@ -310,7 +310,7 @@ var roleBasedService = Article(
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.`),
 
-	LoadFullFile("", "./example/spaceflight/cmd/htspace/application.go"),
+	LoadFullFile("", "../spaceflight/cmd/htspace/application.go"),
 
 	P(`A request from a client such as a browser would follow the
 	below sequence.`),

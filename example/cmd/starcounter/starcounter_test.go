@@ -11,7 +11,7 @@ func TestStarCounter(t *testing.T) {
 	exp := func(exitCode int, args ...string) {
 		tc := strings.Join(args, " ")
 		t.Run(tc, func(t *testing.T) {
-			cmd := wolf.NewTCmd(args...).Use(t)
+			cmd := wolf.NewTCmd(args...)
 			defer cmd.Cleanup()
 			sc := NewStarCounter(cmd)
 			got := sc.Run()

@@ -4,8 +4,9 @@ spaceflight
 │       ├── application.go
 │       └── htspace
 │           └── main.go
+├── package.go
 ├── resource.go
 ├── role.go
 └── system.go
 
-3 directories, 5 files
+3 directories, 6 files

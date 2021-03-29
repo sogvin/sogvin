@@ -5,9 +5,9 @@ filename=$(basename "$path")
 extension="${filename##*.}"
 nameonly="${filename%.*}"
 
-pushd example
-find . -name "*~" -delete
-tree -I "*_test.go" spaceflight > spaceflight.tree
+
+pushd ../
+tree -P "*.go" -I "*_test.go" spaceflight > sogvin/example/spaceflight.tree
 popd
 
 case $extension in

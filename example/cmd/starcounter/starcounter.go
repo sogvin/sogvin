@@ -30,7 +30,7 @@ type StarCounter struct {
 func (me *StarCounter) Run() int {
 	// Parse command line options
 	var (
-		cli    = cmdline.New(me.Args()...)
+		cli    = cmdline.NewParser(me.Args()...)
 		size   = cli.Option("-size").String("all")
 		weight = cli.Option("-weight").String("all")
 		help   = cli.Flag("-h, --help")
