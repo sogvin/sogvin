@@ -34,12 +34,13 @@ spaceflight
 ├── cmd
 │   └── htspace
 │       ├── application.go
-│       └── main.go
+│       └── htspace
+│           └── main.go
 ├── resource.go
 ├── role.go
 └── system.go
 
-2 directories, 5 files
+3 directories, 5 files
 </code></pre><p>The system is the most prominent abstraction the spaceflight
 	package provides. It's responsible for synchronizing database
 	access and other domain related configuration. There would usually
@@ -149,11 +150,11 @@ func (me *user) listRoutes() []Route {
 	e.g. credentials argument.</p>
 <h2>HTTP interface</h2>
 <p>The application htspace can now expose the spaceflight features
-	using its system and roles. A server provides methods for
+	using its system and roles. An application provides methods for
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.</p>
 <div class="filename">htspace/application.go</div>
-<pre class="srcfile complete"><code class="go">package main
+<pre class="srcfile complete"><code class="go">package htspace
 
 import (
 	"encoding/json"
@@ -186,6 +187,50 @@ func (me *Application) serveRoutes(w http.ResponseWriter, r *http.Request) {
 	routes := role.ListRoutes()
 	json.NewEncoder(w).Encode(routes)
 }
-</code></pre></article>
+</code></pre><p>A request from a client such as a browser would follow the
+	below sequence.</p>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  font-family="Arial,Helvetica,sans-serif" width="645" height="296">
+<rect stroke="black" stroke-width="0" fill="#99e6ff" fill-opacity="0.1" x="312" y="24" width="280" height="218"/>
+<text class="area-blue-title" font-size="12px" x="318" y="42"></text>
+<line stroke="#d3d3d3" x1="32" y1="24" x2="32" y2="200"/>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="10" y="18">browser</text>
+<line stroke="#d3d3d3" x1="172" y1="24" x2="172" y2="200"/>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="143" y="18">http.Server</text>
+<line stroke="#d3d3d3" x1="312" y1="24" x2="312" y2="200"/>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="259" y="18">htspace.Application</text>
+<line stroke="#d3d3d3" x1="452" y1="24" x2="452" y2="200"/>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="408" y="18">spaceflight.Role</text>
+<line stroke="#d3d3d3" x1="592" y1="24" x2="592" y2="200"/>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="541" y="18">spaceflight.System</text>
+<text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="357" y="235">Role based access to domain logic</text>
+<path stroke="black" d="M32,57 L172,57" />
+<g transform="rotate(0 172 57)"><path stroke="black" fill="#ffffff" d="M172,57 l-8,-4 l 0,8 Z" /></g>
+
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="70" y="54">GET /routes</text>
+<path stroke="black" d="M172,90 L312,90" />
+<g transform="rotate(0 312 90)"><path stroke="black" fill="#ffffff" d="M312,90 l-8,-4 l 0,8 Z" /></g>
+
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="203" y="87">serveRoutes()</text>
+<path stroke="black" d="M312,123 L452,123" />
+<g transform="rotate(0 452 123)"><path stroke="black" fill="#ffffff" d="M452,123 l-8,-4 l 0,8 Z" /></g>
+
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="357" y="120">new: role</text>
+<path stroke="black" d="M312,156 L592,156" />
+<g transform="rotate(0 592 156)"><path stroke="black" fill="#ffffff" d="M592,156 l-8,-4 l 0,8 Z" /></g>
+
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="407" y="153">role.ListRoutes()</text>
+<path stroke="black" d="M312,189 L32,189" />
+<g transform="rotate(180 32 189)"><path stroke="black" fill="#ffffff" d="M32,189 l-8,-4 l 0,8 Z" /></g>
+
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="121" y="186">write http response</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="198" y="289">Using spaceflight system via a HTTP interface</text></svg><p>Separating the domain logic from the application exposing it
+	using some protocol allows your service to grow. Naming components
+	carefully we can reason about concepts such as the-galaxytravel-service,
+	spaceflight-system and htspace-application, which are all
+	easily referencable in the source code aswell.</p>
+</article>
 <footer>Gregory Vin&ccaron;i&cacute;</footer></body>
 </html>

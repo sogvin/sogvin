@@ -2,9 +2,10 @@ spaceflight
 ├── cmd
 │   └── htspace
 │       ├── application.go
-│       └── main.go
+│       └── htspace
+│           └── main.go
 ├── resource.go
 ├── role.go
 └── system.go
 
-2 directories, 5 files
+3 directories, 5 files

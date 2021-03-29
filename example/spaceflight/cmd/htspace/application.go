@@ -1,4 +1,4 @@
-package main
+package htspace
 
 import (
 	"encoding/json"

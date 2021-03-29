@@ -2,8 +2,10 @@ package sogvin
 
 import (
 	_ "embed"
+	"net/http"
 
 	"github.com/gregoryv/sogvin/example/spaceflight"
+	"github.com/gregoryv/sogvin/example/spaceflight/cmd/htspace"
 
 	"github.com/gregoryv/draw/design"
 	"github.com/gregoryv/draw/shape"
@@ -304,11 +306,22 @@ var roleBasedService = Article(
 	H2("HTTP interface"),
 
 	P(`The application htspace can now expose the spaceflight features
-	using its system and roles. A server provides methods for
+	using its system and roles. An application provides methods for
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.`),
 
 	LoadFullFile("", "./example/spaceflight/cmd/htspace/application.go"),
+
+	P(`A request from a client such as a browser would follow the
+	below sequence.`),
+
+	usingSpaceflightSystem("Using spaceflight system via a HTTP interface").Inline(),
+
+	P(`Separating the domain logic from the application exposing it
+	using some protocol allows your service to grow. Naming components
+	carefully we can reason about concepts such as the-galaxytravel-service,
+	spaceflight-system and htspace-application, which are all
+	easily referencable in the source code aswell.`),
 )
 
 //go:embed "example/spaceflight.tree"
@@ -326,6 +339,27 @@ func spaceflightDiagram(caption string) *design.ClassDiagram {
 	shape.Move(pilot, -100, 0)
 	d.Place(passenger).RightOf(pilot, 70)
 
+	d.SetCaption(caption)
+	return d
+}
+
+func usingSpaceflightSystem(caption string) *design.SequenceDiagram {
+	var (
+		d       = design.NewSequenceDiagram()
+		browser = d.Add("browser")
+		srv     = d.AddStruct(http.Server{})
+		app     = d.AddStruct(htspace.Application{})
+		role    = d.AddInterface((*spaceflight.Role)(nil))
+		sys     = d.AddStruct(spaceflight.System{})
+	)
+	d.ColWidth = 140
+	d.Link(browser, srv, "GET /routes")
+	d.Link(srv, app, "serveRoutes()")
+	d.Link(app, role, "new: role")
+	d.Link(app, sys, "role.ListRoutes()")
+	d.Link(app, browser, "write http response")
+
+	d.Group(app, sys, "Role based access to domain logic", "blue")
 	d.SetCaption(caption)
 	return d
 }
