@@ -308,7 +308,7 @@ var roleBasedService = Article(
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.`),
 
-	LoadFullFile("", "./example/spaceflight/cmd/htspace/server.go"),
+	LoadFullFile("", "./example/spaceflight/cmd/htspace/application.go"),
 )
 
 //go:embed "example/spaceflight.tree"

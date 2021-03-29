@@ -1,8 +1,8 @@
 spaceflight
 ├── cmd
 │   └── htspace
-│       ├── main.go
-│       └── server.go
+│       ├── application.go
+│       └── main.go
 ├── resource.go
 ├── role.go
 └── system.go
