@@ -10,8 +10,8 @@ require (
 	github.com/gregoryv/logger v0.2.0
 	github.com/gregoryv/nexus v0.4.0
 	github.com/gregoryv/qual v0.3.2
-	github.com/gregoryv/web v0.14.1-0.20201209083231-aa3cd2ea60f5
+	github.com/gregoryv/web v0.16.0
 	github.com/gregoryv/wolf v0.2.0
 	github.com/gregoryv/workdir v0.2.0
-	golang.org/x/net v0.0.0-20201224014010-6772e930b67b // indirect
+	golang.org/x/net v0.0.0-20210326220855-61e056675ecf // indirect
 )

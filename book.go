@@ -15,12 +15,16 @@ type Book struct {
 	Title  string
 	Author string
 	pages  []*Page
+	themes []*CSS
 }
 
 // Saves all pages and table of contents
 func (book *Book) SaveTo(base string) error {
 	for _, page := range book.pages {
 		page.SaveTo(base)
+	}
+	for _, theme := range book.themes {
+		theme.SaveTo(base)
 	}
 	return nil
 }
@@ -47,6 +51,10 @@ func (book *Book) AddPage(right string, article *Element) *Element {
 	)
 	book.pages = append(book.pages, page)
 	return linkToPage(page)
+}
+
+func (me *Book) AddTheme(v *CSS) {
+	me.themes = append(me.themes, v)
 }
 
 func newPage(filename, title string, header, article, footer *Element) *Page {

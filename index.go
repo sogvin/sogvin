@@ -8,6 +8,7 @@ func NewSoftwareEngineeringBook() *Book {
 	book := new(Book)
 	book.Title = "Software Engineering"
 	book.Author = "Gregory Vin&ccaron;i&cacute;"
+	book.AddTheme(A4())
 
 	toc := Article(Class("toc"),
 		H1(book.Title),

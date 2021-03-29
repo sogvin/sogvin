@@ -1,121 +1,106 @@
 html, body, header, footer, h1, h2, h3, h4, h5 {
-    margin: 0px 0px;
-    padding: 0px 0px;
-    background-color: #ffffff;
+margin: 0px 0px;
+padding: 0px 0px;
+background-color: #ffffff;
 }
-
 body {
-    width: 21cm;
+width: 21cm;
 }
-
 header {
-    text-align: right;
+text-align: right;
 }
 p {
-    line-height: 1.4em;
+line-height: 1.4em;
 }
 span.left {
-    float: left;
+float: left;
 }
-
 article {
-    margin-top: 0cm;
-    margin-bottom: 0.5cm;
-    padding-top: 0.2cm;
-    padding-left: 4cm;
+margin-top: 0cm;
+margin-bottom: 0.5cm;
+padding-top: 0.2cm;
+padding-left: 4cm;
 }
-
 h1, h2, h3, h4, h5 {
-    margin-left: -4cm;
+margin-left: -4cm;
 }
-
 footer {
-    text-align: right;
+text-align: right;
 }
-
 pre code {
-    font-size: 14px;
+font-size: 14px;
 }
 h1 code, h2 code {
-    font-weight: normal;
-    margin-left: 8px;
+font-weight: normal;
+margin-left: 8px;
 }
-
 code.go {
-    -moz-tab-size: 4;
-    tab-size: 4;
+-moz-tab-size: 4;
+tab-size: 4;
 }
-
 .command, .srcfile {
-    margin-top: 1.6em;
-    margin-bottom: 1.6em;
-    padding-left: 1.6em;
-    background-color: #eaeaea;
+margin-top: 1.6em;
+margin-bottom: 1.6em;
+padding-left: 1.6em;
+background-color: #eaeaea;
 }
 .srcfile code {
-    padding: .6em 0 .6em 0;
-    background-position: right top;
-    display: block;
+padding: .6em 0 .6em 0;
+background-position: right top;
+display: block;
 }
-
 .complete {
-    border: 1px solid #727272;
+border: 1px solid #727272;
 }
-
 .filename {
-    display: block;
-    text-align: right;
-    margin-bottom: -1.6em;
-    font-family: mono;
-    font-size: 12px;
+display: block;
+text-align: right;
+margin-bottom: -1.6em;
+font-family: mono;
+font-size: 12px;
 }
-
 .command {
-    border-left: 7px #727272 solid;
-    padding: .6em 1.6em .6em 1.6em;
+border-left: 7px #727272 solid;
+padding: .6em 1.6em .6em 1.6em;
 }
 .sidenote {
-    border: 1px solid black;
-    width: 3.3cm;
-    padding: 1px 1px;
-    font-size: 0.8em;
-    position: absolute;
-    margin-left: -4cm;
+border: 1px solid black;
+width: 3.3cm;
+padding: 1px 1px;
+font-size: 0.8em;
+position: absolute;
+margin-left: -4cm;
 }
 .inner {
-    padding: 0.1cm;
-    border: 1px solid black;
+padding: 0.1cm;
+border: 1px solid black;
 }
-
 article.toc h3 {
-    margin-left: 0;
+margin-left: 0;
 }
-
 article.toc ul {
-      padding: 0px;
+padding: 0px;
 }
-
 article.toc ul li {
-      padding: 0px;
-      list-style: none;
+padding: 0px;
+list-style: none;
 }
-
 div.figure {
-    text-align: center;
+text-align: center;
 }
 
-@media screen {
+@media screen{
     html, body {
-	margin: 3px 10px;
-	padding: 3px 10px;
-    }
+margin: 3px 10px;
+padding: 3px 10px;
+}
 }
 
-@media print {
-    footer {
-	position: absolute;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-    }
+@media print{
+footer {
+position: absolute;
+bottom: 0px;
+left: 0px;
+width: 100%;
+}
 }
