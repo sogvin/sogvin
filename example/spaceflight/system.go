@@ -9,6 +9,6 @@ type System struct {
 // Use provides the given role access to the service.
 func (me *System) Use(role Role) {
 	var u user
-	u.setService(me)
+	u.setSystem(me)
 	role.setUser(&u)
 }

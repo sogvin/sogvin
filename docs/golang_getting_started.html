@@ -93,10 +93,13 @@ Hello, world!</code></pre><p>Let's step through each line in the program. The fi
 <p>In the above example the code is nicely formatted for easy
        reading but it doesn't have to be. These variations work just
        fine</p>
-<pre class="srcfile complete"><code class="go">package main; func main() { print("Hello, world!\n") }
+<pre class="srcfile complete"><code class="go">package main
+
+func main() { print("Hello, world!\n") }
 </code></pre><pre class="srcfile complete"><code class="go">package main
+
 func main() {
-print("Hello, world!\n")
+	print("Hello, world!\n")
 }
 </code></pre><p>You don't want to spend to much time adding spaces and tabs so
 	   your code looks good, let the computer do it for you. For this

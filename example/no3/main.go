@@ -1,1 +1,3 @@
-package main; func main() { print("Hello, world!\n") }
+package main
+
+func main() { print("Hello, world!\n") }
