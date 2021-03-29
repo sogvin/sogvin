@@ -300,6 +300,8 @@ var roleBasedService = Article(
 	P(`Once you need authentication you have the option to make it
 	part of this service, by extending the Service.Use() method with
 	e.g. credentials argument.`),
+
+	LoadFullFile("", "./example/spaceflight/cmd/htspace/router.go"),
 )
 
 //go:embed "example/spaceflight.tree"
@@ -320,3 +322,5 @@ func spaceflightDiagram(caption string) *design.ClassDiagram {
 	d.SetCaption(caption)
 	return d
 }
+
+// ----------------------------------------

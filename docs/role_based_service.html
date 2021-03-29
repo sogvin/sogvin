@@ -47,14 +47,14 @@ spaceflight
 <div class="filename">spaceflight/service.go</div>
 <pre class="srcfile complete"><code class="go">package spaceflight
 
-// Service provides logic for reading and writing spaceflight related
+// System provides logic for reading and writing spaceflight related
 // resources.
-type Service struct {
+type System struct {
 	// e.g. database, sync mutexes
 }
 
 // Use provides the given role access to the service.
-func (me *Service) Use(role Role) {
+func (me *System) Use(role Role) {
 	var u user
 	u.setService(me)
 	role.setUser(&u)
@@ -104,13 +104,13 @@ func (me *Passenger) setUser(v *user) { me.user = v }
 
 // ----------------------------------------
 
-// user implements domain logic for operations on the service and
+// user implements domain logic for operations on the System and
 // should be used through a role.
 type user struct {
-	srv *Service
+	srv *System
 }
 
-func (me *user) setService(v *Service) { me.srv = v }
+func (me *user) setService(v *System) { me.srv = v }
 
 // ----------------------------------------
 
@@ -147,6 +147,36 @@ func (me *user) listRoutes() []Route {
 <p>Once you need authentication you have the option to make it
 	part of this service, by extending the Service.Use() method with
 	e.g. credentials argument.</p>
-</article>
+<div class="filename">htspace/router.go</div>
+<pre class="srcfile complete"><code class="go">package main
+
+import (
+	"encoding/json"
+	"net/http"
+
+	"github.com/gregoryv/sogvin/example/spaceflight"
+)
+
+func NewServer(srv *spaceflight.System) *Server {
+	return &Server{srv: srv}
+}
+
+type Server struct {
+	srv *spaceflight.System
+}
+
+func (me *Server) Router() *http.ServeMux {
+	m := http.NewServeMux()
+	m.HandleFunc("/routes", me.serveRoutes)
+	return m
+}
+
+func (me *Server) serveRoutes(w http.ResponseWriter, r *http.Request) {
+	var role spaceflight.Passenger
+	me.srv.Use(&role)
+	routes := role.ListRoutes()
+	json.NewEncoder(w).Encode(routes)
+}
+</code></pre></article>
 <footer>Gregory Vin&ccaron;i&cacute;</footer></body>
 </html>

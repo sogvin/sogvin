@@ -14,13 +14,13 @@ func (me *Passenger) setUser(v *user) { me.user = v }
 
 // ----------------------------------------
 
-// user implements domain logic for operations on the service and
+// user implements domain logic for operations on the System and
 // should be used through a role.
 type user struct {
-	srv *Service
+	srv *System
 }
 
-func (me *user) setService(v *Service) { me.srv = v }
+func (me *user) setService(v *System) { me.srv = v }
 
 // ----------------------------------------
 
