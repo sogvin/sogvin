@@ -251,7 +251,7 @@ var roleBasedService = Article(
 		Em("htspace"), ".", Br(), `Don't name the application the same as
     the domain logic package. Also refrain from naming it same as the
     DNS name where it's hosted. The DNS will remain for a long time
-    whereas your service will evolve, be split up into smaller
+    whereas your system will evolve, be split up into smaller
     applications with specific responsibilities. The domain logic
     however will probably remain the same. The directory layout looks
     like this`),
@@ -259,10 +259,10 @@ var roleBasedService = Article(
 	ShellCommand("$ tree spaceflight\n"+spaceflightTree),
 	//
 
-	P(`The system is the main abstraction the spaceflight package
-	provides. It's responsible for synchronizing database access and
-	other domain related configuration. There would usually only exist
-	one instance of the system.`),
+	P(`The system is the most prominent abstraction the spaceflight
+	package provides. It's responsible for synchronizing database
+	access and other domain related configuration. There would usually
+	only exist one instance of the system.`),
 
 	LoadFullFile("", "./example/spaceflight/system.go"),
 

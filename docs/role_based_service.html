@@ -25,7 +25,7 @@
     name. We'll name the application providing this service via HTTP, <em>htspace</em>.<br/>Don't name the application the same as
     the domain logic package. Also refrain from naming it same as the
     DNS name where it's hosted. The DNS will remain for a long time
-    whereas your service will evolve, be split up into smaller
+    whereas your system will evolve, be split up into smaller
     applications with specific responsibilities. The domain logic
     however will probably remain the same. The directory layout looks
     like this</p>
@@ -40,10 +40,10 @@ spaceflight
 └── system.go
 
 2 directories, 5 files
-</code></pre><p>The system is the main abstraction the spaceflight package
-	provides. It's responsible for synchronizing database access and
-	other domain related configuration. There would usually only exist
-	one instance of the system.</p>
+</code></pre><p>The system is the most prominent abstraction the spaceflight
+	package provides. It's responsible for synchronizing database
+	access and other domain related configuration. There would usually
+	only exist one instance of the system.</p>
 <div class="filename">spaceflight/system.go</div>
 <pre class="srcfile complete"><code class="go">package spaceflight
 
