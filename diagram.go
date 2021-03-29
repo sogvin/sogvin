@@ -35,7 +35,8 @@ func newOverviewDiagram() *Element {
 	d.VAlignCenter(inet, client)
 
 	lineBetween := func(a, b shape.Shape) {
-		d.Link(a, b).Head = nil
+		arrow, _ := d.Link(a, b)
+		arrow.Head = nil
 	}
 	lineBetween(serviced, db)
 	lineBetween(ng, serviced)
