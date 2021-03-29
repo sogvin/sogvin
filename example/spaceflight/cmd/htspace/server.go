@@ -7,12 +7,12 @@ import (
 	"github.com/gregoryv/sogvin/example/spaceflight"
 )
 
-func NewServer(srv *spaceflight.System) *Server {
-	return &Server{srv: srv}
+func NewServer(sys *spaceflight.System) *Server {
+	return &Server{sys: sys}
 }
 
 type Server struct {
-	srv *spaceflight.System
+	sys *spaceflight.System
 }
 
 func (me *Server) Router() *http.ServeMux {
@@ -22,8 +22,10 @@ func (me *Server) Router() *http.ServeMux {
 }
 
 func (me *Server) serveRoutes(w http.ResponseWriter, r *http.Request) {
+	// Default to the passenger role
 	var role spaceflight.Passenger
-	me.srv.Use(&role)
+	me.sys.Use(&role)
+
 	routes := role.ListRoutes()
 	json.NewEncoder(w).Encode(routes)
 }

@@ -301,7 +301,14 @@ var roleBasedService = Article(
 	part of this service, by extending the Service.Use() method with
 	e.g. credentials argument.`),
 
-	LoadFullFile("", "./example/spaceflight/cmd/htspace/router.go"),
+	H2("HTTP interface"),
+
+	P(`The application htspace can now expose the spaceflight features
+	using its system and roles. A server provides methods for
+	accessing resources via different URLs. The routing of a url to a
+	specific server method is handled by the subsequent router.`),
+
+	LoadFullFile("", "./example/spaceflight/cmd/htspace/server.go"),
 )
 
 //go:embed "example/spaceflight.tree"

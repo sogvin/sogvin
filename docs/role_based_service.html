@@ -34,7 +34,7 @@ spaceflight
 ├── cmd
 │   └── htspace
 │       ├── main.go
-│       └── router.go
+│       └── server.go
 ├── resource.go
 ├── role.go
 └── system.go
@@ -147,7 +147,12 @@ func (me *user) listRoutes() []Route {
 <p>Once you need authentication you have the option to make it
 	part of this service, by extending the Service.Use() method with
 	e.g. credentials argument.</p>
-<div class="filename">htspace/router.go</div>
+<h2>HTTP interface</h2>
+<p>The application htspace can now expose the spaceflight features
+	using its system and roles. A server provides methods for
+	accessing resources via different URLs. The routing of a url to a
+	specific server method is handled by the subsequent router.</p>
+<div class="filename">htspace/server.go</div>
 <pre class="srcfile complete"><code class="go">package main
 
 import (
@@ -157,12 +162,12 @@ import (
 	"github.com/gregoryv/sogvin/example/spaceflight"
 )
 
-func NewServer(srv *spaceflight.System) *Server {
-	return &Server{srv: srv}
+func NewServer(sys *spaceflight.System) *Server {
+	return &Server{sys: sys}
 }
 
 type Server struct {
-	srv *spaceflight.System
+	sys *spaceflight.System
 }
 
 func (me *Server) Router() *http.ServeMux {
@@ -172,8 +177,10 @@ func (me *Server) Router() *http.ServeMux {
 }
 
 func (me *Server) serveRoutes(w http.ResponseWriter, r *http.Request) {
+	// Default to the passenger role
 	var role spaceflight.Passenger
-	me.srv.Use(&role)
+	me.sys.Use(&role)
+
 	routes := role.ListRoutes()
 	json.NewEncoder(w).Encode(routes)
 }
