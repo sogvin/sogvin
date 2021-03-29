@@ -18,4 +18,4 @@ case $extension in
         ;;
 esac
 
-
+go run ./cmd/mksite
