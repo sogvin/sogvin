@@ -3,6 +3,10 @@ package sogvin
 import (
 	_ "embed"
 
+	"github.com/gregoryv/sogvin/example/spaceflight"
+
+	"github.com/gregoryv/draw/design"
+	"github.com/gregoryv/draw/shape"
 	. "github.com/gregoryv/web"
 )
 
@@ -273,6 +277,9 @@ var roleBasedService = Article(
 	accessible via the pilot role. Also ListRoutes is implemented by
 	type user but accessible by both roles pilot and passenger.`),
 
+	Div(Class("figure"), spaceflightDiagram(`Different roles provide
+		different methods`).Inline()),
+
 	LoadFullFile("", "./example/spaceflight/role.go"),
 
 	P(`This design provides well defined places to implement future
@@ -297,3 +304,19 @@ var roleBasedService = Article(
 
 //go:embed "example/spaceflight.tree"
 var spaceflightTree string
+
+func spaceflightDiagram(caption string) *design.ClassDiagram {
+	var (
+		d         = design.NewClassDiagram()
+		role      = d.Interface((*spaceflight.Role)(nil))
+		pilot     = d.Struct(spaceflight.Pilot{})
+		passenger = d.Struct(spaceflight.Passenger{})
+	)
+	d.Place(role).At(120, 20)
+	d.Place(pilot).Below(role, 70)
+	shape.Move(pilot, -100, 0)
+	d.Place(passenger).RightOf(pilot, 70)
+
+	d.SetCaption(caption)
+	return d
+}
