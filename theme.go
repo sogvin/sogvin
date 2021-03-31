@@ -31,8 +31,11 @@ func A4() *CSS {
 		"padding-top: 0.2cm",
 		"padding-left: 4cm",
 	)
-	css.Style("h1, h2, h3, h4, h5",
+	css.Style("h1, h2",
 		"margin-left: -4cm",
+	)
+	css.Style("h3",
+		"margin-bottom:0.5cm",
 	)
 	css.Style("footer",
 		"text-align: right",
@@ -98,7 +101,10 @@ func A4() *CSS {
 	css.Style("div.figure",
 		"text-align: center",
 	)
-
+	css.Style("table.layout tr td",
+		"vertical-align: top",
+		"width: 200px",
+	)
 	screen := css.Media("screen")
 	screen.Style("html, body",
 		"margin: 3px 10px",

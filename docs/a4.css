@@ -21,8 +21,11 @@ margin-bottom: 0.5cm;
 padding-top: 0.2cm;
 padding-left: 4cm;
 }
-h1, h2, h3, h4, h5 {
+h1, h2 {
 margin-left: -4cm;
+}
+h3 {
+margin-bottom:0.5cm;
 }
 footer {
 text-align: right;
@@ -87,6 +90,10 @@ list-style: none;
 }
 div.figure {
 text-align: center;
+}
+table.layout tr td {
+vertical-align: top;
+width: 200px;
 }
 
 @media screen{
