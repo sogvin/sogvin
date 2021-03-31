@@ -42,7 +42,8 @@ var roleBasedService = Article(
 	information they need. Once the plan has been submitted,
 	passengers can view route details, including interesting
 	waypoints. Crew members can also access the details of routes and
-	possible alternatives, should there be an unforseen cosmic event.`),
+	possible alternatives, should there be an unforseen cosmic
+	event.`),
 
 	H3(`Elicitation`),
 
@@ -69,21 +70,33 @@ var roleBasedService = Article(
 		Li("catalog, destination"),
 		Li("ship"),
 		Li("flight plan, route, waypoint"),
+		Li("system"),
 	),
 
-	Sidenote(`Use different nam- es for package, commands and DNS.`,
-		2.0),
+	H2("Package design"),
 
-	P(`This service will be hosted on `,
-		Code("galaxytravel.future.now"), `. The domain logic is `,
-		Em("spaceflight"), ` i.e. the package name. We'll name the
-    application providing this service via HTTP, `, Em("htspace"),
-		".", Br(), `Don't name the application the same as the domain
-    logic package. Also refrain from naming it same as the DNS name
-    where it's hosted. The DNS will remain for a long time whereas
-    your system will evolve, be split up into smaller applications
-    with specific responsibilities. The domain logic however will
-    probably remain the same. The directory layout looks like this`),
+	P(`The domain we are working in is navigating the stars, as we
+	found out during our elicitation. Let's abbreviate it in a short,
+	pronouncable name `, Em("navstar"), `. This will be the package
+	name in our design.`),
+
+	P(`The service is hosted on galaxytravel.future.com. This is a
+	commercial name for a booking system and in our case also the
+	interface to the navigation system. As such, decouple the
+	commercial name from anything in your design, i.e. don't use
+	it.`),
+
+	P(`The application, that will expose the navstar features via
+	HTTP, we'll name `, Em("htspace"), ".", ` The reason you shouldn't
+	name it e.g. "navstar" is that the domain of navigating stars will
+	grow and you probably want to expose parts of it differently, thus
+	having multiple applications. Also "galaxytravel" is a poor name
+	as it's the commercial service name which could be composed of
+	many applications. Also the DNS will remain for a long time
+	whereas your system will evolve, be split up into smaller
+	applications with specific responsibilities. Adding files for some
+	of the mentioned abstractions we end up with a directory tree like
+	this`),
 
 	ShellCommand("$ tree spaceflight\n"+spaceflightTree),
 	//
