@@ -2,6 +2,7 @@ package sogvin
 
 import (
 	"net/http"
+	"path/filepath"
 
 	_ "embed"
 
@@ -106,7 +107,7 @@ var roleBasedService = Article(
 	access and other domain related configuration. There would usually
 	only exist one instance of the system.`),
 
-	LoadFullFile("", "../spaceflight/system.go"),
+	LoadFullFile("", navstarDir("system.go")),
 
 	P(`Roles expose access to user methods. Fairly often we talk about
 	what we can do with a system, referring to you and me as
@@ -122,7 +123,7 @@ var roleBasedService = Article(
 	Div(Class("figure"), spaceflightDiagram(`Different roles provide
 		different methods`).Inline()),
 
-	LoadFullFile("", "../spaceflight/role.go"),
+	LoadFullFile("", navstarDir("role.go")),
 
 	P(`This design provides well defined places to implement future
 	features. Assume the spaceflight service should provide planet
@@ -150,7 +151,7 @@ var roleBasedService = Article(
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.`),
 
-	LoadFullFile("", "../spaceflight/cmd/htspace/application.go"),
+	LoadFullFile("", navstarDir("cmd/htspace/application.go")),
 
 	P(`A request from a client such as a browser would follow the
 	below sequence.`),
@@ -202,4 +203,8 @@ func usingSpaceflightSystem(caption string) *design.SequenceDiagram {
 	d.Group(app, sys, "Role based access to domain logic", "blue")
 	d.SetCaption(caption)
 	return d
+}
+
+func navstarDir(subpath string) string {
+	return filepath.Join("..", "spaceflight", subpath)
 }
