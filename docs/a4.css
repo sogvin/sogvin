@@ -91,10 +91,6 @@ list-style: none;
 div.figure {
 text-align: center;
 }
-table.layout tr td {
-vertical-align: top;
-width: 200px;
-}
 
 @media screen{
 html, body {

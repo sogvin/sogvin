@@ -101,10 +101,7 @@ func A4() *CSS {
 	css.Style("div.figure",
 		"text-align: center",
 	)
-	css.Style("table.layout tr td",
-		"vertical-align: top",
-		"width: 200px",
-	)
+
 	screen := css.Media("screen")
 	screen.Style("html, body",
 		"margin: 3px 10px",

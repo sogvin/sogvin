@@ -17,18 +17,52 @@
 	applications and without a design they become hard to maintain
 	over time. Moreover services and their features need protecting
 	from unauthorized access. One approach is to provide role based
-	access.</p>
+	access design.</p>
+<h2>Navigating the stars</h2>
+<p>Before we go into the design, let me tell you a bit about the
+    business of navigating through the galaxy. By describing the
+    domain we'll be able to elicit concepts and features for our
+    system design.</p>
+<p>The company <b>Future Inc.</b> provides people means to travel
+    the Milky Way. Customers, browse and order trips on <code>galaxytravel.future.now</code>. Destinations are cataloged and
+    presented adventurously with specifications of distance, travel
+    time, ship details as well as a captains profile.<br/>Captains submit a flight plan just days before departure to
+	make sure it's as accurate as possible since space travel is not
+	an exact science and there are lot of unknown objects
+	about. Luckily the navigation system provides them with all the
+	information they need. Once the plan has been submitted,
+	passengers can view route details, including interesting
+	waypoints. Crew members can also access the details of routes and
+	possible alternatives, should there be an unforseen cosmic event.</p>
+<h3>Elicitation</h3>
+<p>We have enough information to get started I think. The main
+	domain concepts are</p>
+<ul>
+<li>navigating the stars - the domain</li>
+<li>galaxytravel.future.com - service</li>
+</ul>
+<p>Focusing on the navigation part there are people(users) using
+	the system with the following roles</p>
+<ul>
+<li>captain</li>
+<li>passenger</li>
+<li>crew member</li>
+</ul>
+<p>The system provides features to manipulate resources</p>
+<ul>
+<li>catalog, destination</li>
+<li>ship</li>
+<li>flight plan, route, waypoint</li>
+</ul>
 <div class="sidenote" style="margin-top: 2cm"><div class="inner">Use different nam- es for package, commands and DNS.</div>
 </div>
-<p>Let's assume we are writing a service for spaceflight. This
-    service will be hosted on <code>galaxytravel.future.now</code>. The domain logic is <em>spaceflight</em> i.e. the package
-    name. We'll name the application providing this service via HTTP, <em>htspace</em>.<br/>Don't name the application the same as
-    the domain logic package. Also refrain from naming it same as the
-    DNS name where it's hosted. The DNS will remain for a long time
-    whereas your system will evolve, be split up into smaller
-    applications with specific responsibilities. The domain logic
-    however will probably remain the same. The directory layout looks
-    like this</p>
+<p>This service will be hosted on <code>galaxytravel.future.now</code>. The domain logic is <em>spaceflight</em> i.e. the package name. We'll name the
+    application providing this service via HTTP, <em>htspace</em>.<br/>Don't name the application the same as the domain
+    logic package. Also refrain from naming it same as the DNS name
+    where it's hosted. The DNS will remain for a long time whereas
+    your system will evolve, be split up into smaller applications
+    with specific responsibilities. The domain logic however will
+    probably remain the same. The directory layout looks like this</p>
 <pre class="command"><code>$ tree spaceflight
 spaceflight
 ├── cmd
@@ -96,8 +130,6 @@ type System struct {
 <div class="filename">spaceflight/role.go</div>
 <pre class="srcfile complete"><code class="go">package spaceflight
 
-import "errors"
-
 type Role interface {
 	setUser(v *User)
 	PlanRoute(route Route) error
@@ -143,10 +175,6 @@ func (me *User) listRoutes() ([]Route, error) {
 	// implement list routes
 	return nil, nil
 }
-
-// ----------------------------------------
-
-var ErrUnauthorized = errors.New("unauthorized")
 </code></pre><p>This design provides well defined places to implement future
 	features. Assume the spaceflight service should provide planet
 	information to users.</p>
