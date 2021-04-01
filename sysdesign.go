@@ -102,11 +102,7 @@ var roleBasedService = Article(
 
 	H2("System design"),
 
-	P(`You can view the full code `, A(
-		Href("https://github.com/gregoryv/navstar"),
-		"here", `.`,
-	),
-	),
+	P(`You can view the full code `, github("gregoryv/navstar", "here"), `.`),
 
 	P(`The first thing we need is a name for the package or module
 	that will contain the source code of our software. One way to
