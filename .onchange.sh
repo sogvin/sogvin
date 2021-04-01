@@ -7,7 +7,7 @@ nameonly="${filename%.*}"
 
 
 pushd ../
-tree -P "*.go" -I "*_test.go" spaceflight > sogvin/example/spaceflight.tree
+tree -P "*.go" -I "*_test.go" navstar > sogvin/example/navstar.tree
 popd
 
 case $extension in

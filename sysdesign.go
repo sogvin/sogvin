@@ -8,73 +8,101 @@ import (
 
 	"github.com/gregoryv/draw/design"
 	"github.com/gregoryv/draw/shape"
-	"github.com/gregoryv/spaceflight"
-	"github.com/gregoryv/spaceflight/cmd/htspace"
+	"github.com/gregoryv/navstar"
+	"github.com/gregoryv/navstar/cmd/htspace"
 	. "github.com/gregoryv/web"
 )
 
 var roleBasedService = Article(
+	//
+
 	H1("Role based service"), // todo find a better name
 
-	P(`Servers provide a service through some protocol, often the
-	protocol is HTTP. Services like this are often sizeable
-	applications and without a design they become hard to maintain
-	over time. Moreover services and their features need protecting
-	from unauthorized access. One approach is to provide role based
-	access design.`),
+	P(`This article proposes a design for services that need role
+	based access control. Services running on cloud servers mostly
+	provide API's through the HTTP protocol and are often sizeable
+	applications. Without a clear design they become hard to maintain
+	over time. Moreover their features need protecting from
+	unauthorized access. One approach is control access to features
+	using roles.`, Br(), ` I'll explore one such design and elaborate
+	on the naming with an example service for navigating the
+	stars.`),
 
 	H2("Navigating the stars"),
 
-	P(`Before we go into the design, let me tell you a bit about the
+	P(`Before we go into the design, let me tell you about the
     business of navigating through the galaxy. By describing the
     domain we'll be able to elicit concepts and features for our
     system design.`),
 
 	P(`The company <b>Future Inc.</b> provides people means to travel
-    the Milky Way. Customers, browse and order trips on `,
+	the Milky Way. Customers, browse and order trips on `,
 		Code("galaxytravel.future.now"), `. Destinations are cataloged and
-    presented adventurously with specifications of distance, travel
-    time, ship details as well as a captains profile.`, Br(),
+	presented adventurously with specifications of distance, travel
+	time, ship details as well as a captains profile.`, Br(), `The
+	ships captain uses the same service to plan the entire flight. He
+	submits a flight plan just days before departure to make sure it's
+	as accurate as possible since space travel is not an exact science
+	and there are lot of unknown objects about. Luckily the navigation
+	system provides them with all the information they need. Once the
+	plan has been submitted, passengers can view route details,
+	including interesting waypoints. Crew members can also access the
+	details of routes and possible alternatives, should there be an
+	unforseen cosmic event.`),
 
-		`Captains submit a flight plan just days before departure to
-	make sure it's as accurate as possible since space travel is not
-	an exact science and there are lot of unknown objects
-	about. Luckily the navigation system provides them with all the
-	information they need. Once the plan has been submitted,
-	passengers can view route details, including interesting
-	waypoints. Crew members can also access the details of routes and
-	possible alternatives, should there be an unforseen cosmic
-	event.`),
+	P(`Now that we know a bit about the domain we'll be working in,
+	lets find the concepts and decide which ones are part of
+	navigating the stars.`),
 
 	H3(`Elicitation`),
 
-	P(`We have enough information to get started I think. The main
-	domain concepts are`),
+	P(`We know the service is found at galaxytravel.future.com. This
+	is a domain name selected because it sounds great and is easily
+	remembered by customers when they want to elope to another part of
+	the galaxy, think Luke Skywalker in a bar. It has very little to
+	do with navigating the stars though so we should not include that
+	name or part of it in our design.`),
 
-	Ul(
-		Li("navigating the stars - the domain"),
-		Li("galaxytravel.future.com - service"),
+	P(`Several people are interacting with the service, customers,
+	captain, crew members and passengers. Let's exclude the customer
+	as that is a role more related to booking. This leaves us
+	passenger, captain and crew members. Obviously the passenger is a
+	customer at some point but the word customer is irrelevant when it
+	comes to navigating the stars. A passenger however does have
+	access to view parts of the flight plan, which leads us to
+	enumerating the features of our navigation service.`),
+
+	P(`We recognize that the galaxytravel service, serves both
+	customers and captains though with different purpose. In our
+	design we'll separate these into different systems and focus on
+	the system that provides features for maninpulating
+	flightplans. The captain submits a flightplan whereas, other crew
+	members and passengers can view it. Passengers can see the
+	designated route, with details such as current location, waypoints
+	and estimated time of arrival.`),
+
+	P(`Let's summarize by grouping the concepts`),
+
+	Dl(
+		Dt(`Role`),
+		Dd(`passenger, captain, crew member`),
+
+		Dt(`Rsource`),
+		Dd(`flightplan, route, waypoint`),
+
+		Dt(`Feature`),
+		Dd(`submit flightplan, view flightplan`),
 	),
 
-	P(`Focusing on the navigation part there are people(users) using
-	the system with the following roles`),
+	P(`Note that up until now all the terminology is from the domain
+	of navigating the stars. The only term used that somehow relates
+	to a software is "system". Which we'll design now.`),
 
-	Ul(
-		Li("captain"),
-		Li("passenger"),
-		Li("crew member"),
-	),
+	H2("System design"),
 
-	P(`The system provides features to manipulate resources`),
-
-	Ul(
-		Li("catalog, destination"),
-		Li("ship"),
-		Li("flight plan, route, waypoint"),
-		Li("system"),
-	),
-
-	H2("Package design"),
+	P(`Full code is found at `,
+		A(Href("https://github.com/gregoryv/navstar"),
+			"github.com/gregoryv/navstar"), "."),
 
 	P(`The domain we are working in is navigating the stars, as we
 	found out during our elicitation. Let's abbreviate it in a short,
@@ -99,10 +127,10 @@ var roleBasedService = Article(
 	of the mentioned abstractions we end up with a directory tree like
 	this`),
 
-	ShellCommand("$ tree spaceflight\n"+spaceflightTree),
+	ShellCommand("$ tree navstar\n"+navstarTree),
 	//
 
-	P(`The system is the most prominent abstraction the spaceflight
+	P(`The system is the most prominent abstraction the navstar
 	package provides. It's responsible for synchronizing database
 	access and other domain related configuration. There would usually
 	only exist one instance of the system.`),
@@ -120,13 +148,13 @@ var roleBasedService = Article(
 	accessible via the pilot role. Also ListRoutes is implemented by
 	type user but accessible by both roles pilot and passenger.`),
 
-	Div(Class("figure"), spaceflightDiagram(`Different roles provide
+	Div(Class("figure"), navstarDiagram(`Different roles provide
 		different methods`).Inline()),
 
 	LoadFullFile("", navstarDir("role.go")),
 
 	P(`This design provides well defined places to implement future
-	features. Assume the spaceflight service should provide planet
+	features. Assume the navstar service should provide planet
 	information to users.`),
 
 	Ol(
@@ -146,7 +174,7 @@ var roleBasedService = Article(
 
 	H2("HTTP interface"),
 
-	P(`The application htspace can now expose the spaceflight features
+	P(`The application htspace can now expose the navstar features
 	using its system and roles. An application provides methods for
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.`),
@@ -156,24 +184,24 @@ var roleBasedService = Article(
 	P(`A request from a client such as a browser would follow the
 	below sequence.`),
 
-	usingSpaceflightSystem("Using spaceflight system via a HTTP interface").Inline(),
+	usingNavstarSystem("Using navstar system via a HTTP interface").Inline(),
 
 	P(`Separating the domain logic from the application exposing it
 	using some protocol allows your service to grow. Naming components
 	carefully we can reason about concepts such as the-galaxytravel-service,
-	spaceflight-system and htspace-application, which are all
+	navstar-system and htspace-application, which are all
 	easily referencable in the source code aswell.`),
 )
 
-//go:embed "example/spaceflight.tree"
-var spaceflightTree string
+//go:embed "example/navstar.tree"
+var navstarTree string
 
-func spaceflightDiagram(caption string) *design.ClassDiagram {
+func navstarDiagram(caption string) *design.ClassDiagram {
 	var (
 		d         = design.NewClassDiagram()
-		role      = d.Interface((*spaceflight.Role)(nil))
-		pilot     = d.Struct(spaceflight.Pilot{})
-		passenger = d.Struct(spaceflight.Passenger{})
+		role      = d.Interface((*navstar.Role)(nil))
+		pilot     = d.Struct(navstar.Pilot{})
+		passenger = d.Struct(navstar.Passenger{})
 	)
 	d.Place(role).At(120, 20)
 	d.Place(pilot).Below(role, 70)
@@ -184,14 +212,14 @@ func spaceflightDiagram(caption string) *design.ClassDiagram {
 	return d
 }
 
-func usingSpaceflightSystem(caption string) *design.SequenceDiagram {
+func usingNavstarSystem(caption string) *design.SequenceDiagram {
 	var (
 		d       = design.NewSequenceDiagram()
 		browser = d.Add("browser")
 		srv     = d.AddStruct(http.Server{})
 		app     = d.AddStruct(htspace.Application{})
-		role    = d.AddInterface((*spaceflight.Role)(nil))
-		sys     = d.AddStruct(spaceflight.System{})
+		role    = d.AddInterface((*navstar.Role)(nil))
+		sys     = d.AddStruct(navstar.System{})
 	)
 	d.ColWidth = 140
 	d.Link(browser, srv, "GET /routes")
@@ -206,5 +234,5 @@ func usingSpaceflightSystem(caption string) *design.SequenceDiagram {
 }
 
 func navstarDir(subpath string) string {
-	return filepath.Join("..", "spaceflight", subpath)
+	return filepath.Join("..", "navstar", subpath)
 }

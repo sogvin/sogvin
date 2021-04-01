@@ -12,51 +12,72 @@
 <header><code>Design - <a href="index.html">Software Engineering</a></code></header>
 <article>
 <h1>Role based service</h1>
-<p>Servers provide a service through some protocol, often the
-	protocol is HTTP. Services like this are often sizeable
-	applications and without a design they become hard to maintain
-	over time. Moreover services and their features need protecting
-	from unauthorized access. One approach is to provide role based
-	access design.</p>
+<p>This article proposes a design for services that need role
+	based access control. Services running on cloud servers mostly
+	provide API's through the HTTP protocol and are often sizeable
+	applications. Without a clear design they become hard to maintain
+	over time. Moreover their features need protecting from
+	unauthorized access. One approach is control access to features
+	using roles.<br/> I'll explore one such design and elaborate
+	on the naming with an example service for navigating the
+	stars.</p>
 <h2>Navigating the stars</h2>
-<p>Before we go into the design, let me tell you a bit about the
+<p>Before we go into the design, let me tell you about the
     business of navigating through the galaxy. By describing the
     domain we'll be able to elicit concepts and features for our
     system design.</p>
 <p>The company <b>Future Inc.</b> provides people means to travel
-    the Milky Way. Customers, browse and order trips on <code>galaxytravel.future.now</code>. Destinations are cataloged and
-    presented adventurously with specifications of distance, travel
-    time, ship details as well as a captains profile.<br/>Captains submit a flight plan just days before departure to
-	make sure it's as accurate as possible since space travel is not
-	an exact science and there are lot of unknown objects
-	about. Luckily the navigation system provides them with all the
-	information they need. Once the plan has been submitted,
-	passengers can view route details, including interesting
-	waypoints. Crew members can also access the details of routes and
-	possible alternatives, should there be an unforseen cosmic
-	event.</p>
+	the Milky Way. Customers, browse and order trips on <code>galaxytravel.future.now</code>. Destinations are cataloged and
+	presented adventurously with specifications of distance, travel
+	time, ship details as well as a captains profile.<br/>The
+	ships captain uses the same service to plan the entire flight. He
+	submits a flight plan just days before departure to make sure it's
+	as accurate as possible since space travel is not an exact science
+	and there are lot of unknown objects about. Luckily the navigation
+	system provides them with all the information they need. Once the
+	plan has been submitted, passengers can view route details,
+	including interesting waypoints. Crew members can also access the
+	details of routes and possible alternatives, should there be an
+	unforseen cosmic event.</p>
+<p>Now that we know a bit about the domain we'll be working in,
+	lets find the concepts and decide which ones are part of
+	navigating the stars.</p>
 <h3>Elicitation</h3>
-<p>We have enough information to get started I think. The main
-	domain concepts are</p>
-<ul>
-<li>navigating the stars - the domain</li>
-<li>galaxytravel.future.com - service</li>
-</ul>
-<p>Focusing on the navigation part there are people(users) using
-	the system with the following roles</p>
-<ul>
-<li>captain</li>
-<li>passenger</li>
-<li>crew member</li>
-</ul>
-<p>The system provides features to manipulate resources</p>
-<ul>
-<li>catalog, destination</li>
-<li>ship</li>
-<li>flight plan, route, waypoint</li>
-<li>system</li>
-</ul>
-<h2>Package design</h2>
+<p>We know the service is found at galaxytravel.future.com. This
+	is a domain name selected because it sounds great and is easily
+	remembered by customers when they want to elope to another part of
+	the galaxy, think Luke Skywalker in a bar. It has very little to
+	do with navigating the stars though so we should not include that
+	name or part of it in our design.</p>
+<p>Several people are interacting with the service, customers,
+	captain, crew members and passengers. Let's exclude the customer
+	as that is a role more related to booking. This leaves us
+	passenger, captain and crew members. Obviously the passenger is a
+	customer at some point but the word customer is irrelevant when it
+	comes to navigating the stars. A passenger however does have
+	access to view parts of the flight plan, which leads us to
+	enumerating the features of our navigation service.</p>
+<p>We recognize that the galaxytravel service, serves both
+	customers and captains though with different purpose. In our
+	design we'll separate these into different systems and focus on
+	the system that provides features for maninpulating
+	flightplans. The captain submits a flightplan whereas, other crew
+	members and passengers can view it. Passengers can see the
+	designated route, with details such as current location, waypoints
+	and estimated time of arrival.</p>
+<p>Let's summarize by grouping the concepts</p>
+<dl>
+<dt>Role</dt>
+<dd>passenger, captain, crew member</dd>
+<dt>Rsource</dt>
+<dd>flightplan, route, waypoint</dd>
+<dt>Feature</dt>
+<dd>submit flightplan, view flightplan</dd>
+</dl><p>Note that up until now all the terminology is from the domain
+	of navigating the stars. The only term used that somehow relates
+	to a software is "system". Which we'll design now.</p>
+<h2>System design</h2>
+<p>Full code is found at <a href="https://github.com/gregoryv/navstar">github.com/gregoryv/navstar</a>.</p>
 <p>The domain we are working in is navigating the stars, as we
 	found out during our elicitation. Let's abbreviate it in a short,
 	pronouncable name <em>navstar</em>. This will be the package
@@ -77,8 +98,8 @@
 	applications with specific responsibilities. Adding files for some
 	of the mentioned abstractions we end up with a directory tree like
 	this</p>
-<pre class="command"><code>$ tree spaceflight
-spaceflight
+<pre class="command"><code>$ tree navstar
+navstar
 ├── cmd
 │   └── htspace
 │       ├── application.go
@@ -90,18 +111,18 @@ spaceflight
 └── system.go
 
 3 directories, 6 files
-</code></pre><p>The system is the most prominent abstraction the spaceflight
+</code></pre><p>The system is the most prominent abstraction the navstar
 	package provides. It's responsible for synchronizing database
 	access and other domain related configuration. There would usually
 	only exist one instance of the system.</p>
-<div class="filename">spaceflight/system.go</div>
-<pre class="srcfile complete"><code class="go">package spaceflight
+<div class="filename">navstar/system.go</div>
+<pre class="srcfile complete"><code class="go">package navstar
 
 func NewSystem() *System {
 	return &System{}
 }
 
-// System provides logic for reading and writing spaceflight related
+// System provides logic for reading and writing navstar related
 // resources.
 type System struct {
 	// e.g. database, sync mutexes
@@ -115,34 +136,34 @@ type System struct {
 <div class="figure"><svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  font-family="Arial,Helvetica,sans-serif" width="395" height="334">
-<path stroke="black" stroke-dasharray="5,5,5" d="M272,174 L225,104" />
-<g transform="rotate(236 225 104)"><path stroke="black" fill="#ffffff" d="M225,104 l-8,-4 l 0,8 Z" /></g>
+  font-family="Arial,Helvetica,sans-serif" width="357" height="334">
+<path stroke="black" stroke-dasharray="5,5,5" d="M249,174 L210,104" />
+<g transform="rotate(240 210 104)"><path stroke="black" fill="#ffffff" d="M210,104 l-8,-4 l 0,8 Z" /></g>
 
-<path stroke="black" stroke-dasharray="5,5,5" d="M122,174 L169,104" />
-<g transform="rotate(-56 169 104)"><path stroke="black" fill="#ffffff" d="M169,104 l-8,-4 l 0,8 Z" /></g>
+<path stroke="black" stroke-dasharray="5,5,5" d="M112,174 L159,104" />
+<g transform="rotate(-56 159 104)"><path stroke="black" fill="#ffffff" d="M159,104 l-8,-4 l 0,8 Z" /></g>
 
-<rect stroke="#d3d3d3" fill="#ffffff" x="120" y="20" width="154" height="84"/>
-<line stroke="#d3d3d3" x1="120" y1="46" x2="274" y2="46"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="62">ListRoutes()</text>
+<rect stroke="#d3d3d3" fill="#ffffff" x="120" y="20" width="135" height="84"/>
+<line stroke="#d3d3d3" x1="120" y1="46" x2="255" y2="46"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="62">ListRoutes()</text>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="78">PlanRoute()</text>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="94">setUser()</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="36">spaceflight.Role interface</text>
-<rect stroke="#d3d3d3" fill="#ffffff" x="20" y="174" width="134" height="106"/>
-<line stroke="#d3d3d3" x1="20" y1="200" x2="154" y2="200"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="216">User</text>
-<line stroke="#d3d3d3" x1="20" y1="222" x2="154" y2="222"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="238">ListRoutes()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="126" y="36">navstar.Role interface</text>
+<rect stroke="#d3d3d3" fill="#ffffff" x="20" y="174" width="115" height="106"/>
+<line stroke="#d3d3d3" x1="20" y1="200" x2="135" y2="200"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="216">User</text>
+<line stroke="#d3d3d3" x1="20" y1="222" x2="135" y2="222"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="238">ListRoutes()</text>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="254">PlanRoute()</text>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="270">Use()</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="190">spaceflight.Pilot struct</text>
-<rect stroke="#d3d3d3" fill="#ffffff" x="224" y="174" width="169" height="106"/>
-<line stroke="#d3d3d3" x1="224" y1="200" x2="393" y2="200"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="216">User</text>
-<line stroke="#d3d3d3" x1="224" y1="222" x2="393" y2="222"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="238">ListRoutes()</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="254">PlanRoute()</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="270">Use()</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="230" y="190">spaceflight.Passenger struct</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="78" y="327">Different roles provide
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="26" y="190">navstar.Pilot struct</text>
+<rect stroke="#d3d3d3" fill="#ffffff" x="205" y="174" width="150" height="106"/>
+<line stroke="#d3d3d3" x1="205" y1="200" x2="355" y2="200"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="211" y="216">User</text>
+<line stroke="#d3d3d3" x1="205" y1="222" x2="355" y2="222"/><text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="211" y="238">ListRoutes()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="211" y="254">PlanRoute()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="211" y="270">Use()</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="211" y="190">navstar.Passenger struct</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="59" y="327">Different roles provide
 		different methods</text></svg></div>
-<div class="filename">spaceflight/role.go</div>
-<pre class="srcfile complete"><code class="go">package spaceflight
+<div class="filename">navstar/role.go</div>
+<pre class="srcfile complete"><code class="go">package navstar
 
 type Role interface {
 	setUser(v *User)
@@ -190,7 +211,7 @@ func (me *User) listRoutes() ([]Route, error) {
 	return nil, nil
 }
 </code></pre><p>This design provides well defined places to implement future
-	features. Assume the spaceflight service should provide planet
+	features. Assume the navstar service should provide planet
 	information to users.</p>
 <ol>
 <li>Define resource Planet</li>
@@ -205,30 +226,30 @@ func (me *User) listRoutes() ([]Route, error) {
 	part of this service, by extending the Service.Use() method with
 	e.g. credentials argument.</p>
 <h2>HTTP interface</h2>
-<p>The application htspace can now expose the spaceflight features
+<p>The application htspace can now expose the navstar features
 	using its system and roles. An application provides methods for
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.</p>
 <div class="filename">htspace/application.go</div>
-<pre class="srcfile complete"><code class="go">// Package htspace exposes the spaceflight system via HTTP.
+<pre class="srcfile complete"><code class="go">// Package htspace exposes the navstar system via HTTP.
 package htspace
 
 import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/gregoryv/spaceflight"
+	"github.com/gregoryv/navstar"
 )
 
-func NewApplication(sys *spaceflight.System) *Application {
+func NewApplication(sys *navstar.System) *Application {
 	return &Application{sys: sys}
 }
 
 type Application struct {
-	sys *spaceflight.System
+	sys *navstar.System
 }
 
-// Router returns a router providing HTTP access to the spaceflight
+// Router returns a router providing HTTP access to the navstar
 // system.
 func (me *Application) Router() *http.ServeMux {
 	m := http.NewServeMux()
@@ -238,19 +259,19 @@ func (me *Application) Router() *http.ServeMux {
 
 func (me *Application) serveRoutes(w http.ResponseWriter, r *http.Request) {
 	// Default to the passenger role
-	var user spaceflight.User
+	var user navstar.User
 	role := user.Use(me.sys, getRole(r))
 
 	routes, _ := role.ListRoutes()
 	json.NewEncoder(w).Encode(routes)
 }
 
-func getRole(r *http.Request) spaceflight.Role {
+func getRole(r *http.Request) navstar.Role {
 	switch r.URL.Query().Get("role") {
 	case "pilot":
-		return &spaceflight.Pilot{}
+		return &navstar.Pilot{}
 	default:
-		return &spaceflight.Passenger{}
+		return &navstar.Passenger{}
 	}
 }
 </code></pre><p>A request from a client such as a browser would follow the
@@ -258,7 +279,7 @@ func getRole(r *http.Request) spaceflight.Role {
 <svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  font-family="Arial,Helvetica,sans-serif" width="645" height="296">
+  font-family="Arial,Helvetica,sans-serif" width="636" height="296">
 <rect stroke="black" stroke-width="0" fill="#99e6ff" fill-opacity="0.1" x="312" y="24" width="280" height="218"/>
 <text class="area-blue-title" font-size="12px" x="318" y="42"></text>
 <line stroke="#d3d3d3" x1="32" y1="24" x2="32" y2="200"/>
@@ -268,9 +289,9 @@ func getRole(r *http.Request) spaceflight.Role {
 <line stroke="#d3d3d3" x1="312" y1="24" x2="312" y2="200"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="259" y="18">htspace.Application</text>
 <line stroke="#d3d3d3" x1="452" y1="24" x2="452" y2="200"/>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="408" y="18">spaceflight.Role</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="418" y="18">navstar.Role</text>
 <line stroke="#d3d3d3" x1="592" y1="24" x2="592" y2="200"/>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="541" y="18">spaceflight.System</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="551" y="18">navstar.System</text>
 <text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="357" y="235">Role based access to domain logic</text>
 <path stroke="black" d="M32,57 L172,57" />
 <g transform="rotate(0 172 57)"><path stroke="black" fill="#ffffff" d="M172,57 l-8,-4 l 0,8 Z" /></g>
@@ -292,10 +313,10 @@ func getRole(r *http.Request) spaceflight.Role {
 <g transform="rotate(180 32 189)"><path stroke="black" fill="#ffffff" d="M32,189 l-8,-4 l 0,8 Z" /></g>
 
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="121" y="186">write http response</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="198" y="289">Using spaceflight system via a HTTP interface</text></svg><p>Separating the domain logic from the application exposing it
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="203" y="289">Using navstar system via a HTTP interface</text></svg><p>Separating the domain logic from the application exposing it
 	using some protocol allows your service to grow. Naming components
 	carefully we can reason about concepts such as the-galaxytravel-service,
-	spaceflight-system and htspace-application, which are all
+	navstar-system and htspace-application, which are all
 	easily referencable in the source code aswell.</p>
 </article>
 <footer>Gregory Vin&ccaron;i&cacute;</footer></body>

@@ -8,9 +8,9 @@ require (
 	github.com/gregoryv/draw v0.18.0
 	github.com/gregoryv/fox v0.5.0
 	github.com/gregoryv/logger v0.2.0
+	github.com/gregoryv/navstar v0.2.0 // indirect
 	github.com/gregoryv/nexus v0.4.0
 	github.com/gregoryv/qual v0.4.0
-	github.com/gregoryv/spaceflight v0.0.0-20210329124410-19f2f557537c
 	github.com/gregoryv/web v0.16.0
 	github.com/gregoryv/wolf v0.7.0
 	github.com/gregoryv/workdir v0.2.0

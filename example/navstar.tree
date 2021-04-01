@@ -1,4 +1,4 @@
-spaceflight
+navstar
 ├── cmd
 │   └── htspace
 │       ├── application.go
