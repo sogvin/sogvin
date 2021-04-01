@@ -78,6 +78,7 @@
 	to a software is "system". Which we'll design now.</p>
 <h2>System design</h2>
 <p>You can view the full code <a href="https:/github.com/gregoryv/navstar">here</a>.</p>
+<h3>Package naming</h3>
 <p>The first thing we need is a name for the package or module
 	that will contain the source code of our software. One way to
 	figure out a good name is to try to write that one line package
@@ -97,17 +98,15 @@
 <em>"Package navstar provides a system for planning galaxy flights"</em><p>Short pronouncable name, mentions the system and its main
 	purpose. It allows for easy discussion and ties into the domain
 	terminology nicely. Let's stick with it for now.</p>
-<p>The application, that will expose the navstar features via
-	HTTP, we'll name <em>htspace</em>. The reason you shouldn't
-	name it e.g. "navstar" is that the domain of navigating stars will
-	grow and you probably want to expose parts of it differently, thus
-	having multiple applications. Also "galaxytravel" is a poor name
-	as it's the commercial service name which could be composed of
-	many applications. Also the DNS will remain for a long time
-	whereas your system will evolve, be split up into smaller
-	applications with specific responsibilities. Adding files for some
-	of the mentioned abstractions we end up with a directory tree like
-	this</p>
+<h3>Application</h3>
+<p>The navstar system needs to be exposed through an application
+	that understands the HTTP protocol. We can use the same method to
+	find a good name for the package holding the application.</p>
+<em>"Package htnav exposes the navstar system via HTTP"</em><p>The reason you shouldn't name it e.g. "navstar" is that the
+	domain of navigating stars will grow and you probably want to
+	expose parts of it differently, thus having multiple
+	applications. Adding files for some of the mentioned abstractions
+	we end up with a directory tree like this</p>
 <pre class="command"><code>$ tree navstar
 navstar
 ├── cmd

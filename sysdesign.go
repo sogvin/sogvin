@@ -104,6 +104,8 @@ var roleBasedService = Article(
 
 	P(`You can view the full code `, github("gregoryv/navstar", "here"), `.`),
 
+	H3("Package naming"),
+
 	P(`The first thing we need is a name for the package or module
 	that will contain the source code of our software. One way to
 	figure out a good name is to try to write that one line package
@@ -132,17 +134,21 @@ var roleBasedService = Article(
 	purpose. It allows for easy discussion and ties into the domain
 	terminology nicely. Let's stick with it for now.`),
 
-	P(`The application, that will expose the navstar features via
-	HTTP, we'll name `, Em("htspace"), ".", ` The reason you shouldn't
-	name it e.g. "navstar" is that the domain of navigating stars will
-	grow and you probably want to expose parts of it differently, thus
-	having multiple applications. Also "galaxytravel" is a poor name
-	as it's the commercial service name which could be composed of
-	many applications. Also the DNS will remain for a long time
-	whereas your system will evolve, be split up into smaller
-	applications with specific responsibilities. Adding files for some
-	of the mentioned abstractions we end up with a directory tree like
-	this`),
+	// ----------------------------------------
+
+	H3("Application"),
+
+	P(`The navstar system needs to be exposed through an application
+	that understands the HTTP protocol. We can use the same method to
+	find a good name for the package holding the application.`),
+
+	Em(`"Package htnav exposes the navstar system via HTTP"`),
+
+	P(`The reason you shouldn't name it e.g. "navstar" is that the
+	domain of navigating stars will grow and you probably want to
+	expose parts of it differently, thus having multiple
+	applications. Adding files for some of the mentioned abstractions
+	we end up with a directory tree like this`),
 
 	ShellCommand("$ tree navstar\n"+navstarTree),
 	//
