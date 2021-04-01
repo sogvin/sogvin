@@ -98,22 +98,43 @@ var roleBasedService = Article(
 	of navigating the stars. The only term used that somehow relates
 	to a software is "system". Which we'll design now.`),
 
+	// ----------------------------------------
+
 	H2("System design"),
 
-	P(`Full code is found at `,
-		A(Href("https://github.com/gregoryv/navstar"),
-			"github.com/gregoryv/navstar"), "."),
+	P(`You can view the full code `, A(
+		Href("https://github.com/gregoryv/navstar"),
+		"here", `.`,
+	),
+	),
 
-	P(`The domain we are working in is navigating the stars, as we
-	found out during our elicitation. Let's abbreviate it in a short,
-	pronouncable name `, Em("navstar"), `. This will be the package
-	name in our design.`),
+	P(`The first thing we need is a name for the package or module
+	that will contain the source code of our software. One way to
+	figure out a good name is to try to write that one line package
+	documentation sentence. `, Em(`"Package X provides ..."`)),
 
-	P(`The service is hosted on galaxytravel.future.com. This is a
-	commercial name for a booking system and in our case also the
-	interface to the navigation system. As such, decouple the
-	commercial name from anything in your design, i.e. don't use
-	it.`),
+	Em(`"Package galaxytravel provides applications for planning star
+	navigation"`),
+
+	P(`Sounds ok, but wait, we said that the service name galaxytravel
+	was selected for customers and should be excluded from the
+	navigation system. Also it as a service provides more than just
+	applications for planning star navigation. How about`),
+
+	Em(`"Package starnavigation provides means to plan galaxy flights"`),
+
+	P(`Short sentence which abstracts what it provides by using the
+	word "means" and is more specific by using "plan galaxy
+	flights". One problem though, the name "starnavigation" is a
+	mouthful, with five syllables. The name will be used extensively
+	and we should try to find something shorter. Maybe`),
+
+	Sidenote("Short pronounce- able package name", 0.0),
+	Em(`"Package navstar provides a system for planning galaxy flights"`),
+
+	P(`Short pronouncable name, mentions the system and its main
+	purpose. It allows for easy discussion and ties into the domain
+	terminology nicely. Let's stick with it for now.`),
 
 	P(`The application, that will expose the navstar features via
 	HTTP, we'll name `, Em("htspace"), ".", ` The reason you shouldn't
@@ -191,6 +212,11 @@ var roleBasedService = Article(
 	carefully we can reason about concepts such as the-galaxytravel-service,
 	navstar-system and htspace-application, which are all
 	easily referencable in the source code aswell.`),
+)
+
+var repoLink = A(
+	Href("https://github.com/gregoryv/navstar"),
+	"github.com/gregoryv/navstar",
 )
 
 //go:embed "example/navstar.tree"
