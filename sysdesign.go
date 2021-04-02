@@ -59,10 +59,10 @@ var roleBasedService = Article(
 	is a domain name selected because it sounds great and is easily
 	remembered by customers when they want to elope to another part of
 	the galaxy, think Luke Skywalker in a bar. It has very little to
-	do with navigating the stars though so we should not include that
-	name or part of it in our design.`),
+	do with navigating the stars though so we should exclude that name
+	or part of it in our design.`),
 
-	P(`Several people are interacting with the service, customers,
+	P(`Several people are interacting with the service; customers,
 	captain, crew members and passengers. Let's exclude the customer
 	as that is a role more related to booking. This leaves us
 	passenger, captain and crew members. Obviously the passenger is a
@@ -171,12 +171,13 @@ var roleBasedService = Article(
 	what we can do with a system, referring to you and me as
 	users.`),
 
-	Em(`- Pilots plan routes`), Br(),
-	Em(`- Passengers and pilots view routes`),
+	Em(`- Pilots submit flightplan`), Br(),
+	Em(`- Passengers and crew member view flightplans`),
 
-	P(`This translates to PlanRoute is implemented by type user and
-	accessible via the pilot role. Also ListRoutes is implemented by
-	type user but accessible by both roles pilot and passenger.`),
+	P(`This translates to SubmitFlightplan is implemented by type user
+	and accessible via the pilot role. Also ViewFlightplan is
+	implemented by type user but accessible by roles pilot, passenger
+	and crew member.`),
 
 	Div(Class("figure"), navstarDiagram(`Different roles provide
 		different methods`).Inline()),
@@ -257,16 +258,22 @@ func usingNavstarSystem(caption string) *design.SequenceDiagram {
 		srv     = d.AddStruct(http.Server{})
 		app     = d.AddStruct(htnav.Application{})
 		role    = d.AddInterface((*navstar.Role)(nil))
+		user    = d.AddStruct(navstar.User{})
 		sys     = d.AddStruct(navstar.System{})
 	)
-	d.ColWidth = 140
+	d.ColWidth = 110
 	d.Link(browser, srv, "GET /routes")
 	d.Link(srv, app, "serveRoutes()")
 	d.Link(app, role, "new: role")
-	d.Link(app, sys, "role.ListRoutes()")
+	d.Link(app, user, "new: user")
+	d.Link(app, user, "Use(system, role)")
+	d.Link(app, role, "ListFlightplans()")
+	d.Link(role, user, "listFlightplans()")
+	d.Link(user, sys, "query database")
 	d.Link(app, browser, "write http response")
 
-	d.Group(app, sys, "Role based access to domain logic", "blue")
+	d.Group(app, role, "Protected by role", "blue")
+	d.Group(role, sys, "Unprotected", "red")
 	d.SetCaption(caption)
 	return d
 }
