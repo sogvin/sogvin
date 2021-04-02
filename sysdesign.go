@@ -9,7 +9,7 @@ import (
 	"github.com/gregoryv/draw/design"
 	"github.com/gregoryv/draw/shape"
 	"github.com/gregoryv/navstar"
-	"github.com/gregoryv/navstar/cmd/htspace"
+	"github.com/gregoryv/navstar/cmd/htnav"
 	. "github.com/gregoryv/web"
 )
 
@@ -140,9 +140,15 @@ var roleBasedService = Article(
 
 	P(`The navstar system needs to be exposed through an application
 	that understands the HTTP protocol. We can use the same method to
-	find a good name for the package holding the application.`),
+	find a good name for the package holding the application. After
+	some interations I ended up with`),
 
 	Em(`"Package htnav exposes the navstar system via HTTP"`),
+
+	P(`The name htnav is just that, a name which is short, easy to
+	pronounce and reads well when talking about the concepts it
+	provides. As you can see in the tree layout there are two
+	directories named htnav, this structure solves two things`),
 
 	P(`The reason you shouldn't name it e.g. "navstar" is that the
 	domain of navigating stars will grow and you probably want to
@@ -153,12 +159,14 @@ var roleBasedService = Article(
 	ShellCommand("$ tree navstar\n"+navstarTree),
 	//
 
-	P(`The system is the most prominent abstraction the navstar
+	H2("Navstar"),
+
+	P(`The type system is the most prominent abstraction the navstar
 	package provides. It's responsible for synchronizing database
 	access and other domain related configuration. There would usually
 	only exist one instance of the system.`),
 
-	LoadFullFile("", navstarDir("system.go")),
+	navrepo.LoadFile("system.go"),
 
 	P(`Roles expose access to user methods. Fairly often we talk about
 	what we can do with a system, referring to you and me as
@@ -174,7 +182,10 @@ var roleBasedService = Article(
 	Div(Class("figure"), navstarDiagram(`Different roles provide
 		different methods`).Inline()),
 
-	LoadFullFile("", navstarDir("role.go")),
+	P(`We start of by defining all roles in one file together with the
+	interface, showing partial content below`),
+
+	navrepo.LoadFile("role.go", 3, 25),
 
 	P(`This design provides well defined places to implement future
 	features. Assume the navstar service should provide planet
@@ -182,7 +193,7 @@ var roleBasedService = Article(
 
 	Ol(
 		Li("Define resource Planet"),
-		Li("Implement read write methods on type user, e.g.",
+		Li("Implement feature methods on type user, e.g.",
 			Ul(
 				Li(Code("viewPlanet(name string)")),
 				Li(Code("savePlanet(v Planet) error")),
@@ -197,12 +208,12 @@ var roleBasedService = Article(
 
 	H2("HTTP interface"),
 
-	P(`The application htspace can now expose the navstar features
+	P(`The htnav application can now expose the navstar features
 	using its system and roles. An application provides methods for
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.`),
 
-	LoadFullFile("", navstarDir("cmd/htspace/application.go")),
+	navrepo.LoadFile("cmd/htnav/application.go"),
 
 	P(`A request from a client such as a browser would follow the
 	below sequence.`),
@@ -212,7 +223,7 @@ var roleBasedService = Article(
 	P(`Separating the domain logic from the application exposing it
 	using some protocol allows your service to grow. Naming components
 	carefully we can reason about concepts such as the-galaxytravel-service,
-	navstar-system and htspace-application, which are all
+	navstar-system and htnav-application, which are all
 	easily referencable in the source code aswell.`),
 )
 
@@ -245,7 +256,7 @@ func usingNavstarSystem(caption string) *design.SequenceDiagram {
 		d       = design.NewSequenceDiagram()
 		browser = d.Add("browser")
 		srv     = d.AddStruct(http.Server{})
-		app     = d.AddStruct(htspace.Application{})
+		app     = d.AddStruct(htnav.Application{})
 		role    = d.AddInterface((*navstar.Role)(nil))
 		sys     = d.AddStruct(navstar.System{})
 	)
@@ -263,4 +274,10 @@ func usingNavstarSystem(caption string) *design.SequenceDiagram {
 
 func navstarDir(subpath string) string {
 	return filepath.Join("..", "navstar", subpath)
+}
+
+// ----------------------------------------
+var navrepo = &Repo{
+	host:  "https://github.com/gregoryv/navstar",
+	local: "/home/gregory/src/github.com/gregoryv/navstar",
 }

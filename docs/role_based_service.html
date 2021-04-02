@@ -101,8 +101,13 @@
 <h3>Application</h3>
 <p>The navstar system needs to be exposed through an application
 	that understands the HTTP protocol. We can use the same method to
-	find a good name for the package holding the application.</p>
-<em>"Package htnav exposes the navstar system via HTTP"</em><p>The reason you shouldn't name it e.g. "navstar" is that the
+	find a good name for the package holding the application. After
+	some interations I ended up with</p>
+<em>"Package htnav exposes the navstar system via HTTP"</em><p>The name htnav is just that, a name which is short, easy to
+	pronounce and reads well when talking about the concepts it
+	provides. As you can see in the tree layout there are two
+	directories named htnav, this structure solves two things</p>
+<p>The reason you shouldn't name it e.g. "navstar" is that the
 	domain of navigating stars will grow and you probably want to
 	expose parts of it differently, thus having multiple
 	applications. Adding files for some of the mentioned abstractions
@@ -110,21 +115,23 @@
 <pre class="command"><code>$ tree navstar
 navstar
 ├── cmd
-│   └── htspace
+│   └── htnav
 │       ├── application.go
-│       └── htspace
+│       └── htnav
 │           └── main.go
 ├── package.go
 ├── resource.go
 ├── role.go
-└── system.go
+├── system.go
+└── user.go
 
-3 directories, 6 files
-</code></pre><p>The system is the most prominent abstraction the navstar
+3 directories, 7 files
+</code></pre><h2>Navstar</h2>
+<p>The type system is the most prominent abstraction the navstar
 	package provides. It's responsible for synchronizing database
 	access and other domain related configuration. There would usually
 	only exist one instance of the system.</p>
-<div class="filename">navstar/system.go</div>
+<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/system.go">navstar/system.go</a></div>
 <pre class="srcfile complete"><code class="go">package navstar
 
 func NewSystem() *System {
@@ -171,60 +178,38 @@ type System struct {
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="211" y="190">navstar.Passenger struct</text>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="59" y="327">Different roles provide
 		different methods</text></svg></div>
-<div class="filename">navstar/role.go</div>
-<pre class="srcfile complete"><code class="go">package navstar
-
-type Role interface {
-	setUser(v *User)
+<p>We start of by defining all roles in one file together with the
+	interface, showing partial content below</p>
+<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/role.go">navstar/role.go</a></div>
+<pre class="srcfile"><code class="go">type Role interface {
 	PlanRoute(route Route) error
 	ListRoutes() ([]Route, error)
+	setUser(v *User)
 }
-
-type Pilot struct{ *User }
-
-func (me *Pilot) setUser(v *User) { me.User = v }
-
-func (me *Pilot) PlanRoute(v Route) error      { return me.planRoute(v) }
-func (me *Pilot) ListRoutes() ([]Route, error) { return me.listRoutes() }
 
 // ----------------------------------------
 
-type Passenger struct{ *User }
-
-func (me *Passenger) setUser(v *User) { me.User = v }
-
-func (me *Passenger) PlanRoute(v Route) error      { return ErrUnauthorized }
-func (me *Passenger) ListRoutes() ([]Route, error) { return me.listRoutes() }
-
-// ----------------------------------------
-
-// User implements domain logic for operations on the System and
-// should be used through a role.
-type User struct {
-	sys *System
+type Pilot struct {
+	*User
 }
 
-func (me *User) Use(v *System, role Role) Role {
-	me.sys = v
-	role.setUser(me)
-	return role
+func (me *Pilot) PlanRoute(v Route) error {
+	return me.planRoute(v)
 }
 
-func (me *User) planRoute(route Route) error {
-	// implement...
-	return nil
+func (me *Pilot) ListRoutes() ([]Route, error) {
+	return me.listRoutes()
 }
 
-func (me *User) listRoutes() ([]Route, error) {
-	// implement list routes
-	return nil, nil
+func (me *Pilot) setUser(v *User) {
+	me.User = v
 }
 </code></pre><p>This design provides well defined places to implement future
 	features. Assume the navstar service should provide planet
 	information to users.</p>
 <ol>
 <li>Define resource Planet</li>
-<li>Implement read write methods on type user, e.g.<ul>
+<li>Implement feature methods on type user, e.g.<ul>
 <li><code>viewPlanet(name string)</code></li>
 <li><code>savePlanet(v Planet) error</code></li>
 </ul>
@@ -235,13 +220,13 @@ func (me *User) listRoutes() ([]Route, error) {
 	part of this service, by extending the Service.Use() method with
 	e.g. credentials argument.</p>
 <h2>HTTP interface</h2>
-<p>The application htspace can now expose the navstar features
+<p>The htnav application can now expose the navstar features
 	using its system and roles. An application provides methods for
 	accessing resources via different URLs. The routing of a url to a
 	specific server method is handled by the subsequent router.</p>
-<div class="filename">htspace/application.go</div>
-<pre class="srcfile complete"><code class="go">// Package htspace exposes the navstar system via HTTP.
-package htspace
+<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/cmd/htnav/application.go">navstar/cmd/htnav/application.go</a></div>
+<pre class="srcfile complete"><code class="go">// Package htnav exposes the navstar system via HTTP.
+package htnav
 
 import (
 	"encoding/json"
@@ -296,7 +281,7 @@ func getRole(r *http.Request) navstar.Role {
 <line stroke="#d3d3d3" x1="172" y1="24" x2="172" y2="200"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="143" y="18">http.Server</text>
 <line stroke="#d3d3d3" x1="312" y1="24" x2="312" y2="200"/>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="259" y="18">htspace.Application</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="265" y="18">htnav.Application</text>
 <line stroke="#d3d3d3" x1="452" y1="24" x2="452" y2="200"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="418" y="18">navstar.Role</text>
 <line stroke="#d3d3d3" x1="592" y1="24" x2="592" y2="200"/>
@@ -325,7 +310,7 @@ func getRole(r *http.Request) navstar.Role {
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="203" y="289">Using navstar system via a HTTP interface</text></svg><p>Separating the domain logic from the application exposing it
 	using some protocol allows your service to grow. Naming components
 	carefully we can reason about concepts such as the-galaxytravel-service,
-	navstar-system and htspace-application, which are all
+	navstar-system and htnav-application, which are all
 	easily referencable in the source code aswell.</p>
 </article>
 <footer>Gregory Vin&ccaron;i&cacute;</footer></body>

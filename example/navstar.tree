@@ -1,12 +1,13 @@
 navstar
 ├── cmd
-│   └── htspace
+│   └── htnav
 │       ├── application.go
-│       └── htspace
+│       └── htnav
 │           └── main.go
 ├── package.go
 ├── resource.go
 ├── role.go
-└── system.go
+├── system.go
+└── user.go
 
-3 directories, 6 files
+3 directories, 7 files
