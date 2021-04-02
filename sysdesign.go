@@ -204,9 +204,14 @@ var roleBasedService = Article(
 		Li("Expose user methods to selected roles"),
 	),
 
-	P(`Once you need authentication you have the option to make it
-	part of this service, by extending the Service.Use() method with
-	e.g. credentials argument.`),
+	P(`Note that authentication is not part of this design,
+	i.e. translating some user credentials into one specific role. The
+	reason is that authentication is not part of the navstar
+	domain.`),
+
+	P(`At this point the navstar system is fairly well designed and we
+	know how to extend it with new features. It's time to expose the
+	navstar system with an application through a HTTP interface.`),
 
 	H2("HTTP interface"),
 
