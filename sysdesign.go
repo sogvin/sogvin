@@ -23,10 +23,9 @@ var roleBasedService = Article(
 	provide API's through the HTTP protocol and are often sizeable
 	applications. Without a clear design they become hard to maintain
 	over time. Moreover their features need protecting from
-	unauthorized access. One approach is control access to features
-	using roles.`, Br(), ` I'll explore one such design and elaborate
-	on the naming with an example service for navigating the
-	stars.`),
+	unauthorized access. This protection can be defined in roles.
+	I'll explore one such design and elaborate on the naming with an
+	example service for navigating the stars.`),
 
 	H2("Navigating the stars"),
 
@@ -44,9 +43,9 @@ var roleBasedService = Article(
 	submits a flight plan just days before departure to make sure it's
 	as accurate as possible since space travel is not an exact science
 	and there are lot of unknown objects about. Luckily the navigation
-	system provides them with all the information they need. Once the
-	plan has been submitted, passengers can view route details,
-	including interesting waypoints. Crew members can also access the
+	system provides the pilot with all the information they need. Once
+	the plan has been submitted, passengers can view route details,
+	including interesting waypoints. Crew members also access the
 	details of routes and possible alternatives, should there be an
 	unforseen cosmic event.`),
 
