@@ -28,11 +28,14 @@ var roleBasedService = Article(
 	example service for navigating the stars.`),
 
 	H2("Navigating the stars"),
+	Br(),
 
 	P(`Before we go into the design, let me tell you about the
     business of navigating through the galaxy. By describing the
     domain we'll be able to elicit concepts and features for our
     system design.`),
+
+	Div(Class("figure"), Img(Src("img/galaxytravel.png"))),
 
 	P(`The company <b>Future Inc.</b> provides people means to travel
 	the Milky Way. Customers, browse and order trips on `,
@@ -50,7 +53,7 @@ var roleBasedService = Article(
 	unforseen cosmic event.`),
 
 	P(`Now that we know a bit about the domain we'll be working in,
-	lets find the concepts and decide which ones are part of
+	lets find the important concepts and focus on the ones part of
 	navigating the stars.`),
 
 	H3(`Elicitation`),
