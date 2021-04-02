@@ -34,11 +34,11 @@
 	submits a flight plan just days before departure to make sure it's
 	as accurate as possible since space travel is not an exact science
 	and there are lot of unknown objects about. Luckily the navigation
-	system provides the pilot with all the information they need. Once
-	the plan has been submitted, passengers can view route details,
-	including interesting waypoints. Crew members also access the
-	details of routes and possible alternatives, should there be an
-	unforseen cosmic event.</p>
+	system provides the pilots with all the information they
+	need. Once the plan has been submitted, passengers can view route
+	details, including interesting waypoints. Crew members also access
+	the details of routes and possible alternatives, should there be
+	an unforseen cosmic event.</p>
 <p>Now that we know a bit about the domain we'll be working in,
 	lets find the important concepts and focus on the ones part of
 	navigating the stars.</p>
@@ -98,35 +98,7 @@
 <em>"Package navstar provides a system for planning galaxy flights"</em><p>Short pronouncable name, mentions the system and its main
 	purpose. It allows for easy discussion and ties into the domain
 	terminology nicely. Let's stick with it for now.</p>
-<h3>Application</h3>
-<p>The navstar system needs to be exposed through an application
-	that understands the HTTP protocol. We can use the same method to
-	find a good name for the package holding the application. After
-	some interations I ended up with</p>
-<em>"Package htnav exposes the navstar system via HTTP"</em><p>The name htnav is just that, a name which is short, easy to
-	pronounce and reads well when talking about the concepts it
-	provides. As you can see in the tree layout there are two
-	directories named htnav, this structure solves two things</p>
-<p>The reason you shouldn't name it e.g. "navstar" is that the
-	domain of navigating stars will grow and you probably want to
-	expose parts of it differently, thus having multiple
-	applications. Adding files for some of the mentioned abstractions
-	we end up with a directory tree like this</p>
-<pre class="command"><code>$ tree navstar
-navstar
-├── cmd
-│   └── htnav
-│       ├── application.go
-│       └── htnav
-│           └── main.go
-├── package.go
-├── resource.go
-├── role.go
-├── system.go
-└── user.go
-
-3 directories, 7 files
-</code></pre><h2>Navstar</h2>
+<h2>Navstar</h2>
 <p>The type system is the most prominent abstraction the navstar
 	package provides. It's responsible for synchronizing database
 	access and other domain related configuration. There would usually
@@ -235,7 +207,35 @@ func (me *Pilot) setUser(v *User) {
 <p>At this point the navstar system is fairly well designed and we
 	know how to extend it with new features. It's time to expose the
 	navstar system with an application through a HTTP interface.</p>
-<h2>HTTP interface</h2>
+<h3>Application</h3>
+<p>The navstar system needs to be exposed through an application
+	that understands the HTTP protocol. We can use the same method to
+	find a good name for the package holding the application. After
+	some interations I ended up with</p>
+<em>"Package htnav exposes the navstar system via HTTP"</em><p>The name htnav is just that, a name which is short, easy to
+	pronounce and reads well when talking about the concepts it
+	provides. As you can see in the tree layout there are two
+	directories named htnav, this structure solves two things</p>
+<p>The reason you shouldn't name it e.g. "navstar" is that the
+	domain of navigating stars will grow and you probably want to
+	expose parts of it differently, thus having multiple
+	applications. Adding files for some of the mentioned abstractions
+	we end up with a directory tree like this</p>
+<pre class="command"><code>$ tree navstar
+navstar
+├── cmd
+│   └── htnav
+│       ├── application.go
+│       └── htnav
+│           └── main.go
+├── package.go
+├── resource.go
+├── role.go
+├── system.go
+└── user.go
+
+3 directories, 7 files
+</code></pre><h2>HTTP interface</h2>
 <p>The htnav application can now expose the navstar features
 	using its system and roles. An application provides methods for
 	accessing resources via different URLs. The routing of a url to a

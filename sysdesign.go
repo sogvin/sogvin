@@ -46,11 +46,11 @@ var roleBasedService = Article(
 	submits a flight plan just days before departure to make sure it's
 	as accurate as possible since space travel is not an exact science
 	and there are lot of unknown objects about. Luckily the navigation
-	system provides the pilot with all the information they need. Once
-	the plan has been submitted, passengers can view route details,
-	including interesting waypoints. Crew members also access the
-	details of routes and possible alternatives, should there be an
-	unforseen cosmic event.`),
+	system provides the pilots with all the information they
+	need. Once the plan has been submitted, passengers can view route
+	details, including interesting waypoints. Crew members also access
+	the details of routes and possible alternatives, should there be
+	an unforseen cosmic event.`),
 
 	P(`Now that we know a bit about the domain we'll be working in,
 	lets find the important concepts and focus on the ones part of
@@ -138,29 +138,6 @@ var roleBasedService = Article(
 
 	// ----------------------------------------
 
-	H3("Application"),
-
-	P(`The navstar system needs to be exposed through an application
-	that understands the HTTP protocol. We can use the same method to
-	find a good name for the package holding the application. After
-	some interations I ended up with`),
-
-	Em(`"Package htnav exposes the navstar system via HTTP"`),
-
-	P(`The name htnav is just that, a name which is short, easy to
-	pronounce and reads well when talking about the concepts it
-	provides. As you can see in the tree layout there are two
-	directories named htnav, this structure solves two things`),
-
-	P(`The reason you shouldn't name it e.g. "navstar" is that the
-	domain of navigating stars will grow and you probably want to
-	expose parts of it differently, thus having multiple
-	applications. Adding files for some of the mentioned abstractions
-	we end up with a directory tree like this`),
-
-	ShellCommand("$ tree navstar\n"+navstarTree),
-	//
-
 	H2("Navstar"),
 
 	P(`The type system is the most prominent abstraction the navstar
@@ -215,6 +192,29 @@ var roleBasedService = Article(
 	P(`At this point the navstar system is fairly well designed and we
 	know how to extend it with new features. It's time to expose the
 	navstar system with an application through a HTTP interface.`),
+
+	H3("Application"),
+
+	P(`The navstar system needs to be exposed through an application
+	that understands the HTTP protocol. We can use the same method to
+	find a good name for the package holding the application. After
+	some interations I ended up with`),
+
+	Em(`"Package htnav exposes the navstar system via HTTP"`),
+
+	P(`The name htnav is just that, a name which is short, easy to
+	pronounce and reads well when talking about the concepts it
+	provides. As you can see in the tree layout there are two
+	directories named htnav, this structure solves two things`),
+
+	P(`The reason you shouldn't name it e.g. "navstar" is that the
+	domain of navigating stars will grow and you probably want to
+	expose parts of it differently, thus having multiple
+	applications. Adding files for some of the mentioned abstractions
+	we end up with a directory tree like this`),
+
+	ShellCommand("$ tree navstar\n"+navstarTree),
+	//
 
 	H2("HTTP interface"),
 
