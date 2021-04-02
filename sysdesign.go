@@ -183,7 +183,9 @@ var roleBasedService = Article(
 		different methods`).Inline()),
 
 	P(`We start of by defining all roles in one file together with the
-	interface, showing partial content below`),
+	interface, showing partial content below. The reason being that
+	roles change together, ie. if we define a new feature method, all
+	roles need updating.`),
 
 	navrepo.LoadFile("role.go", 3, 25),
 
@@ -241,11 +243,13 @@ func navstarDiagram(caption string) *design.ClassDiagram {
 		role      = d.Interface((*navstar.Role)(nil))
 		pilot     = d.Struct(navstar.Pilot{})
 		passenger = d.Struct(navstar.Passenger{})
+		crew      = d.Struct(navstar.Crew{})
 	)
-	d.Place(role).At(120, 20)
+	d.Place(role).At(100, 20)
 	d.Place(pilot).Below(role, 70)
 	shape.Move(pilot, -100, 0)
-	d.Place(passenger).RightOf(pilot, 70)
+	d.Place(passenger, crew).RightOf(pilot, 70)
+	d.VAlignCenter(passenger, role)
 
 	d.SetCaption(caption)
 	return d
