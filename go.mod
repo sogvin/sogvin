@@ -18,3 +18,4 @@ require (
 )
 
 replace github.com/gregoryv/navstar => ../navstar
+replace github.com/gregoryv/draw => ../draw

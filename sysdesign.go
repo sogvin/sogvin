@@ -138,7 +138,10 @@ var roleBasedService = Article(
 
 	// ----------------------------------------
 
-	H2("Navstar"),
+	H3("Navstar package"),
+
+	Div(Class("figure"), coreDiagram(`Navstar package is the core
+	package with domain logic`).Inline()),
 
 	P(`The type system is the most prominent abstraction the navstar
 	package provides. It's responsible for synchronizing database
@@ -244,6 +247,35 @@ var repoLink = A(
 
 //go:embed "example/navstar.tree"
 var navstarTree string
+
+func coreDiagram(caption string) *design.Diagram {
+	var (
+		w, h, r, s = 80, 50, 20, 2
+		dx         = w - r
+		dy         = h / 2
+		right      = dx + 2*s
+		below      = -dy + s
+		above      = dy - s
+		d          = design.NewDiagram()
+		ns         = shape.NewHexagon("navstar", w, h, r)
+		htnav      = shape.NewHexagon("", w, h, r)
+		cmd        = shape.NewHexagon("", w, h, r)
+		htnavcmd   = shape.NewHexagon("", w, h, r)
+	)
+	_ = below
+	shape.SetClass("dim", htnav, cmd, htnavcmd)
+	d.Place(ns).At(80, 120)
+
+	d.Place(htnav).Above(ns, 0)
+	shape.Move(htnav, right, above)
+
+	d.Place(cmd).Above(ns, 2*s)
+	d.Place(htnavcmd).Above(cmd, 0)
+	shape.Move(htnavcmd, right, above)
+
+	d.SetCaption(caption)
+	return d
+}
 
 func navstarDiagram(caption string) *design.ClassDiagram {
 	var (

@@ -98,7 +98,21 @@
 <em>"Package navstar provides a system for planning galaxy flights"</em><p>Short pronouncable name, mentions the system and its main
 	purpose. It allows for easy discussion and ties into the domain
 	terminology nicely. Let's stick with it for now.</p>
-<h2>Navstar</h2>
+<h3>Navstar package</h3>
+<div class="figure"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  font-family="Arial,Helvetica,sans-serif" width="313" height="224">
+<path stroke="#d3d3d3" fill="#ffffff" d="M100,120 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="100" y="149">navstar</text>
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M164,93 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="184" y="122"></text>
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M100,66 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="120" y="95"></text>
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M164,39 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="184" y="68"></text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="0" y="217">Navstar package is the core
+	package with domain logic</text></svg></div>
 <p>The type system is the most prominent abstraction the navstar
 	package provides. It's responsible for synchronizing database
 	access and other domain related configuration. There would usually
@@ -268,8 +282,9 @@ func (me *Application) Router() *http.ServeMux {
 }
 
 func (me *Application) serveRoutes(w http.ResponseWriter, r *http.Request) {
+	var role navstar.Role = getRole(r)
 	var user navstar.User
-	role := user.Use(me.sys, getRole(r))
+	user.Use(me.sys, role)
 
 	routes, _ := role.ListFlightplans()
 	json.NewEncoder(w).Encode(routes)
