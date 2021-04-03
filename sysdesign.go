@@ -140,13 +140,18 @@ var roleBasedService = Article(
 
 	H3("Navstar package"),
 
-	Div(Class("figure"), coreDiagram(`Navstar package is the core
-	package with domain logic`).Inline()),
+	P(`Navstar implements domain logic related to planning galaxy
+	flights. It's at the core of our design. Later we'll build other
+	layers on top of it.`),
+
+	Div(Class("figure"), coreDiagram(`Navstar is the core package with
+	domain logic`).Inline()),
 
 	P(`The type system is the most prominent abstraction the navstar
 	package provides. It's responsible for synchronizing database
 	access and other domain related configuration. There would usually
-	only exist one instance of the system.`),
+	only exist one instance of the system in any running
+	application.`),
 
 	navrepo.LoadFile("system.go"),
 
