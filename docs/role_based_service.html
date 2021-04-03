@@ -224,43 +224,15 @@ func (me *Pilot) setUser(v *User) {
 	domain.</p>
 <p>At this point the navstar system is fairly well designed and we
 	know how to extend it with new features. It's time to expose the
-	navstar system with an application through a HTTP interface.</p>
-<h3>Application</h3>
-<p>The navstar system needs to be exposed through an application
-	that understands the HTTP protocol. We can use the same method to
-	find a good name for the package holding the application. After
-	some interations I ended up with</p>
-<em>"Package htnav exposes the navstar system via HTTP"</em><p>The name htnav is just that, a name which is short, easy to
-	pronounce and reads well when talking about the concepts it
-	provides. As you can see in the tree layout there are two
-	directories named htnav, this structure solves two things</p>
-<p>The reason you shouldn't name it e.g. "navstar" is that the
-	domain of navigating stars will grow and you probably want to
-	expose parts of it differently, thus having multiple
-	applications. Adding files for some of the mentioned abstractions
-	we end up with a directory tree like this</p>
-<pre class="command"><code>$ tree navstar
-navstar
-├── cmd
-│   └── htnav
-│       ├── application.go
-│       └── htnav
-│           └── main.go
-├── package.go
-├── resource.go
-├── role.go
-├── system.go
-└── user.go
-
-3 directories, 7 files
-</code></pre><h2>HTTP interface</h2>
-<p>The htnav application can now expose the navstar features
-	using its system and roles. An application provides methods for
-	accessing resources via different URLs. The routing of a url to a
-	specific server method is handled by the subsequent router.</p>
-<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/cmd/htnav/application.go">navstar/cmd/htnav/application.go</a></div>
-<pre class="srcfile complete"><code class="go">// Package htnav exposes the navstar system via HTTP.
-package htnav
+	navstar system through a HTTP interface.</p>
+<h2>HTTP Api</h2>
+<p>The htapi provides a router that expose the navstar features
+	using its system and roles. Resources are accessible via different
+	URLs. The routing of a url to a specific server method is handled
+	by the subsequent muxer.</p>
+<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/htapi/application.go">navstar/htapi/application.go</a></div>
+<pre class="srcfile complete"><code class="go">// Package htapi exposes the navstar system via HTTP.
+package htapi
 
 import (
 	"encoding/json"
@@ -269,23 +241,23 @@ import (
 	"github.com/gregoryv/navstar"
 )
 
-func NewApplication(sys *navstar.System) *Application {
-	return &Application{sys: sys}
+func NewHttpRouter(sys *navstar.System) *HttpRouter {
+	mux := http.NewServeMux()
+	hr := HttpRouter{sys: sys, mux: mux}
+	mux.HandleFunc("/routes", hr.serveRoutes)
+	return &hr
 }
 
-type Application struct {
+type HttpRouter struct {
 	sys *navstar.System
+	mux *http.ServeMux
 }
 
-// Router returns a router providing HTTP access to the navstar
-// system.
-func (me *Application) Router() *http.ServeMux {
-	m := http.NewServeMux()
-	m.HandleFunc("/routes", me.serveRoutes)
-	return m
+func (me *HttpRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	me.mux.ServeHTTP(w, r)
 }
 
-func (me *Application) serveRoutes(w http.ResponseWriter, r *http.Request) {
+func (me *HttpRouter) serveRoutes(w http.ResponseWriter, r *http.Request) {
 	var role navstar.Role = getRole(r)
 	var user navstar.User
 	user.Use(me.sys, role)
@@ -312,66 +284,87 @@ func getRole(r *http.Request) navstar.Role {
 <svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  font-family="Arial,Helvetica,sans-serif" width="626" height="428">
-<rect stroke="black" stroke-width="0" fill="#ff9999" fill-opacity="0.1" x="362" y="24" width="220" height="350"/>
-<text class="area-red-title" font-size="12px" x="368" y="42"></text>
-<rect stroke="black" stroke-width="0" fill="#99e6ff" fill-opacity="0.1" x="252" y="24" width="110" height="350"/>
-<text class="area-blue-title" font-size="12px" x="258" y="42"></text>
-<line stroke="#d3d3d3" x1="32" y1="24" x2="32" y2="332"/>
+  font-family="Arial,Helvetica,sans-serif" width="636" height="395">
+<rect stroke="black" stroke-width="0" fill="#ff9999" fill-opacity="0.1" x="312" y="24" width="280" height="317"/>
+<text class="area-red-title" font-size="12px" x="318" y="42"></text>
+<rect stroke="black" stroke-width="0" fill="#99e6ff" fill-opacity="0.1" x="172" y="24" width="140" height="317"/>
+<text class="area-blue-title" font-size="12px" x="178" y="42"></text>
+<line stroke="#d3d3d3" x1="32" y1="24" x2="32" y2="299"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="10" y="18">browser</text>
-<line stroke="#d3d3d3" x1="142" y1="24" x2="142" y2="332"/>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="113" y="18">http.Server</text>
-<line stroke="#d3d3d3" x1="252" y1="24" x2="252" y2="332"/>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="205" y="18">htnav.Application</text>
-<line stroke="#d3d3d3" x1="362" y1="24" x2="362" y2="332"/>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="328" y="18">navstar.Role</text>
-<text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="261" y="367">Protected by role</text>
-<line stroke="#d3d3d3" x1="472" y1="24" x2="472" y2="332"/>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="438" y="18">navstar.User</text>
-<line stroke="#d3d3d3" x1="582" y1="24" x2="582" y2="332"/>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="541" y="18">navstar.System</text>
-<text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="438" y="367">Unprotected</text>
-<path stroke="black" d="M32,57 L142,57" />
-<g transform="rotate(0 142 57)"><path stroke="black" fill="#ffffff" d="M142,57 l-8,-4 l 0,8 Z" /></g>
+<line stroke="#d3d3d3" x1="172" y1="24" x2="172" y2="299"/>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="128" y="18">htapi.HttpRouter</text>
+<line stroke="#d3d3d3" x1="312" y1="24" x2="312" y2="299"/>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="278" y="18">navstar.Role</text>
+<text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="196" y="334">Protected by role</text>
+<line stroke="#d3d3d3" x1="452" y1="24" x2="452" y2="299"/>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="418" y="18">navstar.User</text>
+<line stroke="#d3d3d3" x1="592" y1="24" x2="592" y2="299"/>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="551" y="18">navstar.System</text>
+<text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="418" y="334">Unprotected</text>
+<path stroke="black" d="M32,57 L172,57" />
+<g transform="rotate(0 172 57)"><path stroke="black" fill="#ffffff" d="M172,57 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="55" y="54">GET /routes</text>
-<path stroke="black" d="M142,90 L252,90" />
-<g transform="rotate(0 252 90)"><path stroke="black" fill="#ffffff" d="M252,90 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="70" y="54">GET /routes</text>
+<path stroke="black" d="M172,90 L312,90" />
+<g transform="rotate(0 312 90)"><path stroke="black" fill="#ffffff" d="M312,90 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="158" y="87">serveRoutes()</text>
-<path stroke="black" d="M252,123 L362,123" />
-<g transform="rotate(0 362 123)"><path stroke="black" fill="#ffffff" d="M362,123 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="217" y="87">new: role</text>
+<path stroke="black" d="M172,123 L452,123" />
+<g transform="rotate(0 452 123)"><path stroke="black" fill="#ffffff" d="M452,123 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="282" y="120">new: role</text>
-<path stroke="black" d="M252,156 L472,156" />
-<g transform="rotate(0 472 156)"><path stroke="black" fill="#ffffff" d="M472,156 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="285" y="120">new: user</text>
+<path stroke="black" d="M172,156 L452,156" />
+<g transform="rotate(0 452 156)"><path stroke="black" fill="#ffffff" d="M452,156 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="335" y="153">new: user</text>
-<path stroke="black" d="M252,189 L472,189" />
-<g transform="rotate(0 472 189)"><path stroke="black" fill="#ffffff" d="M472,189 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="264" y="153">Use(system, role)</text>
+<path stroke="black" d="M172,189 L312,189" />
+<g transform="rotate(0 312 189)"><path stroke="black" fill="#ffffff" d="M312,189 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="314" y="186">Use(system, role)</text>
-<path stroke="black" d="M252,222 L362,222" />
-<g transform="rotate(0 362 222)"><path stroke="black" fill="#ffffff" d="M362,222 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="198" y="186">ListFlightplans()</text>
+<path stroke="black" d="M312,222 L452,222" />
+<g transform="rotate(0 452 222)"><path stroke="black" fill="#ffffff" d="M452,222 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="263" y="219">ListFlightplans()</text>
-<path stroke="black" d="M362,255 L472,255" />
-<g transform="rotate(0 472 255)"><path stroke="black" fill="#ffffff" d="M472,255 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="340" y="219">listFlightplans()</text>
+<path stroke="black" d="M452,255 L592,255" />
+<g transform="rotate(0 592 255)"><path stroke="black" fill="#ffffff" d="M592,255 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="375" y="252">listFlightplans()</text>
-<path stroke="black" d="M472,288 L582,288" />
-<g transform="rotate(0 582 288)"><path stroke="black" fill="#ffffff" d="M582,288 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="479" y="252">query database</text>
+<path stroke="black" d="M172,288 L32,288" />
+<g transform="rotate(180 32 288)"><path stroke="black" fill="#ffffff" d="M32,288 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="484" y="285">query database</text>
-<path stroke="black" d="M252,321 L32,321" />
-<g transform="rotate(180 32 321)"><path stroke="black" fill="#ffffff" d="M32,321 l-8,-4 l 0,8 Z" /></g>
-
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="91" y="318">write http response</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="198" y="421">Using navstar system via a HTTP interface</text></svg><p>Separating the domain logic from the application exposing it
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="51" y="285">write http response</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="203" y="388">Using navstar system via a HTTP interface</text></svg><p>Separating the domain logic from the application exposing it
 	using some protocol allows your service to grow. Naming components
 	carefully we can reason about concepts such as the-galaxytravel-service,
 	navstar-system and htnav-application, which are all
 	easily referencable in the source code aswell.</p>
-</article>
+<h3>Application</h3>
+<p>The navstar system needs to be exposed through an application
+	that understands the HTTP protocol. We can use the same method to
+	find a good name for the package holding the application. After
+	some interations I ended up with</p>
+<em>"Package htnav exposes the navstar system via HTTP"</em><p>The name htnav is just that, a name which is short, easy to
+	pronounce and reads well when talking about the concepts it
+	provides.</p>
+<p>The reason you shouldn't name it e.g. "navstar" is that the
+	domain of navigating stars will grow and you probably want to
+	expose parts of it differently, thus having multiple
+	applications. Adding files for some of the mentioned abstractions
+	we end up with a directory tree like this</p>
+<pre class="command"><code>$ tree navstar
+navstar
+├── cmd
+│   └── htnav
+│       └── main.go
+├── htapi
+│   └── application.go
+├── package.go
+├── resource.go
+├── role.go
+├── system.go
+└── user.go
+
+3 directories, 7 files
+</code></pre></article>
 <footer>Gregory Vin&ccaron;i&cacute;</footer></body>
 </html>

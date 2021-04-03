@@ -1,7 +1,6 @@
 package sogvin
 
 import (
-	"net/http"
 	"path/filepath"
 
 	_ "embed"
@@ -9,7 +8,7 @@ import (
 	"github.com/gregoryv/draw/design"
 	"github.com/gregoryv/draw/shape"
 	"github.com/gregoryv/navstar"
-	"github.com/gregoryv/navstar/cmd/htnav"
+	"github.com/gregoryv/navstar/htapi"
 	. "github.com/gregoryv/web"
 )
 
@@ -199,7 +198,27 @@ var roleBasedService = Article(
 
 	P(`At this point the navstar system is fairly well designed and we
 	know how to extend it with new features. It's time to expose the
-	navstar system with an application through a HTTP interface.`),
+	navstar system through a HTTP interface.`),
+
+	H2("HTTP Api"),
+
+	P(`The htapi provides a router that expose the navstar features
+	using its system and roles. Resources are accessible via different
+	URLs. The routing of a url to a specific server method is handled
+	by the subsequent muxer.`),
+
+	navrepo.LoadFile("htapi/application.go"),
+
+	P(`A request from a client such as a browser would follow the
+	below sequence.`),
+
+	usingNavstarSystem("Using navstar system via a HTTP interface").Inline(),
+
+	P(`Separating the domain logic from the application exposing it
+	using some protocol allows your service to grow. Naming components
+	carefully we can reason about concepts such as the-galaxytravel-service,
+	navstar-system and htnav-application, which are all
+	easily referencable in the source code aswell.`),
 
 	H3("Application"),
 
@@ -212,8 +231,7 @@ var roleBasedService = Article(
 
 	P(`The name htnav is just that, a name which is short, easy to
 	pronounce and reads well when talking about the concepts it
-	provides. As you can see in the tree layout there are two
-	directories named htnav, this structure solves two things`),
+	provides.`),
 
 	P(`The reason you shouldn't name it e.g. "navstar" is that the
 	domain of navigating stars will grow and you probably want to
@@ -223,26 +241,6 @@ var roleBasedService = Article(
 
 	ShellCommand("$ tree navstar\n"+navstarTree),
 	//
-
-	H2("HTTP interface"),
-
-	P(`The htnav application can now expose the navstar features
-	using its system and roles. An application provides methods for
-	accessing resources via different URLs. The routing of a url to a
-	specific server method is handled by the subsequent router.`),
-
-	navrepo.LoadFile("cmd/htnav/application.go"),
-
-	P(`A request from a client such as a browser would follow the
-	below sequence.`),
-
-	usingNavstarSystem("Using navstar system via a HTTP interface").Inline(),
-
-	P(`Separating the domain logic from the application exposing it
-	using some protocol allows your service to grow. Naming components
-	carefully we can reason about concepts such as the-galaxytravel-service,
-	navstar-system and htnav-application, which are all
-	easily referencable in the source code aswell.`),
 )
 
 var repoLink = A(
@@ -304,15 +302,13 @@ func usingNavstarSystem(caption string) *design.SequenceDiagram {
 	var (
 		d       = design.NewSequenceDiagram()
 		browser = d.Add("browser")
-		srv     = d.AddStruct(http.Server{})
-		app     = d.AddStruct(htnav.Application{})
+		app     = d.AddStruct(htapi.HttpRouter{})
 		role    = d.AddInterface((*navstar.Role)(nil))
 		user    = d.AddStruct(navstar.User{})
 		sys     = d.AddStruct(navstar.System{})
 	)
-	d.ColWidth = 110
-	d.Link(browser, srv, "GET /routes")
-	d.Link(srv, app, "serveRoutes()")
+	d.ColWidth = 140
+	d.Link(browser, app, "GET /routes")
 	d.Link(app, role, "new: role")
 	d.Link(app, user, "new: user")
 	d.Link(app, user, "Use(system, role)")

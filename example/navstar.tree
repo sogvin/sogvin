@@ -1,9 +1,9 @@
 navstar
 ├── cmd
 │   └── htnav
-│       ├── application.go
-│       └── htnav
-│           └── main.go
+│       └── main.go
+├── htapi
+│   └── application.go
 ├── package.go
 ├── resource.go
 ├── role.go
