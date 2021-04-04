@@ -25,7 +25,7 @@
 <li class="h2"><a href="#systemdesign">System design</a></li>
 <li class="h3"><a href="#packagenaming">Package naming</a></li>
 <li class="h3"><a href="#navstarpackage">Navstar package</a></li>
-<li class="h2"><a href="#httpinterface">HTTP interface</a></li>
+<li class="h2"><a href="#httpprogramminginterface">HTTP programming interface</a></li>
 <li class="h2"><a href="#application">Application</a></li>
 </ul>
 </nav>
@@ -239,19 +239,22 @@ func (me *Pilot) setUser(v *User) {
 	    navstar domain.</p>
 <p>At this point the navstar system is fairly well designed
 	    and we know how to extend it with new features. It's time to
-	    expose the navstar system through a HTTP interface.</p>
-<h2 id="httpinterface"><a href="#httpinterface">HTTP interface</a></h2>
+	    expose the navstar system through a HTTP programming
+	    interface.</p>
+<h2 id="httpprogramminginterface"><a href="#httpprogramminginterface">HTTP programming interface</a></h2>
 <p>At this stage I haven't decided on a specific design for
 		the interface. I know however that talking about this part of
-		the design; well use wording like "web api" or "http
-		api". Now, a name like webapi seems a bit to generic as HTTP
-		is not the only protocol to us.</p>
-<p>The htapi provides a router that expose the navstar
+		the design; well use wording like "navstar webapi", "navstar
+		httpapi" or even simply "navstar api". Now, a name like webapi
+		or api alone seems a bit to generic as HTTP is not the only
+		protocol to us. httpapi is a mouthful so we'll shorten it to
+		<em>htapi</em>.</p>
+<p>The htapi provides a router that exposes the navstar
 	    features using its system and roles. Resources are accessible
 	    via different URLs. The routing of a url to a specific server
-	    method is handled by the subsequent muxer.</p>
+	    method is handled by the muxer.</p>
 <div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/htapi/application.go">navstar/htapi/application.go</a></div>
-<pre class="srcfile complete"><code class="go">// Package htapi exposes the navstar system via HTTP.
+<pre class="srcfile"><code class="go">// Package htapi exposes the navstar system via HTTP.
 package htapi
 
 import (
@@ -263,41 +266,14 @@ import (
 
 func NewRouter(sys *navstar.System) *Router {
 	mux := http.NewServeMux()
-	hr := Router{sys: sys, mux: mux}
-	mux.HandleFunc("/routes", hr.serveRoutes)
-	return &hr
+	r := Router{sys: sys, mux: mux}
+	mux.HandleFunc("/routes", r.serveRoutes)
+	return &r
 }
 
 type Router struct {
 	sys *navstar.System
 	mux *http.ServeMux
-}
-
-func (me *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	me.mux.ServeHTTP(w, r)
-}
-
-func (me *Router) serveRoutes(w http.ResponseWriter, r *http.Request) {
-	var role navstar.Role = getRole(r)
-	var user navstar.User
-	user.Use(me.sys, role)
-
-	routes, _ := role.ListFlightplans()
-	json.NewEncoder(w).Encode(routes)
-}
-
-// getRole returns a role implementation based on the incomming
-// request. This one just looks for the query parameter role. Defaults
-// to the passenger role.
-func getRole(r *http.Request) navstar.Role {
-	switch r.URL.Query().Get("role") {
-	case "pilot":
-		return &navstar.Pilot{}
-	case "crew":
-		return &navstar.Crew{}
-	default:
-		return &navstar.Passenger{}
-	}
 }
 </code></pre><p>A request from a client such as a browser would follow the
 	    below sequence.</p>

@@ -208,22 +208,27 @@ var roleBasedService = func() *Element {
 
 		P(`At this point the navstar system is fairly well designed
 	    and we know how to extend it with new features. It's time to
-	    expose the navstar system through a HTTP interface.`),
+	    expose the navstar system through a HTTP programming
+	    interface.`),
 
-		H2("HTTP interface"),
+		// ----------------------------------------
+
+		H2("HTTP programming interface"),
 
 		P(`At this stage I haven't decided on a specific design for
 		the interface. I know however that talking about this part of
-		the design; well use wording like "web api" or "http
-		api". Now, a name like webapi seems a bit to generic as HTTP
-		is not the only protocol to us.`),
+		the design; well use wording like "navstar webapi", "navstar
+		httpapi" or even simply "navstar api". Now, a name like webapi
+		or api alone seems a bit to generic as HTTP is not the only
+		protocol to us. httpapi is a mouthful so we'll shorten it to
+		<em>htapi</em>.`),
 
-		P(`The htapi provides a router that expose the navstar
+		P(`The htapi provides a router that exposes the navstar
 	    features using its system and roles. Resources are accessible
 	    via different URLs. The routing of a url to a specific server
-	    method is handled by the subsequent muxer.`),
+	    method is handled by the muxer.`),
 
-		navrepo.LoadFile("htapi/application.go"),
+		navrepo.LoadFile("htapi/application.go", 0, 21),
 
 		P(`A request from a client such as a browser would follow the
 	    below sequence.`),
@@ -236,6 +241,8 @@ var roleBasedService = func() *Element {
 	    the-galaxytravel-service, navstar-system and
 	    htnav-application, which are all easily referencable in the
 	    source code aswell.`),
+
+		// ----------------------------------------
 
 		H2("Application"),
 
