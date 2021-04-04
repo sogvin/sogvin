@@ -249,6 +249,20 @@ func (me *Pilot) setUser(v *User) {
 		or api alone seems a bit to generic as HTTP is not the only
 		protocol to us. httpapi is a mouthful so we'll shorten it to
 		<em>htapi</em>.</p>
+<div class="figure"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  font-family="Arial,Helvetica,sans-serif" width="286" height="224">
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M100,120 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="100" y="149">navstar</text>
+<path stroke="#d3d3d3" fill="#ffffff" d="M164,93 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="169" y="122">htnav</text>
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M100,66 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="120" y="95"></text>
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M164,39 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="184" y="68"></text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="0" y="217">htapi package is separated
+		from the core navstar</text></svg></div>
 <p>The htapi provides a router that exposes the navstar
 	    features using its system and roles. Resources are accessible
 	    via different URLs. The routing of a url to a specific server

@@ -223,6 +223,9 @@ var roleBasedService = func() *Element {
 		protocol to us. httpapi is a mouthful so we'll shorten it to
 		<em>htapi</em>.`),
 
+		Div(Class("figure"), htapiDiagram(`htapi package is separated
+		from the core navstar`).Inline()),
+
 		P(`The htapi provides a router that exposes the navstar
 	    features using its system and roles. Resources are accessible
 	    via different URLs. The routing of a url to a specific server
@@ -301,6 +304,35 @@ func coreDiagram(caption string) *design.Diagram {
 	)
 	_ = below
 	shape.SetClass("dim", htnav, cmd, htnavcmd)
+	d.Place(ns).At(80, 120)
+
+	d.Place(htnav).Above(ns, 0)
+	shape.Move(htnav, right, above)
+
+	d.Place(cmd).Above(ns, 2*s)
+	d.Place(htnavcmd).Above(cmd, 0)
+	shape.Move(htnavcmd, right, above)
+
+	d.SetCaption(caption)
+	return d
+}
+
+func htapiDiagram(caption string) *design.Diagram {
+	var (
+		w, h, r, s = 80, 50, 20, 2
+		dx         = w - r
+		dy         = h / 2
+		right      = dx + 2*s
+		below      = -dy + s
+		above      = dy - s
+		d          = design.NewDiagram()
+		ns         = shape.NewHexagon("navstar", w, h, r)
+		htnav      = shape.NewHexagon("htnav", w, h, r)
+		cmd        = shape.NewHexagon("", w, h, r)
+		htnavcmd   = shape.NewHexagon("", w, h, r)
+	)
+	_ = below
+	shape.SetClass("dim", ns, cmd, htnavcmd)
 	d.Place(ns).At(80, 120)
 
 	d.Place(htnav).Above(ns, 0)
