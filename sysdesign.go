@@ -80,8 +80,8 @@ var roleBasedService = func() *Element {
 	    leaves us passenger, captain and crew members. Obviously the
 	    passenger is a customer at some point but the word customer is
 	    irrelevant when it comes to navigating the stars. A passenger
-	    however does have access to view parts of the flight plan,
-	    which leads us to enumerating the features of our navigation
+	    however, has access to viewing parts of the flight plan, which
+	    leads us to enumerating the features of our navigation
 	    service.`),
 
 		P(`We recognize that the galaxytravel service, serves both
@@ -176,8 +176,8 @@ var roleBasedService = func() *Element {
 		Em(`- Passengers and crew member view flightplans`),
 
 		P(`This translates to SubmitFlightplan is implemented by type
-	    user and accessible via the pilot role. Also ViewFlightplan is
-	    implemented by type user but accessible by roles pilot,
+	    user and accessible via the pilot role. Also ListFlightplans
+	    is implemented by type user but accessible by roles pilot,
 	    passenger and crew member.`),
 
 		Div(Class("figure"), navstarDiagram(`Different roles provide
@@ -221,11 +221,11 @@ var roleBasedService = func() *Element {
 
 		P(`At this stage I haven't decided on a specific design for
 		the interface. I know however that talking about this part of
-		the design; well use wording like "navstar webapi", "navstar
-		httpapi" or even simply "navstar api". Now, a name like webapi
-		or api alone seems a bit to generic as HTTP is not the only
-		protocol to us. httpapi is a mouthful so we'll shorten it to
-		<em>htapi</em>.`),
+		the design; we will use wording like "navstar webapi",
+		"navstar httpapi" or even simply "navstar api". Now, a name
+		like webapi or api alone seems a bit to generic as HTTP is not
+		the only protocol available to us. Httpapi is a mouthful so
+		we'll shorten it to <em>htapi</em>.`),
 
 		Div(Class("figure"), htapiDiagram(`htapi package is separated
 		from the core navstar`).Inline()),
@@ -233,7 +233,9 @@ var roleBasedService = func() *Element {
 		P(`The htapi provides a router that exposes the navstar
 	    features using its system and roles. Resources are accessible
 	    via different URLs. The routing of a url to a specific server
-	    method is handled by the muxer.`),
+	    method is handled by the muxer. Note how in this layer we are
+	    increasingly using terms outside of the domain and more
+	    technical, which is perfectly ok.`),
 
 		navrepo.LoadFile("htapi/router.go", 0, 21),
 
@@ -249,12 +251,12 @@ var roleBasedService = func() *Element {
 
 		navrepo.LoadFile("htapi/router.go", 23, -1),
 
-		P(`We can keep on developing this layer until we think we're
+		P(`We can keep on developing this layer until we think it's
 		ready to let other people start using it. This would be the
 		time you think about designing for deployment, performance and
 		maintainers. I won't go into those areas here. Let's focus on
-		the design on one particular application we intend to deliver
-		that can be hosted on some server.`),
+		the design for one particular application we intend to deliver
+		that can be hosted on some server in the cloud.`),
 
 		// ----------------------------------------
 
@@ -267,7 +269,7 @@ var roleBasedService = func() *Element {
 	    command-folders are found under the folder
 	    <code>cmd/</code>. We can use the same method to find a good
 	    name for the package holding the application. After some
-	    interations I ended up with with the name <em>starplan</em>`),
+	    interations I ended up with with the name <em>starplan</em>.`),
 
 		Div(Class("figure"), starplanDiagram(`Command starplan exposes
 		the htapi via a TCP server.`).Inline()),
@@ -275,18 +277,20 @@ var roleBasedService = func() *Element {
 		P(`The reason you shouldn't name it e.g. "navstar" is that the
 	    domain of navigating stars will grow and you probably want to
 	    expose parts of it differently, thus having multiple
-	    commands. Adding files for some of the mentioned abstractions
-	    we end up with a directory tree like this`),
+	    commands.`), Br(), `Adding files for some of the mentioned
+	    abstractions we end up with a directory tree like this`),
 
 		ShellCommand("$ tree navstar\n"+navstarTree),
 
 		H2("Summary"),
 
 		P(`Separating the domain logic from the application exposing
-	    it allows your service to grow. Naming components carefully we
-	    can reason about concepts such as the-galaxytravel-service,
-	    navstar-system and starplan-application, which are all easily
-	    referencable in the source code aswell.`),
+	    it allows your service to grow more easily. I'm for allowing
+	    each layer to grow independently as much as possible. By
+	    naming components carefully we can reason about concepts such
+	    as the-galaxytravel-service, navstar-system and
+	    starplan-application, which are all easily referencable in the
+	    source code aswell.`),
 	//
 	)
 	toc.MakeTOC(nav, article, "h2", "h3")
