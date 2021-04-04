@@ -256,7 +256,7 @@ func (me *Pilot) setUser(v *User) {
 <path stroke="#d3d3d3" fill="#e2e2e2" d="M100,120 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
 <text class="dim-title" font-size="12px" x="100" y="149">navstar</text>
 <path stroke="#d3d3d3" fill="#ffffff" d="M164,93 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="169" y="122">htnav</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="170" y="122">htapi</text>
 <path stroke="#d3d3d3" fill="#e2e2e2" d="M100,66 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
 <text class="dim-title" font-size="12px" x="120" y="95"></text>
 <path stroke="#d3d3d3" fill="#e2e2e2" d="M164,39 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
@@ -384,14 +384,14 @@ func getRole(r *http.Request) navstar.Role {
 	    it using some protocol allows your service to grow. Naming
 	    components carefully we can reason about concepts such as
 	    the-galaxytravel-service, navstar-system and
-	    htnav-application, which are all easily referencable in the
+	    htapi-application, which are all easily referencable in the
 	    source code aswell.</p>
 <h2 id="application"><a href="#application">Application</a></h2>
 <p>The navstar system needs to be exposed through an
 	    application that understands the HTTP protocol. We can use the
 	    same method to find a good name for the package holding the
 	    application. After some interations I ended up with</p>
-<em>"Package htnav exposes the navstar system via HTTP"</em><p>The name htnav is just that, a name which is short, easy to
+<em>"Package htapi exposes the navstar system via HTTP"</em><p>The name htapi is just that, a name which is short, easy to
 	    pronounce and reads well when talking about the concepts it
 	    provides.</p>
 <p>The reason you shouldn't name it e.g. "navstar" is that the

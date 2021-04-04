@@ -249,7 +249,7 @@ var roleBasedService = func() *Element {
 	    it using some protocol allows your service to grow. Naming
 	    components carefully we can reason about concepts such as
 	    the-galaxytravel-service, navstar-system and
-	    htnav-application, which are all easily referencable in the
+	    htapi-application, which are all easily referencable in the
 	    source code aswell.`),
 
 		// ----------------------------------------
@@ -261,9 +261,9 @@ var roleBasedService = func() *Element {
 	    same method to find a good name for the package holding the
 	    application. After some interations I ended up with`),
 
-		Em(`"Package htnav exposes the navstar system via HTTP"`),
+		Em(`"Package htapi exposes the navstar system via HTTP"`),
 
-		P(`The name htnav is just that, a name which is short, easy to
+		P(`The name htapi is just that, a name which is short, easy to
 	    pronounce and reads well when talking about the concepts it
 	    provides.`),
 
@@ -298,20 +298,20 @@ func coreDiagram(caption string) *design.Diagram {
 		above      = dy - s
 		d          = design.NewDiagram()
 		ns         = shape.NewHexagon("navstar", w, h, r)
-		htnav      = shape.NewHexagon("", w, h, r)
+		htapi      = shape.NewHexagon("", w, h, r)
 		cmd        = shape.NewHexagon("", w, h, r)
-		htnavcmd   = shape.NewHexagon("", w, h, r)
+		htapicmd   = shape.NewHexagon("", w, h, r)
 	)
 	_ = below
-	shape.SetClass("dim", htnav, cmd, htnavcmd)
+	shape.SetClass("dim", htapi, cmd, htapicmd)
 	d.Place(ns).At(80, 120)
 
-	d.Place(htnav).Above(ns, 0)
-	shape.Move(htnav, right, above)
+	d.Place(htapi).Above(ns, 0)
+	shape.Move(htapi, right, above)
 
 	d.Place(cmd).Above(ns, 2*s)
-	d.Place(htnavcmd).Above(cmd, 0)
-	shape.Move(htnavcmd, right, above)
+	d.Place(htapicmd).Above(cmd, 0)
+	shape.Move(htapicmd, right, above)
 
 	d.SetCaption(caption)
 	return d
@@ -327,20 +327,20 @@ func htapiDiagram(caption string) *design.Diagram {
 		above      = dy - s
 		d          = design.NewDiagram()
 		ns         = shape.NewHexagon("navstar", w, h, r)
-		htnav      = shape.NewHexagon("htnav", w, h, r)
+		htapi      = shape.NewHexagon("htapi", w, h, r)
 		cmd        = shape.NewHexagon("", w, h, r)
-		htnavcmd   = shape.NewHexagon("", w, h, r)
+		htapicmd   = shape.NewHexagon("", w, h, r)
 	)
 	_ = below
-	shape.SetClass("dim", ns, cmd, htnavcmd)
+	shape.SetClass("dim", ns, cmd, htapicmd)
 	d.Place(ns).At(80, 120)
 
-	d.Place(htnav).Above(ns, 0)
-	shape.Move(htnav, right, above)
+	d.Place(htapi).Above(ns, 0)
+	shape.Move(htapi, right, above)
 
 	d.Place(cmd).Above(ns, 2*s)
-	d.Place(htnavcmd).Above(cmd, 0)
-	shape.Move(htnavcmd, right, above)
+	d.Place(htapicmd).Above(cmd, 0)
+	shape.Move(htapicmd, right, above)
 
 	d.SetCaption(caption)
 	return d
