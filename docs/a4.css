@@ -91,6 +91,20 @@ list-style: none;
 div.figure {
 text-align: center;
 }
+h1 a, h2 a, h3 a, h4 a, h5 a {
+text-decoration: none;
+color: black;
+}
+h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a {
+text-decoration: underline;
+}
+article nav ul {
+list-style-type: square;
+}
+article nav ul li.h3 {
+margin-left: 1em;
+list-style-type: none;
+}
 
 @media screen{
 html, body {

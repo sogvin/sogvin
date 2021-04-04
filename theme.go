@@ -102,6 +102,22 @@ func A4() *CSS {
 		"text-align: center",
 	)
 
+	css.Style("h1 a, h2 a, h3 a, h4 a, h5 a",
+		"text-decoration: none",
+		"color: black",
+	)
+	css.Style("h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a",
+		"text-decoration: underline",
+	)
+
+	css.Style("article nav ul",
+		"list-style-type: square",
+	)
+	css.Style("article nav ul li.h3",
+		"margin-left: 1em",
+		"list-style-type: none",
+	)
+
 	screen := css.Media("screen")
 	screen.Style("html, body",
 		"margin: 3px 10px",

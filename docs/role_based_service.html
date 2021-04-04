@@ -12,15 +12,24 @@
 <header><code>Design - <a href="index.html">Software Engineering</a></code></header>
 <article>
 <h1>Role based service</h1>
-<p>This article proposes a design for services that need role
-	based access control. Services running on cloud servers mostly
-	provide API's through the HTTP protocol and are often sizeable
-	applications. Without a clear design they become hard to maintain
-	over time. Moreover their features need protecting from
-	unauthorized access. This protection can be defined in roles.
-	I'll explore one such design and elaborate on the naming with an
-	example service for navigating the stars.</p>
-<h2>Navigating the stars</h2>
+<p>Services running on cloud servers mostly provide API's through
+	the HTTP protocol and are often sizeable applications. Without a
+	clear design they become hard to maintain over time. Moreover
+	their features need protecting from unauthorized access. This
+	protection can be defined in roles.  I'll explore one such design
+	and elaborate on the naming with an example service for navigating
+	the stars.</p>
+<nav><ul>
+<li class="h2"><a href="#domaindescriptionnavigatingthestars">Domain description - Navigating the stars</a></li>
+<li class="h3"><a href="#elicitation">Elicitation</a></li>
+<li class="h2"><a href="#systemdesign">System design</a></li>
+<li class="h3"><a href="#packagenaming">Package naming</a></li>
+<li class="h3"><a href="#navstarpackage">Navstar package</a></li>
+<li class="h2"><a href="#httpapi">HTTP Api</a></li>
+<li class="h3"><a href="#application">Application</a></li>
+</ul>
+</nav>
+<h2 id="domaindescriptionnavigatingthestars"><a href="#domaindescriptionnavigatingthestars">Domain description - Navigating the stars</a></h2>
 <br/><p>Before we go into the design, let me tell you about the
     business of navigating through the galaxy. By describing the
     domain we'll be able to elicit concepts and features for our
@@ -42,7 +51,7 @@
 <p>Now that we know a bit about the domain we'll be working in,
 	lets find the important concepts and focus on the ones part of
 	navigating the stars.</p>
-<h3>Elicitation</h3>
+<h3 id="elicitation"><a href="#elicitation">Elicitation</a></h3>
 <p>We know the service is found at galaxytravel.future.com. This
 	is a domain name selected because it sounds great and is easily
 	remembered by customers when they want to elope to another part of
@@ -76,9 +85,9 @@
 </dl><p>Note that up until now all the terminology is from the domain
 	of navigating the stars. The only term used that somehow relates
 	to a software is "system". Which we'll design now.</p>
-<h2>System design</h2>
+<h2 id="systemdesign"><a href="#systemdesign">System design</a></h2>
 <p>You can view the full code <a href="https:/github.com/gregoryv/navstar">here</a>.</p>
-<h3>Package naming</h3>
+<h3 id="packagenaming"><a href="#packagenaming">Package naming</a></h3>
 <p>The first thing we need is a name for the package or module
 	that will contain the source code of our software. One way to
 	figure out a good name is to try to write that one line package
@@ -98,7 +107,7 @@
 <em>"Package navstar provides a system for planning galaxy flights"</em><p>Short pronouncable name, mentions the system and its main
 	purpose. It allows for easy discussion and ties into the domain
 	terminology nicely. Let's stick with it for now.</p>
-<h3>Navstar package</h3>
+<h3 id="navstarpackage"><a href="#navstarpackage">Navstar package</a></h3>
 <p>Navstar implements domain logic related to planning galaxy
 	flights. It's at the core of our design. Later we'll build other
 	layers on top of it.</p>
@@ -225,7 +234,7 @@ func (me *Pilot) setUser(v *User) {
 <p>At this point the navstar system is fairly well designed and we
 	know how to extend it with new features. It's time to expose the
 	navstar system through a HTTP interface.</p>
-<h2>HTTP Api</h2>
+<h2 id="httpapi"><a href="#httpapi">HTTP Api</a></h2>
 <p>The htapi provides a router that expose the navstar features
 	using its system and roles. Resources are accessible via different
 	URLs. The routing of a url to a specific server method is handled
@@ -241,23 +250,23 @@ import (
 	"github.com/gregoryv/navstar"
 )
 
-func NewHttpRouter(sys *navstar.System) *HttpRouter {
+func NewRouter(sys *navstar.System) *Router {
 	mux := http.NewServeMux()
-	hr := HttpRouter{sys: sys, mux: mux}
+	hr := Router{sys: sys, mux: mux}
 	mux.HandleFunc("/routes", hr.serveRoutes)
 	return &hr
 }
 
-type HttpRouter struct {
+type Router struct {
 	sys *navstar.System
 	mux *http.ServeMux
 }
 
-func (me *HttpRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (me *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	me.mux.ServeHTTP(w, r)
 }
 
-func (me *HttpRouter) serveRoutes(w http.ResponseWriter, r *http.Request) {
+func (me *Router) serveRoutes(w http.ResponseWriter, r *http.Request) {
 	var role navstar.Role = getRole(r)
 	var user navstar.User
 	user.Use(me.sys, role)
@@ -292,7 +301,7 @@ func getRole(r *http.Request) navstar.Role {
 <line stroke="#d3d3d3" x1="32" y1="24" x2="32" y2="299"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="10" y="18">browser</text>
 <line stroke="#d3d3d3" x1="172" y1="24" x2="172" y2="299"/>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="128" y="18">htapi.HttpRouter</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="139" y="18">htapi.Router</text>
 <line stroke="#d3d3d3" x1="312" y1="24" x2="312" y2="299"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="278" y="18">navstar.Role</text>
 <text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="196" y="334">Protected by role</text>
@@ -338,7 +347,7 @@ func getRole(r *http.Request) navstar.Role {
 	carefully we can reason about concepts such as the-galaxytravel-service,
 	navstar-system and htnav-application, which are all
 	easily referencable in the source code aswell.</p>
-<h3>Application</h3>
+<h3 id="application"><a href="#application">Application</a></h3>
 <p>The navstar system needs to be exposed through an application
 	that understands the HTTP protocol. We can use the same method to
 	find a good name for the package holding the application. After
