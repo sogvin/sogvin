@@ -27,10 +27,13 @@ var roleBasedService = func() *Element {
 	    from unauthorized access. This protection can be defined in
 	    roles.  I'll explore one such design and elaborate on the
 	    naming with an example service for navigating the stars.`),
+
 		nav,
 
+		P(`Code examples found below you can view at `,
+			github("gregoryv/navstar", "gregoryv/navstart"), `.`),
+
 		H2("Domain description - Navigating the stars"),
-		Br(),
 
 		P(`Before we go into the design, let me tell you about the
         business of navigating through the galaxy. By describing the
@@ -59,7 +62,7 @@ var roleBasedService = func() *Element {
 	    in, lets find the important concepts and focus on the ones
 	    part of navigating the stars.`),
 
-		H3(`Elicitation`),
+		H3(`Concept elicitation`),
 
 		P(`We know the service is found at
 	    galaxytravel.future.com. This is a domain name selected
@@ -67,7 +70,9 @@ var roleBasedService = func() *Element {
 	    when they want to elope to another part of the galaxy, think
 	    Luke Skywalker in a bar. It has very little to do with
 	    navigating the stars though so we should exclude that name or
-	    part of it in our design.`),
+	    part of it in our design. Reason about the words in your
+	    domain before deciding on how to use them. Refactoring code is
+	    easy compared to changing peoples perception of concepts.`),
 
 		P(`Several people are interacting with the service; customers,
 	    captain, crew members and passengers. Let's exclude the
@@ -110,15 +115,14 @@ var roleBasedService = func() *Element {
 
 		H2("System design"),
 
-		P(`You can view the full code `, github("gregoryv/navstar", "here"), `.`),
+		P(`The first thing we need is a name for the package or module
+	    that will contain the source code of our software.`),
 
 		H3("Package naming"),
 
-		P(`The first thing we need is a name for the package or module
-	    that will contain the source code of our software. One way to
-	    figure out a good name is to try to write that one line
-	    package documentation sentence. `, Em(`"Package X provides
-	    ..."`)),
+		P(`One way to figure out a good name is to try to write that
+	    one line package documentation sentence. `, Em(`"Package X
+	    provides ..."`)),
 
 		Em(`"Package galaxytravel provides applications for planning
 	    star navigation"`),
@@ -231,7 +235,7 @@ var roleBasedService = func() *Element {
 	    via different URLs. The routing of a url to a specific server
 	    method is handled by the muxer.`),
 
-		navrepo.LoadFile("htapi/application.go", 0, 21),
+		navrepo.LoadFile("htapi/router.go", 0, 21),
 
 		P(`A request from a client such as a browser would follow the
 	    below sequence.`),
@@ -243,37 +247,46 @@ var roleBasedService = func() *Element {
 		if needed. This way the router references everything needed by
 		the handler functions which are bound to it.`),
 
-		navrepo.LoadFile("htapi/application.go", 23, -1),
+		navrepo.LoadFile("htapi/router.go", 23, -1),
 
-		P(`Separating the domain logic from the application exposing
-	    it using some protocol allows your service to grow. Naming
-	    components carefully we can reason about concepts such as
-	    the-galaxytravel-service, navstar-system and
-	    htapi-application, which are all easily referencable in the
-	    source code aswell.`),
+		P(`We can keep on developing this layer until we think we're
+		ready to let other people start using it. This would be the
+		time you think about designing for deployment, performance and
+		maintainers. I won't go into those areas here. Let's focus on
+		the design on one particular application we intend to deliver
+		that can be hosted on some server.`),
 
 		// ----------------------------------------
 
 		H2("Application"),
 
-		P(`The navstar system needs to be exposed through an
-	    application that understands the HTTP protocol. We can use the
-	    same method to find a good name for the package holding the
-	    application. After some interations I ended up with`),
+		P(`With our domain logic in one package and the exposing http
+	    layer in another we want to provide a command that handles
+	    requests over the internet. The Go language build system
+	    defaults to folder names when building and often these
+	    command-folders are found under the folder
+	    <code>cmd/</code>. We can use the same method to find a good
+	    name for the package holding the application. After some
+	    interations I ended up with with the name <em>starplan</em>`),
 
-		Em(`"Package htapi exposes the navstar system via HTTP"`),
-
-		P(`The name htapi is just that, a name which is short, easy to
-	    pronounce and reads well when talking about the concepts it
-	    provides.`),
+		Div(Class("figure"), starplanDiagram(`Command starplan exposes
+		the htapi via a TCP server.`).Inline()),
 
 		P(`The reason you shouldn't name it e.g. "navstar" is that the
 	    domain of navigating stars will grow and you probably want to
 	    expose parts of it differently, thus having multiple
-	    applications. Adding files for some of the mentioned
-	    abstractions we end up with a directory tree like this`),
+	    commands. Adding files for some of the mentioned abstractions
+	    we end up with a directory tree like this`),
 
 		ShellCommand("$ tree navstar\n"+navstarTree),
+
+		H2("Summary"),
+
+		P(`Separating the domain logic from the application exposing
+	    it allows your service to grow. Naming components carefully we
+	    can reason about concepts such as the-galaxytravel-service,
+	    navstar-system and starplan-application, which are all easily
+	    referencable in the source code aswell.`),
 	//
 	)
 	toc.MakeTOC(nav, article, "h2", "h3")
@@ -300,18 +313,18 @@ func coreDiagram(caption string) *design.Diagram {
 		ns         = shape.NewHexagon("navstar", w, h, r)
 		htapi      = shape.NewHexagon("", w, h, r)
 		cmd        = shape.NewHexagon("", w, h, r)
-		htapicmd   = shape.NewHexagon("", w, h, r)
+		starplan   = shape.NewHexagon("", w, h, r)
 	)
 	_ = below
-	shape.SetClass("dim", htapi, cmd, htapicmd)
+	shape.SetClass("dim", htapi, cmd, starplan)
 	d.Place(ns).At(80, 120)
 
 	d.Place(htapi).Above(ns, 0)
 	shape.Move(htapi, right, above)
 
 	d.Place(cmd).Above(ns, 2*s)
-	d.Place(htapicmd).Above(cmd, 0)
-	shape.Move(htapicmd, right, above)
+	d.Place(starplan).Above(cmd, 0)
+	shape.Move(starplan, right, above)
 
 	d.SetCaption(caption)
 	return d
@@ -329,18 +342,47 @@ func htapiDiagram(caption string) *design.Diagram {
 		ns         = shape.NewHexagon("navstar", w, h, r)
 		htapi      = shape.NewHexagon("htapi", w, h, r)
 		cmd        = shape.NewHexagon("", w, h, r)
-		htapicmd   = shape.NewHexagon("", w, h, r)
+		starplan   = shape.NewHexagon("", w, h, r)
 	)
 	_ = below
-	shape.SetClass("dim", ns, cmd, htapicmd)
+	shape.SetClass("dim", ns, cmd, starplan)
 	d.Place(ns).At(80, 120)
 
 	d.Place(htapi).Above(ns, 0)
 	shape.Move(htapi, right, above)
 
 	d.Place(cmd).Above(ns, 2*s)
-	d.Place(htapicmd).Above(cmd, 0)
-	shape.Move(htapicmd, right, above)
+	d.Place(starplan).Above(cmd, 0)
+	shape.Move(starplan, right, above)
+
+	d.SetCaption(caption)
+	return d
+}
+
+func starplanDiagram(caption string) *design.Diagram {
+	var (
+		w, h, r, s = 80, 50, 20, 2
+		dx         = w - r
+		dy         = h / 2
+		right      = dx + 2*s
+		below      = -dy + s
+		above      = dy - s
+		d          = design.NewDiagram()
+		ns         = shape.NewHexagon("navstar", w, h, r)
+		htapi      = shape.NewHexagon("htapi", w, h, r)
+		cmd        = shape.NewHexagon("cmd", w, h, r)
+		starplan   = shape.NewHexagon("starplan", w, h, r)
+	)
+	_ = below
+	shape.SetClass("dim", ns, htapi, cmd)
+	d.Place(ns).At(80, 120)
+
+	d.Place(htapi).Above(ns, 0)
+	shape.Move(htapi, right, above)
+
+	d.Place(cmd).Above(ns, 2*s)
+	d.Place(starplan).Above(cmd, 0)
+	shape.Move(starplan, right, above)
 
 	d.SetCaption(caption)
 	return d

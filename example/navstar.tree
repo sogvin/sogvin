@@ -1,13 +1,12 @@
 navstar
 ├── cmd
-│   └── htnav
+│   └── starplan
 │       └── main.go
 ├── htapi
-│   └── application.go
+│   └── router.go
 ├── package.go
 ├── resource.go
 ├── role.go
 ├── system.go
 └── user.go
 
-3 directories, 7 files
