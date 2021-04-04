@@ -277,20 +277,28 @@ var roleBasedService = func() *Element {
 		P(`The reason you shouldn't name it e.g. "navstar" is that the
 	    domain of navigating stars will grow and you probably want to
 	    expose parts of it differently, thus having multiple
-	    commands.`), Br(), `Adding files for some of the mentioned
+	    commands.`, Br(), `Adding files for some of the mentioned
 	    abstractions we end up with a directory tree like this`),
 
 		ShellCommand("$ tree navstar\n"+navstarTree),
 
 		H2("Summary"),
 
-		P(`Separating the domain logic from the application exposing
-	    it allows your service to grow more easily. I'm for allowing
-	    each layer to grow independently as much as possible. By
-	    naming components carefully we can reason about concepts such
-	    as the-galaxytravel-service, navstar-system and
+		P(`Separating the domain logic from, the application exposing
+	    it, allows your service to grow more easily. By naming
+	    components carefully we can reason about concepts such as
+	    the-galaxytravel-service, navstar-system and
 	    starplan-application, which are all easily referencable in the
-	    source code aswell.`),
+	    source code aswell. Aim to have a few, but well defined
+	    crossing points between the layers. Starplan uses htapi and
+	    navstar, whereas htapi only uses the navstar package.`),
+
+		P(`Try not to design all the layers simultaneously as it's
+		easier to reason about one purpose. Start with the business
+		domain logic and work outwards throught the layers.`),
+
+		Em(`See you in the stars!`),
+
 	//
 	)
 	toc.MakeTOC(nav, article, "h2", "h3")
