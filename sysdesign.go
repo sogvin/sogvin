@@ -235,6 +235,13 @@ var roleBasedService = func() *Element {
 
 		usingNavstarSystem("Using navstar system via a HTTP interface").Inline(),
 
+		P(`The router only propagates the request down to the muxer
+		which is an implementation detail and can be freely replaced
+		if needed. This way the router references everything needed by
+		the handler functions which are bound to it.`),
+
+		navrepo.LoadFile("htapi/application.go", 23, -1),
+
 		P(`Separating the domain logic from the application exposing
 	    it using some protocol allows your service to grow. Naming
 	    components carefully we can reason about concepts such as
@@ -329,22 +336,23 @@ func usingNavstarSystem(caption string) *design.SequenceDiagram {
 	var (
 		d       = design.NewSequenceDiagram()
 		browser = d.Add("browser")
-		app     = d.AddStruct(htapi.Router{})
+		router  = d.AddStruct(htapi.Router{})
 		role    = d.AddInterface((*navstar.Role)(nil))
 		user    = d.AddStruct(navstar.User{})
 		sys     = d.AddStruct(navstar.System{})
 	)
 	d.ColWidth = 140
-	d.Link(browser, app, "GET /routes")
-	d.Link(app, role, "new: role")
-	d.Link(app, user, "new: user")
-	d.Link(app, user, "Use(system, role)")
-	d.Link(app, role, "ListFlightplans()")
+	d.Link(browser, router, "GET /flightplans")
+	d.Link(router, router, "serveFlightplans() via muxer")
+	d.Link(router, role, "new: role")
+	d.Link(router, user, "new: user")
+	d.Link(router, user, "user.Use(system, role)")
+	d.Link(router, role, "ListFlightplans()")
 	d.Link(role, user, "listFlightplans()")
 	d.Link(user, sys, "query database")
-	d.Link(app, browser, "write http response")
+	d.Link(router, browser, "write http response")
 
-	d.Group(app, role, "Protected by role", "blue")
+	d.Group(router, role, "Protected by role", "blue")
 	d.Group(role, sys, "Unprotected", "red")
 	d.SetCaption(caption)
 	return d

@@ -267,7 +267,7 @@ import (
 func NewRouter(sys *navstar.System) *Router {
 	mux := http.NewServeMux()
 	r := Router{sys: sys, mux: mux}
-	mux.HandleFunc("/routes", r.serveRoutes)
+	mux.HandleFunc("/routes", r.serveFlightplans)
 	return &r
 }
 
@@ -280,56 +280,93 @@ type Router struct {
 <svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  font-family="Arial,Helvetica,sans-serif" width="636" height="395">
-<rect stroke="black" stroke-width="0" fill="#ff9999" fill-opacity="0.1" x="312" y="24" width="280" height="317"/>
+  font-family="Arial,Helvetica,sans-serif" width="636" height="450">
+<rect stroke="black" stroke-width="0" fill="#ff9999" fill-opacity="0.1" x="312" y="24" width="280" height="372"/>
 <text class="area-red-title" font-size="12px" x="318" y="42"></text>
-<rect stroke="black" stroke-width="0" fill="#99e6ff" fill-opacity="0.1" x="172" y="24" width="140" height="317"/>
+<rect stroke="black" stroke-width="0" fill="#99e6ff" fill-opacity="0.1" x="172" y="24" width="140" height="372"/>
 <text class="area-blue-title" font-size="12px" x="178" y="42"></text>
-<line stroke="#d3d3d3" x1="32" y1="24" x2="32" y2="299"/>
+<line stroke="#d3d3d3" x1="32" y1="24" x2="32" y2="354"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="10" y="18">browser</text>
-<line stroke="#d3d3d3" x1="172" y1="24" x2="172" y2="299"/>
+<line stroke="#d3d3d3" x1="172" y1="24" x2="172" y2="354"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="139" y="18">htapi.Router</text>
-<line stroke="#d3d3d3" x1="312" y1="24" x2="312" y2="299"/>
+<line stroke="#d3d3d3" x1="312" y1="24" x2="312" y2="354"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="278" y="18">navstar.Role</text>
-<text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="196" y="334">Protected by role</text>
-<line stroke="#d3d3d3" x1="452" y1="24" x2="452" y2="299"/>
+<text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="196" y="389">Protected by role</text>
+<line stroke="#d3d3d3" x1="452" y1="24" x2="452" y2="354"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="418" y="18">navstar.User</text>
-<line stroke="#d3d3d3" x1="592" y1="24" x2="592" y2="299"/>
+<line stroke="#d3d3d3" x1="592" y1="24" x2="592" y2="354"/>
 <text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="551" y="18">navstar.System</text>
-<text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="418" y="334">Unprotected</text>
+<text font-style="italic" font-family="Arial,Helvetica,sans-serif" font-size="12px" x="418" y="389">Unprotected</text>
 <path stroke="black" d="M32,57 L172,57" />
 <g transform="rotate(0 172 57)"><path stroke="black" fill="#ffffff" d="M172,57 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="70" y="54">GET /routes</text>
-<path stroke="black" d="M172,90 L312,90" />
-<g transform="rotate(0 312 90)"><path stroke="black" fill="#ffffff" d="M312,90 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="59" y="54">GET /flightplans</text>
+<line stroke="black" x1="172" y1="90" x2="187" y2="90"/>
+<line stroke="black" x1="187" y1="90" x2="187" y2="122"/>
+<path stroke="black" d="M187,122 L172,122" />
+<g transform="rotate(180 172 122)"><path stroke="black" fill="#ffffff" d="M172,122 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="217" y="87">new: role</text>
-<path stroke="black" d="M172,123 L452,123" />
-<g transform="rotate(0 452 123)"><path stroke="black" fill="#ffffff" d="M452,123 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="193" y="109">serveFlightplans() via muxer</text>
+<path stroke="black" d="M172,145 L312,145" />
+<g transform="rotate(0 312 145)"><path stroke="black" fill="#ffffff" d="M312,145 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="285" y="120">new: user</text>
-<path stroke="black" d="M172,156 L452,156" />
-<g transform="rotate(0 452 156)"><path stroke="black" fill="#ffffff" d="M452,156 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="217" y="142">new: role</text>
+<path stroke="black" d="M172,178 L452,178" />
+<g transform="rotate(0 452 178)"><path stroke="black" fill="#ffffff" d="M452,178 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="264" y="153">Use(system, role)</text>
-<path stroke="black" d="M172,189 L312,189" />
-<g transform="rotate(0 312 189)"><path stroke="black" fill="#ffffff" d="M312,189 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="285" y="175">new: user</text>
+<path stroke="black" d="M172,211 L452,211" />
+<g transform="rotate(0 452 211)"><path stroke="black" fill="#ffffff" d="M452,211 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="198" y="186">ListFlightplans()</text>
-<path stroke="black" d="M312,222 L452,222" />
-<g transform="rotate(0 452 222)"><path stroke="black" fill="#ffffff" d="M452,222 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="251" y="208">user.Use(system, role)</text>
+<path stroke="black" d="M172,244 L312,244" />
+<g transform="rotate(0 312 244)"><path stroke="black" fill="#ffffff" d="M312,244 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="340" y="219">listFlightplans()</text>
-<path stroke="black" d="M452,255 L592,255" />
-<g transform="rotate(0 592 255)"><path stroke="black" fill="#ffffff" d="M592,255 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="198" y="241">ListFlightplans()</text>
+<path stroke="black" d="M312,277 L452,277" />
+<g transform="rotate(0 452 277)"><path stroke="black" fill="#ffffff" d="M452,277 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="479" y="252">query database</text>
-<path stroke="black" d="M172,288 L32,288" />
-<g transform="rotate(180 32 288)"><path stroke="black" fill="#ffffff" d="M32,288 l-8,-4 l 0,8 Z" /></g>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="340" y="274">listFlightplans()</text>
+<path stroke="black" d="M452,310 L592,310" />
+<g transform="rotate(0 592 310)"><path stroke="black" fill="#ffffff" d="M592,310 l-8,-4 l 0,8 Z" /></g>
 
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="51" y="285">write http response</text>
-<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="203" y="388">Using navstar system via a HTTP interface</text></svg><p>Separating the domain logic from the application exposing
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="479" y="307">query database</text>
+<path stroke="black" d="M172,343 L32,343" />
+<g transform="rotate(180 32 343)"><path stroke="black" fill="#ffffff" d="M32,343 l-8,-4 l 0,8 Z" /></g>
+
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="51" y="340">write http response</text>
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="203" y="443">Using navstar system via a HTTP interface</text></svg><p>The router only propagates the request down to the muxer
+		which is an implementation detail and can be freely replaced
+		if needed. This way the router references everything needed by
+		the handler functions which are bound to it.</p>
+<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/htapi/application.go">navstar/htapi/application.go</a></div>
+<pre class="srcfile"><code class="go">func (me *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	me.mux.ServeHTTP(w, r)
+}
+
+func (me *Router) serveFlightplans(w http.ResponseWriter, r *http.Request) {
+	var role navstar.Role = getRole(r)
+	var user navstar.User
+	user.Use(me.sys, role)
+
+	routes, _ := role.ListFlightplans()
+	json.NewEncoder(w).Encode(routes)
+}
+
+// getRole returns a role implementation based on the incomming
+// request. This one just looks for the query parameter role. Defaults
+// to the passenger role.
+func getRole(r *http.Request) navstar.Role {
+	switch r.URL.Query().Get("role") {
+	case "pilot":
+		return &navstar.Pilot{}
+	case "crew":
+		return &navstar.Crew{}
+	default:
+		return &navstar.Passenger{}
+	}
+}
+</code></pre><p>Separating the domain logic from the application exposing
 	    it using some protocol allows your service to grow. Naming
 	    components carefully we can reason about concepts such as
 	    the-galaxytravel-service, navstar-system and
