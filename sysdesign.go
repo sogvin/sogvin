@@ -34,7 +34,7 @@ var roleBasedService = func() *Element {
 		P(`Code examples found below you can view at `,
 			github("gregoryv/navstar", "gregoryv/navstart"), `.`),
 
-		H2("Domain description - Navigating the stars"),
+		H2("Domain description"),
 
 		P(`Before we go into the design, let me tell you about the
         business of navigating through the galaxy. By describing the
