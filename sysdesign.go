@@ -191,7 +191,7 @@ var roleBasedService = func() *Element {
 		navrepo.LoadFile("role.go", 3, 25),
 
 		P(`This design provides well defined places to implement
-	    future features. Assume the navstar service should provide
+	    future features. Assume the navstar system should provide
 	    planet information to users.`),
 
 		Ol(
@@ -204,6 +204,9 @@ var roleBasedService = func() *Element {
 			),
 			Li("Expose user methods to selected roles"),
 		),
+
+		Sidenote(`Authentication is most often a service level
+		feature.`, 0.0),
 
 		P(`Note that authentication is not part of this design,
 	    i.e. translating some user credentials into one specific

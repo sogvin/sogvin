@@ -225,7 +225,7 @@ func (me *Pilot) setUser(v *User) {
 	me.User = v
 }
 </code></pre><p>This design provides well defined places to implement
-	    future features. Assume the navstar service should provide
+	    future features. Assume the navstar system should provide
 	    planet information to users.</p>
 <ol>
 <li>Define resource Planet</li>
@@ -236,6 +236,9 @@ func (me *Pilot) setUser(v *User) {
 </li>
 <li>Expose user methods to selected roles</li>
 </ol>
+<div class="sidenote" style="margin-top: 0cm"><div class="inner">Authentication is most often a service level
+		feature.</div>
+</div>
 <p>Note that authentication is not part of this design,
 	    i.e. translating some user credentials into one specific
 	    role. The reason is that authentication is not part of the
