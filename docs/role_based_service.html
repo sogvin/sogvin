@@ -444,6 +444,32 @@ navstar
 	    source code aswell. Aim to have a few, but well defined
 	    crossing points between the layers. Starplan uses htapi and
 	    navstar, whereas htapi only uses the navstar package.</p>
+<div class="figure"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  font-family="Arial,Helvetica,sans-serif" width="322" height="305">
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M100,120 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="100" y="149">navstar</text>
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M164,93 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="170" y="122">htapi</text>
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M100,66 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="108" y="95">cmd</text>
+<path stroke="#d3d3d3" fill="#e2e2e2" d="M164,39 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text class="dim-title" font-size="12px" x="162" y="68">starplan</text>
+<path stroke="#d3d3d3" fill="#ffffff" d="M36,147 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="35" y="176">internal</text>
+<path stroke="#d3d3d3" fill="#ffffff" d="M36,201 l 40,0 20,25 -20,25 -40,0 -20,-25 20,-25" />
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="42" y="230">other</text>
+<path stroke="black" d="M320,45 L165,245" />
+<g transform="rotate(128 165 245)"><path stroke="black" fill="#ffffff" d="M165,245 l-8,-4 l 0,8 Z" /></g>
+
+<text font-family="Arial,Helvetica,sans-serif" font-size="12px" x="56" y="298">Dependency flow, from
+		right to left.</text></svg></div>
+<p>For other internal domain logic that benefits from
+		alternate naming than <code>navstar.X</code>, structure
+		packages in the internal directory. A part from being hidden
+		by the Go language it's also conceptually correct, domain
+		internals should not be exposed to any other layer.</p>
 <p>Try not to design all the layers simultaneously as it's
 		easier to reason about one purpose. Start with the business
 		domain logic and work outwards throught the layers.</p>

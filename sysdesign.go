@@ -296,6 +296,15 @@ var roleBasedService = func() *Element {
 	    crossing points between the layers. Starplan uses htapi and
 	    navstar, whereas htapi only uses the navstar package.`),
 
+		Div(Class("figure"), internalDiagram(`Dependency flow, from
+		right to left.`).Inline()),
+
+		P(`For other internal domain logic that benefits from
+		alternate naming than <code>navstar.X</code>, structure
+		packages in the internal directory. A part from being hidden
+		by the Go language it's also conceptually correct, domain
+		internals should not be exposed to any other layer.`),
+
 		P(`Try not to design all the layers simultaneously as it's
 		easier to reason about one purpose. Start with the business
 		domain logic and work outwards throught the layers.`),
@@ -399,6 +408,44 @@ func starplanDiagram(caption string) *design.Diagram {
 	d.Place(starplan).Above(cmd, 0)
 	shape.Move(starplan, right, above)
 
+	d.SetCaption(caption)
+	return d
+}
+
+func internalDiagram(caption string) *design.Diagram {
+	var (
+		w, h, r, s = 80, 50, 20, 2
+		dx         = w - r
+		dy         = h / 2
+		right      = dx + 2*s
+		left       = -right
+		below      = -dy + s
+		above      = dy - s
+		d          = design.NewDiagram()
+		ns         = shape.NewHexagon("navstar", w, h, r)
+		htapi      = shape.NewHexagon("htapi", w, h, r)
+		cmd        = shape.NewHexagon("cmd", w, h, r)
+		starplan   = shape.NewHexagon("starplan", w, h, r)
+		internal   = shape.NewHexagon("internal", w, h, r)
+		other      = shape.NewHexagon("other", w, h, r)
+		arrow      = shape.NewArrow(200, 0, 45, 200)
+	)
+
+	shape.SetClass("dim", ns, htapi, cmd, starplan)
+	d.Place(ns).At(80, 120)
+
+	d.Place(htapi).Above(ns, 0)
+	shape.Move(htapi, right, above)
+
+	d.Place(cmd).Above(ns, 2*s)
+	d.Place(starplan).Above(cmd, 0)
+	shape.Move(starplan, right, above)
+
+	d.Place(internal).Below(ns, 0)
+	shape.Move(internal, left, below)
+
+	d.Place(other).Below(internal, 2*s)
+	d.Place(arrow).At(320, 45)
 	d.SetCaption(caption)
 	return d
 }
