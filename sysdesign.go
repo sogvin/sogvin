@@ -18,15 +18,16 @@ var roleBasedService = func() *Element {
 	article := Article(
 		//
 
-		H1("Role based service"), // todo find a better name
+		H1("System design - layers and access roles"),
 
-		P(`Services running on cloud servers mostly provide API's
-	    through the HTTP protocol and are often sizeable
-	    applications. Without a clear design they become hard to
-	    maintain over time. Moreover their features need protecting
-	    from unauthorized access. This protection can be defined in
-	    roles.  I'll explore one such design and elaborate on the
-	    naming with an example service for navigating the stars.`),
+		P(`Services running on cloud servers mostly provide
+	    programming interfaces through the hyper text transfer
+	    protocol(HTTP) and are often sizeable applications. Without a
+	    clear design they become hard to maintain over time. Moreover
+	    their features need protecting from unauthorized access. This
+	    protection can be defined in roles.  I'll explore one package
+	    design and elaborate on the naming with an example service for
+	    navigating the stars.`),
 
 		nav,
 
