@@ -68,7 +68,7 @@ var roleBasedService = func() *Element {
 		P(`We know the service is found at
 	    galaxytravel.future.com. This is a domain name selected
 	    because it sounds great and is easily remembered by customers
-	    when they want to elope to another part of the galaxy, think
+	    when they want to elope to another part of the galaxy, imagine
 	    Luke Skywalker in a bar. It has very little to do with
 	    navigating the stars though so we should exclude that name or
 	    part of it in our design. Reason about the words in your
@@ -78,12 +78,12 @@ var roleBasedService = func() *Element {
 		P(`Several people are interacting with the service; customers,
 	    captain, crew members and passengers. Let's exclude the
 	    customer as that is a role more related to booking. This
-	    leaves us passenger, captain and crew members. Obviously the
-	    passenger is a customer at some point but the word customer is
-	    irrelevant when it comes to navigating the stars. A passenger
-	    however, has access to viewing parts of the flight plan, which
-	    leads us to enumerating the features of our navigation
-	    service.`),
+	    leaves us with passenger, captain and crew members. Obviously
+	    the passenger is a customer at some point but the word
+	    customer is irrelevant when it comes to navigating the
+	    stars. A passenger however, has access to viewing parts of the
+	    flight plan, which leads us to enumerating the features of our
+	    navigation service.`),
 
 		P(`We recognize that the galaxytravel service, serves both
 	    customers and captains though with different purpose. In our
@@ -258,9 +258,10 @@ var roleBasedService = func() *Element {
 		P(`We can keep on developing this layer until we think it's
 		ready to let other people start using it. This would be the
 		time you think about designing for deployment, performance and
-		maintainers. I won't go into those areas here. Let's focus on
-		the design for one particular application we intend to deliver
-		that can be hosted on some server in the cloud.`),
+		maintainers. However I won't go into those areas in this
+		article. Let's focus on the design for one particular
+		application we intend to deliver that can be hosted on some
+		server in the cloud.`),
 
 		// ----------------------------------------
 
@@ -303,7 +304,7 @@ var roleBasedService = func() *Element {
 		P(`For other internal domain logic that benefits from
 		alternate naming than <code>navstar.X</code>, structure
 		packages in the internal directory. A part from being hidden
-		by the Go language it's also conceptually correct, domain
+		by the Go language it's also conceptually correct that domain
 		internals should not be exposed to any other layer.`),
 
 		P(`Try not to design all the layers simultaneously as it's
