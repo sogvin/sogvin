@@ -47,8 +47,8 @@ func gettingStartedWithProgramming() *Element {
        thoroughly, you should already have used the terminal so I
        assume you know where to find it.`),
 
-		stylingConventions,
-		setupWorkingDirectory,
+		stylingConventions(),
+		setupWorkingDirectory(),
 	)
 }
 

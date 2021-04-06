@@ -22,12 +22,12 @@ func NewSoftwareEngineeringBook() *Book {
 
 		H2("Design"),
 		Ul(
-			book.AddPage("Design", purposeOfFuncMain),
-			book.AddPage("Design", nexusPattern),
-			book.AddPage("Design", gracefulServerShutdown),
-			book.AddPage("Design", componentsDiagram),
-			book.AddPage("Design", strictMode),
-			book.AddPage("Design", roleBasedService),
+			book.AddPage("Design", purposeOfFuncMain()),
+			book.AddPage("Design", nexusPattern()),
+			book.AddPage("Design", gracefulServerShutdown()),
+			book.AddPage("Design", componentsDiagram()),
+			book.AddPage("Design", strictMode()),
+			book.AddPage("Design", roleBasedService()),
 		),
 		H3("Go packages"),
 		Ul(
@@ -37,9 +37,9 @@ func NewSoftwareEngineeringBook() *Book {
 
 		H2("Test"),
 		Ul(
-			book.AddPage("Test", inlineTestHelpers),
-			book.AddPage("Test", alternateDesign),
-			book.AddPage("Test", setupTeardown),
+			book.AddPage("Test", inlineTestHelpers()),
+			book.AddPage("Test", alternateDesign()),
+			book.AddPage("Test", setupTeardown()),
 		),
 		H3("Go packages"),
 		Ul(
@@ -51,7 +51,7 @@ func NewSoftwareEngineeringBook() *Book {
 
 		H2("Build"),
 		Ul(
-			book.AddPage("Build", embedVersionAndRevision),
+			book.AddPage("Build", embedVersionAndRevision()),
 		),
 		H3("Go packages"),
 		Ul(

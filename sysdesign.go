@@ -13,7 +13,7 @@ import (
 	"github.com/gregoryv/web/toc"
 )
 
-var roleBasedService = func() *Element {
+func roleBasedService() *Element {
 	nav := Nav()
 	article := Article(
 		//
@@ -317,7 +317,7 @@ var roleBasedService = func() *Element {
 	)
 	toc.MakeTOC(nav, article, "h2", "h3")
 	return article
-}()
+}
 
 var repoLink = A(
 	Href("https://github.com/gregoryv/navstar"),

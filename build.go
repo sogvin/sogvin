@@ -1,29 +1,44 @@
 package sogvin
 
-import . "github.com/gregoryv/web"
+import (
+	"fmt"
 
-var embedVersionAndRevision = Article(
-	H1("Embed version and revision"),
+	. "github.com/gregoryv/web"
+)
 
-	P(`When is this valuable? When publishing software for
+func embedVersionAndRevision() *Element {
+	return Article(
+		H1("Embed version and revision"),
+
+		P(`When is this valuable? When publishing software for
        traceability and referenc.  I.e. for bug reports or
        documentation reference. Your applications can use flags such
        as -v or -version for this purpose. One way to modify variables
        during the build is via -ldflags.`),
 
-	H2("Using -ldflags"),
-	P("First declare a variable, not constant, in the main package."),
-	LoadFile("./internal/cmd/embedversion/main.go", 9, -1),
-	P(
-		`Then compile and change the version with`,
-	),
-	ShellCommand(`go build -ldflags "-X main.version=0.1" ./cmd/app`),
-	P(
+		H2("Using -ldflags"),
+		P("First declare a variable, not constant, in the main package."),
+		LoadFile("./internal/cmd/embedversion/main.go", 9, -1),
 
-		`You can also change multiple values in this way, let's add
-		the revision as well`,
-	),
-	ShellCommand(
-		`go build -ldflags "-X main.version=0.1 -X main.revision=alpha" ./cmd/app`,
-	),
-)
+		P(`Then compile and change the version with`),
+
+		ShellCommand(
+
+			`go build -ldflags "-X main.version=0.1" ./cmd/app`,
+		),
+
+		P(`You can also change multiple values in this way, let's add
+		the revision as well`),
+
+		ShellCommand(
+
+			func() string {
+				return fmt.Sprint("go build ",
+					`-ldflags "-X main.version=0.1 -X main.revision=alpha" `,
+					"./cmd/app",
+				)
+			}(),
+		),
+		//
+	)
+}

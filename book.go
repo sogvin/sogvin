@@ -38,6 +38,7 @@ func findH1(article *Element) string {
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
 }
 
+// AddPage creates a new page and returns a link to it
 func (book *Book) AddPage(right string, article *Element) *Element {
 	title := findH1(article)
 	filename := filenameFrom(title) + ".html"
