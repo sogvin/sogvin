@@ -17,7 +17,7 @@ func NewSoftwareEngineeringBook() *Book {
 
 		H2("Start"),
 		Ul(
-			book.AddPage("Start", gettingStartedWithProgramming),
+			book.AddPage("Start", gettingStartedWithProgramming()),
 		),
 
 		H2("Design"),
