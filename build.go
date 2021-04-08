@@ -18,7 +18,7 @@ func embedVersionAndRevision() *Element {
 
 		H2("Using -ldflags"),
 		P("First declare a variable, not constant, in the main package."),
-		LoadFile("./internal/cmd/embedversion/main.go", 9, -1),
+		loadFile("./internal/cmd/embedversion/main.go", 9, -1),
 
 		P(`Then compile and change the version with`),
 

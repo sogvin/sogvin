@@ -68,9 +68,9 @@ func stylingConventions() *Element {
 	   presented in two ways; an entire file has a gray background
 	   with a solid border.`),
 
-		LoadFile("example/no1/main.go"),
+		loadFile("example/no1/main.go"),
 		"whereas partial content is without borders.",
-		LoadFile("example/no1/main.go", 3, -1),
+		loadFile("example/no1/main.go", 3, -1),
 
 		Sidenote("Side note; emphasizing an important concept.", 0.0),
 
@@ -96,7 +96,7 @@ $ mkdir go-learn
 $ cd go-learn`),
 
 		H2("Your first program"),
-		LoadFile("example/no2/main.go"),
+		loadFile("example/no2/main.go"),
 
 		P(`Create a file in your editor and then type in the above
 	   code. Save it as <code>main.go</code> and run the program in
@@ -117,8 +117,8 @@ $ cd go-learn`),
        reading but it doesn't have to be. These variations work just
        fine`),
 
-		LoadFile("example/no3/main.go"),
-		LoadFile("example/no4/main.go"),
+		loadFile("example/no3/main.go"),
+		loadFile("example/no4/main.go"),
 
 		P(`You don't want to spend to much time adding spaces and tabs so
 	   your code looks good, let the computer do it for you. For this

@@ -167,7 +167,7 @@ func roleBasedService() *Element {
 	    would usually only exist one instance of the system in any
 	    running application.`),
 
-		navrepo.LoadFile("system.go"),
+		navrepo.loadFile("system.go"),
 
 		P(`Roles expose access to user methods. Fairly often we talk
 	    about what we can do with a system, referring to you and me as
@@ -189,7 +189,7 @@ func roleBasedService() *Element {
 	    that roles change together, ie. if we define a new feature
 	    method, all roles need updating.`),
 
-		navrepo.LoadFile("role.go", 3, 25),
+		navrepo.loadFile("role.go", 3, 25),
 
 		P(`This design provides well defined places to implement
 	    future features. Assume the navstar system should provide
@@ -241,7 +241,7 @@ func roleBasedService() *Element {
 	    increasingly using terms outside of the domain and more
 	    technical, which is perfectly ok.`),
 
-		navrepo.LoadFile("htapi/router.go", 0, 21),
+		navrepo.loadFile("htapi/router.go", 0, 21),
 
 		P(`A request from a client such as a browser would follow the
 	    below sequence.`),
@@ -253,7 +253,7 @@ func roleBasedService() *Element {
 		if needed. This way the router references everything needed by
 		the handler functions which are bound to it.`),
 
-		navrepo.LoadFile("htapi/router.go", 23, -1),
+		navrepo.loadFile("htapi/router.go", 23, -1),
 
 		P(`We can keep on developing this layer until we think it's
 		ready to let other people start using it. This would be the

@@ -17,7 +17,7 @@ func setupTeardown() *Element {
 	is appropriate for setting up databases and after a test run
 	tearing them down.`),
 
-		LoadFile("./internal/testing/setup/setup_test.go", 8, -1),
+		loadFile("./internal/testing/setup/setup_test.go", 8, -1),
 
 		P(`Be mindful of what you consider to be global setup. The shared
 	setup will force you to design tests with less coupling with other
@@ -40,14 +40,14 @@ func inlineTestHelpers() *Element {
          failures point out failed cases directly. Given a function
          calculating the double of an int.`,
 		),
-		LoadFile("./internal/testing/inline/double.go", 7, 0),
+		loadFile("./internal/testing/inline/double.go", 7, 0),
 		P(
 
 			`The test would look like this.`,
 		),
 		Sidenote("Inlined helper does not need t argument.", 0.8),
 		Sidenote("Descriptive cases fail on correct line.", 4.6),
-		LoadFile("./internal/testing/inline/double_test.go", 7, -1),
+		loadFile("./internal/testing/inline/double_test.go", 7, -1),
 		Sidenote("Utmost 2 inlined helpers.", 0.2),
 
 		P(`Keep it simple and use utmost two inlined helpers. Compared to
@@ -88,7 +88,7 @@ func alternateDesign() *Element {
          should focus on verifying logic, not data. In this case the
          logic is binary, failed or not.`,
 		),
-		LoadFile("./internal/testing/okbad/assert_test.go", 8, 0),
+		loadFile("./internal/testing/okbad/assert_test.go", 8, 0),
 		P(
 
 			`The initial design of the `, A(
@@ -101,10 +101,10 @@ func alternateDesign() *Element {
          return an error adds a few more lines to the function. We
          also added the check for nil result. The nil check may be
          left out or removed once you have your tests.  `),
-		LoadFile("./internal/testing/okbad/double.go", 7, 24), P(
+		loadFile("./internal/testing/okbad/double.go", 7, 24), P(
 
 			`Let's use our new assert functions.`,
 		),
-		LoadFile("./internal/testing/okbad/double_test.go", 7, 0),
+		loadFile("./internal/testing/okbad/double_test.go", 7, 0),
 	)
 }

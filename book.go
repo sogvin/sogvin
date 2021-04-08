@@ -165,18 +165,18 @@ func LoadFullFile(label, filename string) *Element {
 	}
 	return Wrap(
 		Div(Class("filename"), label),
-		LoadFile(filename, 0, -1),
+		loadFile(filename, 0, -1),
 	)
 }
 
-// LoadFile returns a pre web element wrapping the contents from the
+// loadFile returns a pre web element wrapping the contents from the
 // given file. If to == -1 all lines to the end of file are returned.
-func LoadFile(filename string, span ...int) *Element {
+func loadFile(filename string, span ...int) *Element {
 	from, to := 0, -1
 	if len(span) == 2 {
 		from, to = span[0], span[1]
 	}
-	v := internal.LoadFile(filename, from, to)
+	v := internal.loadFile(filename, from, to)
 	class := "srcfile"
 	if from == 0 && to == -1 {
 		class += " complete"

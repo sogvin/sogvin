@@ -22,9 +22,9 @@ func (me *Repo) LinkedLabel(pth string) *Element {
 	)
 }
 
-func (me *Repo) LoadFile(pth string, span ...int) *Element {
+func (me *Repo) loadFile(pth string, span ...int) *Element {
 	return Wrap(
 		me.LinkedLabel(pth),
-		LoadFile(path.Join(me.local, pth), span...),
+		loadFile(path.Join(me.local, pth), span...),
 	)
 }

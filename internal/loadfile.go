@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func LoadFile(filename string, from, to int) string {
+func loadFile(filename string, from, to int) string {
 	var buf bytes.Buffer
 	fh, err := os.Open(filename)
 	if err != nil {

@@ -25,7 +25,7 @@ func purposeOfFuncMain() *Element {
 	   actual work. The name of the galaxy would be such an option and
 	   perhaps a verbosity flag for debugging purposes.`),
 
-		LoadFile("./internal/cmd/countstars/main.go", 8, -1),
+		loadFile("./internal/cmd/countstars/main.go", 8, -1),
 
 		P(`Now that you know what the main function should do, let us take
 	   a look at how to do it, apart of the option definition
@@ -87,13 +87,13 @@ func purposeOfFuncMain() *Element {
 			13,
 		),
 
-		LoadFile("./example/cmd/starcounter/starcounter.go"),
+		loadFile("./example/cmd/starcounter/starcounter.go"),
 
 		P(`Testing complex patterns is straight forward.`),
-		LoadFile("./example/cmd/starcounter/starcounter_test.go"),
+		loadFile("./example/cmd/starcounter/starcounter_test.go"),
 
 		P(`Complexity of func main still remains at one, looking like`),
-		LoadFile("./example/cmd/starcounter/main.go"),
+		loadFile("./example/cmd/starcounter/main.go"),
 	)
 }
 
@@ -126,11 +126,11 @@ func nexusPattern() *Element {
 
 		Sidenote("The err field links operations.", 0.6),
 		Sidenote("Each method sets x.err before returning.", 3.3),
-		LoadFile("./internal/errhandling/nexus.go", 21, -1),
+		loadFile("./internal/errhandling/nexus.go", 21, -1),
 
 		`With the fileIO nexus inplace the CopyFile function is
 	readable and with only one error checking and handling needed.`,
-		LoadFile("./internal/errhandling/nexus.go", 8, 19),
+		loadFile("./internal/errhandling/nexus.go", 8, 19),
 	)
 }
 
@@ -144,7 +144,7 @@ func gracefulServerShutdown() *Element {
 
 		Sidenote("Register the graceful part of the server.", 4.8),
 		Sidenote("Important to wait for graceful stop to end.", 7.8),
-		LoadFile("./internal/cmd/graceful/graceful.go", 11, -1),
+		loadFile("./internal/cmd/graceful/graceful.go", 11, -1),
 		P(`Remember that you could expose the Shutdown func of your
        server through an URL to simplify clean shutdown. Useful for
        when you are doing continuous integration and
@@ -203,13 +203,13 @@ func strictMode() *Element {
        method. Define the Strict interface to match that of the
        familiar testing T.Fatal.`),
 
-		LoadFile("./internal/strictClient.go", 8, 20),
+		loadFile("./internal/strictClient.go", 8, 20),
 
 		P(`Once the client has the strict ability it can be used in it's
 	  methods. Default the client to a lax mode where the Fatal method
 	  does nothing.  `),
 
-		LoadFile("./internal/strictClient.go", 22, 28),
+		loadFile("./internal/strictClient.go", 22, 28),
 
 		P(`Let's assume your service only accepts json and expects each
        request to set the correct header.  A simple wrapper around
@@ -217,13 +217,13 @@ func strictMode() *Element {
 
 		Sidenote("Use the strict wrapper in public methods.", 1.2),
 		Sidenote("Private funcs just return errors as usual.", 5.7),
-		LoadFile("./internal/strictClient.go", 30, -1),
+		loadFile("./internal/strictClient.go", 30, -1),
 
 		P(`Any error from the sending of the request will be checked by
 	  the strict interface. This adds no real benefit to the client
 	  itself but it makes a difference when testing.`),
 
-		LoadFile("./internal/strictClient_xtest.go", 8, 13),
+		loadFile("./internal/strictClient_xtest.go", 8, 13),
 
 		ShellCommand(`$ go test
 --- FAIL: TestClient (0.00s)
