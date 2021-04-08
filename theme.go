@@ -4,7 +4,7 @@ import (
 	. "github.com/gregoryv/web"
 )
 
-func A4() *CSS {
+func a4() *CSS {
 	css := NewCSS()
 	css.Filename = "a4.css"
 
