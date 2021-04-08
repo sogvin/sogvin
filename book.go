@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/gregoryv/sogvin/internal"
 	. "github.com/gregoryv/web"
+	"github.com/gregoryv/web/files"
 )
 
 type Book struct {
@@ -156,9 +156,9 @@ func Sidenote(el interface{}, cm float64) *Element {
 	)
 }
 
-// LoadFullFile returns a wrapped element with label and file contents.
+// loadFullFile returns a wrapped element with label and file contents.
 // If label is empty string the filename last part is used.
-func LoadFullFile(label, filename string) *Element {
+func loadFullFile(label, filename string) *Element {
 	if label == "" {
 		dir := filepath.Base(filepath.Dir(filename))
 		label = path.Join(dir, filepath.Base(filename))
@@ -176,7 +176,7 @@ func loadFile(filename string, span ...int) *Element {
 	if len(span) == 2 {
 		from, to = span[0], span[1]
 	}
-	v := internal.loadFile(filename, from, to)
+	v := files.MustLoadLines(filename, from, to)
 	class := "srcfile"
 	if from == 0 && to == -1 {
 		class += " complete"
