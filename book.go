@@ -67,8 +67,8 @@ func newPage(filename, title string, header, article, footer *Element) *Page {
 					Name("viewport"),
 					Content("width=device-width, initial-scale=1.0"),
 				),
-				Stylesheet("theme.css"),
-				Stylesheet("a4.css"),
+				stylesheet("theme.css"),
+				stylesheet("a4.css"),
 				Title(title)),
 			Body(
 				header,
@@ -139,8 +139,8 @@ func PageHeader(right string) *Element {
 	return h
 }
 
-// Stylesheet returns a link web element
-func Stylesheet(href string) *Element {
+// stylesheet returns a link web element
+func stylesheet(href string) *Element {
 	return Link(Rel("stylesheet"), Type("text/css"), Href(href))
 }
 
