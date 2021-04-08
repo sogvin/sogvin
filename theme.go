@@ -134,7 +134,7 @@ func A4() *CSS {
 	return css
 }
 
-func Theme() *CSS {
+func theme() *CSS {
 	css := NewCSS()
 	css.Filename = "theme.css"
 

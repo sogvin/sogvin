@@ -2,7 +2,7 @@ package spec
 
 import . "github.com/gregoryv/web"
 
-func Theme() *CSS {
+func theme() *CSS {
 	css := NewCSS()
 	css.Import("https://fonts.googleapis.com/css?family=Inconsolata|Source+Sans+Pro")
 

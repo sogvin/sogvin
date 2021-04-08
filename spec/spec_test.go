@@ -15,7 +15,7 @@ func Test_index(t *testing.T) {
 	NewPage(
 		Html(
 			Head(
-				Style(Theme()),
+				Style(theme()),
 			),
 			body,
 		),
