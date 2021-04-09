@@ -16,7 +16,7 @@ func (me *Repo) LinkedLabel(pth string) *Element {
 	label := path.Join(path.Base(me.local), pth)
 	return Div(Class("filename"),
 		A(
-			Href(path.Join(me.host, "blob/main", pth)),
+			Href(me.host+"/blob/main/"+pth),
 			label,
 		),
 	)

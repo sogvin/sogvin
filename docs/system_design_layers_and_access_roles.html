@@ -140,7 +140,7 @@
 	    database access and other domain related configuration. There
 	    would usually only exist one instance of the system in any
 	    running application.</p>
-<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/system.go">navstar/system.go</a></div>
+<div class="filename"><a href="https://github.com/gregoryv/navstar/blob/main/system.go">navstar/system.go</a></div>
 <pre class="srcfile complete"><code class="go">package navstar
 
 func NewSystem() *System {
@@ -201,7 +201,7 @@ type System struct {
 	    the interface, showing partial content below. The reason being
 	    that roles change together, ie. if we define a new feature
 	    method, all roles need updating.</p>
-<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/role.go">navstar/role.go</a></div>
+<div class="filename"><a href="https://github.com/gregoryv/navstar/blob/main/role.go">navstar/role.go</a></div>
 <pre class="srcfile"><code class="go">type Role interface {
 	SubmitFlightplan(route Flightplan) error
 	ListFlightplans() ([]Flightplan, error)
@@ -276,7 +276,7 @@ func (me *Pilot) setUser(v *User) {
 	    method is handled by the muxer. Note how in this layer we are
 	    increasingly using terms outside of the domain and more
 	    technical, which is perfectly ok.</p>
-<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/htapi/router.go">navstar/htapi/router.go</a></div>
+<div class="filename"><a href="https://github.com/gregoryv/navstar/blob/main/htapi/router.go">navstar/htapi/router.go</a></div>
 <pre class="srcfile"><code class="go">// Package htapi exposes the navstar system via HTTP.
 package htapi
 
@@ -362,7 +362,7 @@ type Router struct {
 		which is an implementation detail and can be freely replaced
 		if needed. This way the router references everything needed by
 		the handler functions which are bound to it.</p>
-<div class="filename"><a href="https:/github.com/gregoryv/navstar/blob/main/htapi/router.go">navstar/htapi/router.go</a></div>
+<div class="filename"><a href="https://github.com/gregoryv/navstar/blob/main/htapi/router.go">navstar/htapi/router.go</a></div>
 <pre class="srcfile"><code class="go">func (me *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	me.mux.ServeHTTP(w, r)
 }
