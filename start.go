@@ -72,7 +72,7 @@ func stylingConventions() *Element {
 		"whereas partial content is without borders.",
 		loadFile("example/no1/main.go", 3, -1),
 
-		Sidenote("Side note; emphasizing an important concept.", 0.0),
+		sidenote("Side note; emphasizing an important concept.", 0.0),
 
 		P(`There is a lot to learn and whenever a section includes
 	    many concepts or longer explanations I'll add a side note with
@@ -127,7 +127,7 @@ $ cd go-learn`),
 
 		shellCommand("$ gofmt -w main.go"),
 
-		Sidenote(`Keep code perceptible!`, 0.0),
+		sidenote(`Keep code perceptible!`, 0.0),
 
 		P(`Replace <code>main.go</code> with the name of whatever file you
 	   want to format. Keep your code nicely formattted, it improves

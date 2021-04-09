@@ -146,7 +146,7 @@ func stylesheet(href string) *Element {
 
 // Boxnote returns a small box aligned to the left with given top
 // margin in cm.
-func Sidenote(el interface{}, cm float64) *Element {
+func sidenote(el interface{}, cm float64) *Element {
 	return Div(Class("sidenote"),
 		&Attribute{
 			Name: "style",

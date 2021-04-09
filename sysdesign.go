@@ -143,7 +143,7 @@ func roleBasedService() *Element {
 	    extensively and we should try to find something
 	    shorter. Maybe`),
 
-		Sidenote("Short pronounce- able package name", 0.0),
+		sidenote("Short pronounce- able package name", 0.0),
 		Em(`"Package navstar provides a system for planning galaxy flights"`),
 
 		P(`Short pronouncable name, mentions the system and its main
@@ -206,7 +206,7 @@ func roleBasedService() *Element {
 			Li("Expose user methods to selected roles"),
 		),
 
-		Sidenote(`Authentication is most often a service level
+		sidenote(`Authentication is most often a service level
 		feature.`, 0.0),
 
 		P(`Note that authentication is not part of this design,

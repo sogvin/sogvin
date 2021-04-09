@@ -45,10 +45,10 @@ func inlineTestHelpers() *Element {
 
 			`The test would look like this.`,
 		),
-		Sidenote("Inlined helper does not need t argument.", 0.8),
-		Sidenote("Descriptive cases fail on correct line.", 4.6),
+		sidenote("Inlined helper does not need t argument.", 0.8),
+		sidenote("Descriptive cases fail on correct line.", 4.6),
 		loadFile("./internal/testing/inline/double_test.go", 7, -1),
-		Sidenote("Utmost 2 inlined helpers.", 0.2),
+		sidenote("Utmost 2 inlined helpers.", 0.2),
 
 		P(`Keep it simple and use utmost two inlined helpers. Compared to
        table-driven-tests inlined helpers declare the <em>how</em>

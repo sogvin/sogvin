@@ -40,8 +40,8 @@ func purposeOfFuncMain() *Element {
 	   program you would note that second, the order of the options are
 	   sorted in the same way as the help output.`),
 
-		Sidenote("Cyclomatic complexity should be one.", -5.2),
-		Sidenote("Option order should match output.", -2.3),
+		sidenote("Cyclomatic complexity should be one.", -5.2),
+		sidenote("Option order should match output.", -2.3),
 
 		H2("Benefits"),
 
@@ -77,8 +77,8 @@ func purposeOfFuncMain() *Element {
 	   execution with various options. This is impossible to do with
 	   the above approach while tracking coverage.`),
 
-		Sidenote("Run is now testable and complexity can grow slightly", 5),
-		Sidenote(
+		sidenote("Run is now testable and complexity can grow slightly", 5),
+		sidenote(
 			Span("Alternate ",
 				A(
 					Href("https://godoc.org/github.com/gregoryv/cmdline"), "cmdline"),
@@ -124,8 +124,8 @@ func nexusPattern() *Element {
        return if it is set without doing anything. This way all
        subsequent calls are no-operations.`),
 
-		Sidenote("The err field links operations.", 0.6),
-		Sidenote("Each method sets x.err before returning.", 3.3),
+		sidenote("The err field links operations.", 0.6),
+		sidenote("Each method sets x.err before returning.", 3.3),
 		loadFile("./internal/errhandling/nexus.go", 21, -1),
 
 		`With the fileIO nexus inplace the CopyFile function is
@@ -142,8 +142,8 @@ func gracefulServerShutdown() *Element {
 	   an interrupt which tells a listening <code>http.Server</code>
 	   to shutdown.`),
 
-		Sidenote("Register the graceful part of the server.", 4.8),
-		Sidenote("Important to wait for graceful stop to end.", 7.8),
+		sidenote("Register the graceful part of the server.", 4.8),
+		sidenote("Important to wait for graceful stop to end.", 7.8),
 		loadFile("./internal/cmd/graceful/graceful.go", 11, -1),
 		P(`Remember that you could expose the Shutdown func of your
        server through an URL to simplify clean shutdown. Useful for
@@ -215,8 +215,8 @@ func strictMode() *Element {
        request to set the correct header.  A simple wrapper around
        http.DefaultClient could look like this.  `),
 
-		Sidenote("Use the strict wrapper in public methods.", 1.2),
-		Sidenote("Private funcs just return errors as usual.", 5.7),
+		sidenote("Use the strict wrapper in public methods.", 1.2),
+		sidenote("Private funcs just return errors as usual.", 5.7),
 		loadFile("./internal/strictClient.go", 30, -1),
 
 		P(`Any error from the sending of the request will be checked by
