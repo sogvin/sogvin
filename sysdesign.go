@@ -298,7 +298,7 @@ func roleBasedService() *Element {
 	    crossing points between the layers. Starplan uses htapi and
 	    navstar, whereas htapi only uses the navstar package.`),
 
-		Div(Class("figure"), InternalDiagram(`Dependency flow, from
+		Div(Class("figure"), internalDiagram(`Dependency flow, from
 		right to left.`).Inline()),
 
 		P(`For other internal domain logic that benefits from
@@ -414,7 +414,7 @@ func starplanDiagram(caption string) *design.Diagram {
 	return d
 }
 
-func InternalDiagram(caption string) *design.Diagram {
+func internalDiagram(caption string) *design.Diagram {
 	var (
 		w, h, r, s = 80, 50, 20, 2
 		dx         = w - r
