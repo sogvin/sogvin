@@ -46,7 +46,7 @@ func (book *Book) AddPage(right string, article *Element) *Element {
 	page := newPage(
 		filename,
 		stripTags(title)+" - "+book.Title,
-		PageHeader(right+" - "+A(Href("index.html"), book.Title).String()),
+		pageHeader(right+" - "+A(Href("index.html"), book.Title).String()),
 		article,
 		Footer(book.Author),
 	)
@@ -131,7 +131,7 @@ func filenameFrom(in string) string {
 	return tidy.String()
 }
 
-func PageHeader(right string) *Element {
+func pageHeader(right string) *Element {
 	h := Header()
 	if right != "" {
 		h = h.With(Code(right))

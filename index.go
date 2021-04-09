@@ -59,7 +59,7 @@ func NewSoftwareEngineeringBook() *Book {
 			gregoryv("find", "files by name or content"),
 		),
 	)
-	index := newPage("index.html", findH1(toc), PageHeader(""), toc, Footer())
+	index := newPage("index.html", findH1(toc), pageHeader(""), toc, Footer())
 	book.pages = append(book.pages, index)
 
 	return book
