@@ -11,10 +11,10 @@ require (
 	github.com/gregoryv/navstar v0.2.0
 	github.com/gregoryv/nexus v0.4.0
 	github.com/gregoryv/qual v0.4.0
-	github.com/gregoryv/web v0.16.0
+	github.com/gregoryv/web v0.17.1-0.20210409084545-1f5d7374535e
 	github.com/gregoryv/wolf v0.7.1-0.20210322070002-85ee5b00b774
 	github.com/gregoryv/workdir v0.2.0
-	golang.org/x/net v0.0.0-20210326220855-61e056675ecf // indirect
+	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
 )
 
 replace github.com/gregoryv/navstar => ../navstar
