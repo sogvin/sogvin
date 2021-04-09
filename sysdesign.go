@@ -285,7 +285,7 @@ func roleBasedService() *Element {
 	    commands.`, Br(), `Adding files for some of the mentioned
 	    abstractions we end up with a directory tree like this`),
 
-		ShellCommand("$ tree navstar\n"+navstarTree),
+		shellCommand("$ tree navstar\n"+navstarTree),
 
 		H2("Summary"),
 

@@ -194,7 +194,7 @@ func gregoryv(name, txt string) *Element {
 	)
 }
 
-// ShellCommand returns a web Element wrapping shell commands
-func ShellCommand(v string) *Element {
+// shellCommand returns a web Element wrapping shell commands
+func shellCommand(v string) *Element {
 	return Pre(Class("command"), Code(v))
 }

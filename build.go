@@ -22,7 +22,7 @@ func embedVersionAndRevision() *Element {
 
 		P(`Then compile and change the version with`),
 
-		ShellCommand(
+		shellCommand(
 
 			`go build -ldflags "-X main.version=0.1" ./cmd/app`,
 		),
@@ -30,7 +30,7 @@ func embedVersionAndRevision() *Element {
 		P(`You can also change multiple values in this way, let's add
 		the revision as well`),
 
-		ShellCommand(
+		shellCommand(
 
 			func() string {
 				return fmt.Sprint("go build ",

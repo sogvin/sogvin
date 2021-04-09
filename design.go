@@ -225,7 +225,7 @@ func strictMode() *Element {
 
 		loadFile("./internal/strictClient_xtest.go", 8, 13),
 
-		ShellCommand(`$ go test
+		shellCommand(`$ go test
 --- FAIL: TestClient (0.00s)
     strictClient.go:32: checkContentType: "" must be application/json
 `),
