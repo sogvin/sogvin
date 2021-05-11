@@ -4,8 +4,8 @@ import (
 	. "github.com/gregoryv/web"
 )
 
-func NewWebsite() *Book {
-	book := new(Book)
+func NewWebsite() *Website {
+	book := new(Website)
 	book.Title = "Software Engineering"
 	book.Author = "Gregory Vin&ccaron;i&cacute;"
 	book.AddThemes(a4(), theme())

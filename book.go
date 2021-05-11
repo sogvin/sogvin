@@ -11,7 +11,7 @@ import (
 	"github.com/gregoryv/web/files"
 )
 
-type Book struct {
+type Website struct {
 	Title  string
 	Author string
 	pages  []*Page
@@ -19,7 +19,7 @@ type Book struct {
 }
 
 // Saves all pages and table of contents
-func (book *Book) SaveTo(base string) error {
+func (book *Website) SaveTo(base string) error {
 	for _, page := range book.pages {
 		page.SaveTo(base)
 	}
@@ -39,7 +39,7 @@ func findH1(article *Element) string {
 }
 
 // AddPage creates a new page and returns a link to it
-func (book *Book) AddPage(right string, article *Element) *Element {
+func (book *Website) AddPage(right string, article *Element) *Element {
 	title := findH1(article)
 	filename := filenameFrom(title) + ".html"
 
@@ -54,7 +54,7 @@ func (book *Book) AddPage(right string, article *Element) *Element {
 	return linkToPage(page)
 }
 
-func (me *Book) AddThemes(v ...*CSS) {
+func (me *Website) AddThemes(v ...*CSS) {
 	me.themes = append(me.themes, v...)
 }
 
