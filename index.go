@@ -4,7 +4,7 @@ import (
 	. "github.com/gregoryv/web"
 )
 
-func NewSoftwareEngineeringBook() *Book {
+func NewWebsite() *Book {
 	book := new(Book)
 	book.Title = "Software Engineering"
 	book.Author = "Gregory Vin&ccaron;i&cacute;"

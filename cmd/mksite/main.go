@@ -11,7 +11,7 @@ func main() {
 	prefix := flag.String("p", "./docs", "write pages to")
 	flag.Parse()
 
-	book := sogvin.NewSoftwareEngineeringBook()
+	book := sogvin.NewWebsite()
 	log.SetFlags(0)
 	err := book.SaveTo(*prefix)
 	if err != nil {
