@@ -71,7 +71,7 @@ func roleBasedService() *Element {
 	    when they want to elope to another part of the galaxy, imagine
 	    Luke Skywalker in a bar. It has very little to do with
 	    navigating the stars though so we should exclude that name or
-	    part of it in our design. Reason about the words in your
+	    part of it from our design. Reason about the words in your
 	    domain before deciding on how to use them. Refactoring code is
 	    easy compared to changing peoples perception of concepts.`),
 
@@ -100,7 +100,7 @@ func roleBasedService() *Element {
 			Dt(`Role`),
 			Dd(`passenger, captain, crew member`),
 
-			Dt(`Rsource`),
+			Dt(`Resource`),
 			Dd(`flightplan, route, waypoint`),
 
 			Dt(`Feature`),
@@ -122,16 +122,16 @@ func roleBasedService() *Element {
 		H3("Package naming"),
 
 		P(`One way to figure out a good name is to try to write that
-	    one line package documentation sentence. `, Em(`"Package X
-	    provides ..."`)),
+	    one line package documentation sentence `, Em(`"Package X
+	    provides ...".`)),
 
 		Em(`"Package galaxytravel provides applications for planning
 	    star navigation"`),
 
 		P(`Sounds ok, but wait, we said that the service name
 	    galaxytravel was selected for customers and should be excluded
-	    from the navigation system. Also it as a service provides more
-	    than just applications for planning star navigation. How
+	    from the navigation system. Also, as a service it provides
+	    more than just applications for planning star navigation. How
 	    about`),
 
 		Em(`"Package starnavigation provides means to plan galaxy flights"`),
