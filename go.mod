@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/gregoryv/asserter v0.4.1
 	github.com/gregoryv/cmdline v0.5.2
-	github.com/gregoryv/draw v0.18.0
+	github.com/gregoryv/draw v0.22.1
 	github.com/gregoryv/fox v0.6.2
 	github.com/gregoryv/logger v0.2.0
 	github.com/gregoryv/navstar v0.2.0
@@ -18,5 +18,3 @@ require (
 )
 
 replace github.com/gregoryv/navstar => ../navstar
-
-replace github.com/gregoryv/draw => ../draw
