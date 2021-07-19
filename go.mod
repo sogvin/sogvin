@@ -3,18 +3,18 @@ module github.com/gregoryv/sogvin
 go 1.16
 
 require (
-	github.com/gregoryv/asserter v0.4.0
+	github.com/gregoryv/asserter v0.4.1
 	github.com/gregoryv/cmdline v0.5.2
 	github.com/gregoryv/draw v0.18.0
-	github.com/gregoryv/fox v0.5.0
+	github.com/gregoryv/fox v0.6.2
 	github.com/gregoryv/logger v0.2.0
 	github.com/gregoryv/navstar v0.2.0
-	github.com/gregoryv/nexus v0.4.0
-	github.com/gregoryv/qual v0.4.0
-	github.com/gregoryv/web v0.17.1-0.20210409084545-1f5d7374535e
-	github.com/gregoryv/wolf v0.7.1-0.20210322070002-85ee5b00b774
+	github.com/gregoryv/nexus v0.5.1
+	github.com/gregoryv/qual v0.4.1
+	github.com/gregoryv/web v0.19.0
+	github.com/gregoryv/wolf v0.8.0
 	github.com/gregoryv/workdir v0.2.0
-	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
+	golang.org/x/net v0.0.0-20210716203947-853a461950ff // indirect
 )
 
 replace github.com/gregoryv/navstar => ../navstar
