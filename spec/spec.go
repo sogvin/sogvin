@@ -5,30 +5,18 @@ import (
 )
 
 func NewSpecification() *Page {
-	n := NewHn(1)
-	body := Body(
-		NewExploreRequirementsEngineering(n),
-		NewBeachStory(n),
-	)
-	return NewPage(
-		Html(
-			Head(
-				Meta(Charset("utf-8")),
-				Style(theme()),
-				Script(
-					// to prevent Firefox FOUC, this must be here
-					// https://stackoverflow.com/questions/21147149
-					"let FF_FOUC_FIX;",
-				),
-			),
-			body,
+	return newPage(
+		H1("Exploring requirements engineering"),
+
+		Article(
+			NewExploreRequirementsEngineering(),
+			NewBeachStory(),
 		),
 	)
 }
 
-func NewExploreRequirementsEngineering(n *Hn) *Element {
-	return Article(
-		n.H1("Exploring requirements engineering"),
+func NewExploreRequirementsEngineering() *Element {
+	return Wrap(
 
 		P(`An exercise in elicitating requirements, imho. still one of
         the most difficult task in software engineering.`),
@@ -72,15 +60,15 @@ func NewExploreRequirementsEngineering(n *Hn) *Element {
 	)
 }
 
-func NewBeachStory(n *Hn) *Element {
-	return Article(
-		n.H1("To the beach"),
+func NewBeachStory() *Element {
+	return Section(
+		H2("To the beach"),
 
 		P(`Through the navigation system people can plot a course or
 		manually steer a ship.  People depend on its accuracy and
 		automation to safely navigate through space.`),
 
-		n.H2(`Plot new course`),
+		H3(`Plot new course`),
 
 		P(`Standing at the bridge, the captain asks for the closest
 		viable planets for some time at the beach. Selects the one
@@ -95,7 +83,7 @@ func NewBeachStory(n *Hn) *Element {
 		adapts the course accordingly. The captain is notified through
 		his personal communicator of the changes.`),
 
-		n.H2(`Manual control`),
+		H3(`Manual control`),
 
 		P(`Once the ship enters the planets atmosphere one of the crew
 	 	members on the bridge tells the system to let him manually
@@ -139,4 +127,25 @@ func John(el ...interface{}) *Element {
 
 func Jane(el ...interface{}) *Element {
 	return Div("&#8213; Jane: ").With(el...)
+}
+
+func newPage(content ...interface{}) *Page {
+
+	return NewPage(
+
+		Html(
+			Head(
+				Meta(Charset("utf-8")),
+				Style(theme()),
+				Script(
+					// to prevent Firefox FOUC, this must be here
+					// https://stackoverflow.com/questions/21147149
+					"let FF_FOUC_FIX;",
+				),
+			),
+			Body(
+				content...,
+			),
+		),
+	)
 }
