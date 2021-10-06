@@ -8,7 +8,7 @@ func theme() *CSS {
 
 	css.Style("html, body",
 		"margin: 0 0",
-		"body: 0 0",
+		"padding: 0 0",
 		"font-family: 'Source Sans Pro', sans-serif",
 	)
 	css.Style("body",
