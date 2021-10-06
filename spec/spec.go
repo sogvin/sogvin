@@ -4,6 +4,28 @@ import (
 	. "github.com/gregoryv/web"
 )
 
+func NewSpecification() *Page {
+	n := NewHn(1)
+	body := Body(
+		NewExploreRequirementsEngineering(n),
+		NewBeachStory(n),
+	)
+	return NewPage(
+		Html(
+			Head(
+				Meta(Charset("utf-8")),
+				Style(theme()),
+				Script(
+					// to prevent Firefox FOUC, this must be here
+					// https://stackoverflow.com/questions/21147149
+					"let FF_FOUC_FIX;",
+				),
+			),
+			body,
+		),
+	)
+}
+
 func NewExploreRequirementsEngineering(n *Hn) *Element {
 	return Article(
 		n.H1("Exploring requirements engineering"),
