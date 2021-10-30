@@ -21,3 +21,5 @@ case $1 in
 	$0 build
 	;;
 esac
+
+echo $dist
