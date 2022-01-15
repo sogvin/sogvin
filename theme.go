@@ -19,6 +19,11 @@ func a4() *CSS {
 	css.Style("header",
 		"text-align: right",
 	)
+	css.Style(".unreleased",
+		"background-color: red",
+		"color: white",
+		"padding: 0 10px",
+	)
 	css.Style("p",
 		"line-height: 1.4em",
 	)

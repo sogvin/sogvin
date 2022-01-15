@@ -68,11 +68,22 @@ func NewWebsite() *Website {
 		),
 	)
 	index := newPage("index.html", findH1(toc), Header(Code(
-		"v"+Version()+" - "+Released(),
+		versionField(), " - ", Released(),
 	)), toc, Footer())
 	site.pages = append(site.pages, index)
 
 	return &site
+}
+
+func versionField() *Element {
+	el := Span()
+	v := Version()
+	if v == "unreleased" {
+		el.With(Class("unreleased"), v)
+	} else {
+		el.With("v", v)
+	}
+	return el
 }
 
 type Website struct {
