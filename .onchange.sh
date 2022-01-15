@@ -5,17 +5,13 @@ filename=$(basename "$path")
 extension="${filename##*.}"
 nameonly="${filename%.*}"
 
-
-pushd ../
-tree -P "*.go" -I "*_test.go" navstar | grep -v directories > sogvin/example/navstar.tree
-popd
+set -e
+set -o pipefail
 
 case $extension in
     go)
         goimports -w $path
-	go test -coverprofile /tmp/c.out ./... 
-	#uncover /tmp/c.out
         ;;
 esac
 
-./ci.sh build
+./ci.sh build test
