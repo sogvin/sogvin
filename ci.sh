@@ -10,6 +10,7 @@ case $1 in
 	echo "Usage: $0 build|publish"
 	;;
     publish)
+	go run ./cmd/mksite -c # guard
 	rsync -avC $dist/docs/ www.7de.se:/var/www/www.sogvin.com/
 	;;
     build)
