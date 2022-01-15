@@ -71,6 +71,11 @@ func NewWebsite() *Website {
 			site.AddDrill("Logging", "", "drill/level_logs.go"),
 		),
 
+		H3("Encoding"),
+		Ul(
+			site.AddDrill("Encoding", "", "drill/json_encode.go"),
+		),
+
 		H2("References"),
 		Ul(
 			site.AddPage("References", packageRefs()),

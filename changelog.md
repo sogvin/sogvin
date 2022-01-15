@@ -6,6 +6,7 @@ This project adheres to semantic versioning.
 ## [unreleased]
 
 - Add drills
+  - Encode struct to json
   - Read file line by line
   - Simple level loggers
   - Basic use of log printer fucs
