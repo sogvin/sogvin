@@ -5,9 +5,13 @@ This project adheres to semantic versioning.
 
 ## [unreleased]
 
-- Add drill Parse builtin types
+- Add drills
+  - "Parse options using cmdline.BasicParser"
+  - "Parse builtin types"
+  - "Short and long option names"
+
 - Group packages under references
-- Add drill Short and long option names
+
 
 ## [0.3.0] 2022-01-15
 

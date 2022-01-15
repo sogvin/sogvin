@@ -168,7 +168,7 @@ func gregoryv(name, txt string) *Element {
 func example(args string, files ...string) *Element {
 	res, err := runExample(args, files...)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err, files)
 	}
 	return shellCommand(string(res))
 }
@@ -267,7 +267,7 @@ func runExample(args string, files ...string) ([]byte, error) {
 	// files in same directory, but speed up builds
 	name := filepath.Base(first)
 	i := strings.Index(name, ".")
-	dir := filepath.Join(os.TempDir(), name[:i])
+	dir := filepath.Join("./build", name[:i])
 	if err := os.MkdirAll(dir, 0722); err != nil {
 		return nil, err
 	}
