@@ -56,6 +56,7 @@ func NewWebsite() *Website {
 			return Wrap(
 				H3(h),
 				Ul(
+					site.AddDrill(h, "-h", "drill/flag_types.go"),
 					site.AddDrill(h, "-h", "drill/flag_names.go"),
 				),
 			)

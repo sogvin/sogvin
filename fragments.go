@@ -177,8 +177,11 @@ func loadExample(filename string) *Element {
 	src := loadAs(filename, "init", "main")
 	i := strings.Index(src, "\n") // first line
 	fn := strings.Index(src, "\npackage")
-	block := src[i+1 : fn]
-	block = strings.ReplaceAll(block, "//", "")
+	var block string
+	if fn > i {
+		block = src[i+1 : fn]
+		block = strings.ReplaceAll(block, "//", "")
+	}
 	e := Wrap(
 		H1(src[3:i]),
 		P(block),
