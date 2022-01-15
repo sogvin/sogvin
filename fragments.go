@@ -174,15 +174,19 @@ func example(args string, files ...string) *Element {
 }
 
 func loadExample(filename string) *Element {
+	src := loadAs(filename, "init", "main")
+	i := strings.Index(src, "\n") // first line
+	fn := strings.Index(src, "\npackage")
+	block := src[i+1 : fn]
+	block = strings.ReplaceAll(block, "//", "")
 	e := Wrap(
+		H1(src[3:i]),
+		P(block),
 		Div(Class("filename"), filename),
 		Pre(Class("srcfile complete"),
-			Code(Class("go"),
-				skipFirstLine(loadAs(filename, "init", "main")),
-			),
+			Code(Class("go"), src[fn+1:]),
 		),
 	)
-	//LinkAll(e, refs)
 	return e
 }
 

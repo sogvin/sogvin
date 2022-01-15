@@ -64,9 +64,19 @@ func NewWebsite() *Website {
 		),
 
 		H2("Drills"),
-		Ul(
-			site.newDrill("-h", "drill/flag_names.go"),
-		),
+
+		P(`Drills are short examples for practicing often used
+		concepts.`),
+
+		func() *Element {
+			h := "Command line"
+			return Wrap(
+				H3(h),
+				Ul(
+					site.AddDrill(h, "-h", "drill/flag_names.go"),
+				),
+			)
+		}(),
 	)
 	index := newPage("index.html", findH1(toc), Header(Code(
 		versionField(), " - ", Released(),
@@ -102,11 +112,7 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 	return linkToPage(page)
 }
 
-func (me *Website) AddThemes(v ...*CSS) {
-	me.themes = append(me.themes, v...)
-}
-
-func (me *Website) newDrill(args string, filename string) *Element {
+func (me *Website) AddDrill(right, args string, filename string) *Element {
 	article := Article(
 		loadExample(filename),
 		example(args, filename),
@@ -124,7 +130,12 @@ func (me *Website) newDrill(args string, filename string) *Element {
 				Title(""),
 			),
 			Body(
-				Header(),
+				// todo link to parent
+				Header(
+					Header(Code(
+						right+" - "+A(Href("../index.html"), me.Title).String(),
+					)),
+				),
 				article,
 				Footer(me.Author),
 			),
@@ -132,6 +143,10 @@ func (me *Website) newDrill(args string, filename string) *Element {
 	)
 	me.drills = append(me.drills, page)
 	return linkDrill(filename)
+}
+
+func (me *Website) AddThemes(v ...*CSS) {
+	me.themes = append(me.themes, v...)
 }
 
 // Saves all pages and table of contents
