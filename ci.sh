@@ -13,6 +13,11 @@ case $1 in
 	rsync -avC $dist/docs/ www.7de.se:/var/www/www.sogvin.com/
 	;;
     build)
+	pushd ../
+	tree -P "*.go" -I "*_test.go" navstar | grep -v directories > sogvin/example/navstar.tree
+	popd
+	go build ./...
+	
 	mkdir -p $dist
 	go run ./cmd/mksite -p $dist/docs
 	rsync -avC ./docs $dist/
@@ -21,10 +26,10 @@ case $1 in
 	rm -rf $dist
 	;;
     test)
-	go test -coverprofile /tmp/c.out ./... 2>&1| sed 's|github.com/gregoryv|.|g'
+	go test -coverprofile /tmp/c.out ./... 2>&1 | sed 's|github.com/gregoryv|.|g'
 	;;
     *)
-	$0 build
+	$0 build test
 	;;
 esac
 
