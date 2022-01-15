@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -o pipefail
+
 dist=/tmp/sogvin
 
 case $1 in
@@ -22,4 +25,9 @@ case $1 in
 	;;
 esac
 
-echo $dist
+
+# Run next target if any
+shift
+[[ -z "$@" ]] && exit 0
+$0 $@
+
