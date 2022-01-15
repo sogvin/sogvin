@@ -67,7 +67,9 @@ func NewWebsite() *Website {
 			gregoryv("find", "files by name or content"),
 		),
 	)
-	index := newPage("index.html", findH1(toc), pageHeader(""), toc, Footer())
+	index := newPage("index.html", findH1(toc), Header(Code(
+		"v"+Version()+" - "+Released(),
+	)), toc, Footer())
 	site.pages = append(site.pages, index)
 
 	return &site
@@ -108,7 +110,9 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 	page := newPage(
 		filename,
 		stripTags(title)+" - "+me.Title,
-		pageHeader(right+" - "+A(Href("index.html"), me.Title).String()),
+		Header(Code(
+			right+" - "+A(Href("index.html"), me.Title).String(),
+		)),
 		article,
 		Footer(me.Author),
 	)
@@ -191,14 +195,6 @@ func filenameFrom(in string) string {
 		}
 	}
 	return tidy.String()
-}
-
-func pageHeader(right string) *Element {
-	h := Header()
-	if right != "" {
-		h = h.With(Code(right))
-	}
-	return h
 }
 
 // stylesheet returns a link web element
