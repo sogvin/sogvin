@@ -20,6 +20,9 @@ case $1 in
     clean)
 	rm -rf $dist
 	;;
+    test)
+	go test -coverprofile /tmp/c.out ./... 2>&1| sed 's|github.com/gregoryv|.|g'
+	;;
     *)
 	$0 build
 	;;
