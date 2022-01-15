@@ -3,6 +3,7 @@ package sogvin
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"path"
 	"path/filepath"
 	"strings"
@@ -75,17 +76,6 @@ func NewWebsite() *Website {
 	return &site
 }
 
-func versionField() *Element {
-	el := Span()
-	v := Version()
-	if v == "unreleased" {
-		el.With(Class("unreleased"), v)
-	} else {
-		el.With("v", v)
-	}
-	return el
-}
-
 type Website struct {
 	Title  string
 	Author string
@@ -102,6 +92,23 @@ func (me *Website) SaveTo(base string) error {
 		theme.SaveTo(base)
 	}
 	return nil
+}
+
+func (me *Website) AddThemes(v ...*CSS) {
+	me.themes = append(me.themes, v...)
+}
+
+// ----------------------------------------
+
+func versionField() *Element {
+	el := Span()
+	v := Version()
+	if v == "unreleased" {
+		el.With(Class("unreleased"), v)
+	} else {
+		el.With("v", v)
+	}
+	return el
 }
 
 func findH1(article *Element) string {
@@ -129,10 +136,6 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 	)
 	me.pages = append(me.pages, page)
 	return linkToPage(page)
-}
-
-func (me *Website) AddThemes(v ...*CSS) {
-	me.themes = append(me.themes, v...)
 }
 
 func newPage(filename, title string, header, article, footer *Element) *Page {
@@ -261,6 +264,14 @@ func gregoryv(name, txt string) *Element {
 			name, name, txt,
 		),
 	)
+}
+
+func example(cmdline string, files ...string) *Element {
+	res, err := runExample(cmdline, files...)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return shellCommand(string(res))
 }
 
 // shellCommand returns a web Element wrapping shell commands
