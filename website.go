@@ -51,17 +51,17 @@ func NewWebsite() *Website {
 		P(`Drills are short examples for practicing often used
 		concepts.`),
 
-		func() *Element {
-			h := "Command line"
-			return Wrap(
-				H3(h),
-				Ul(
-					site.AddDrill(h, "", "drill/flag_types.go"),
-					site.AddDrill(h, "", "drill/flag_names.go"),
-					site.AddDrill(h, "", "drill/cmdline_basic.go"),
-				),
-			)
-		}(),
+		H3("Command line"),
+		Ul(
+			site.AddDrill("Command line", "", "drill/flag_types.go"),
+			site.AddDrill("Command line", "", "drill/flag_names.go"),
+			site.AddDrill("Command line", "", "drill/cmdline_basic.go"),
+		),
+
+		H3("Reading files"),
+		Ul(
+			site.AddDrill("Reading files", "", "drill/slurp_file.go"),
+		),
 
 		H2("References"),
 		Ul(

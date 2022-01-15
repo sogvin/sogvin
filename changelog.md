@@ -6,9 +6,11 @@ This project adheres to semantic versioning.
 ## [unreleased]
 
 - Add drills
+  - "Slurp file"
   - "Parse options using cmdline.BasicParser"
   - "Parse builtin types"
   - "Short and long option names"
+
 
 - Group packages under references
 
