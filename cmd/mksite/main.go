@@ -1,20 +1,37 @@
 package main
 
 import (
-	"flag"
+	"fmt"
 	"log"
 
+	"github.com/gregoryv/cmdline"
 	"github.com/gregoryv/sogvin"
 )
 
 func main() {
-	prefix := flag.String("p", "./docs", "write pages to")
-	flag.Parse()
+	var (
+		cli          = cmdline.NewBasicParser()
+		prefix       = cli.Option("-p, --prefix", "write pages to").String("./docs")
+		showVersion  = cli.Flag("-v, --version")
+		checkRelease = cli.Flag("-c, --check-release")
+	)
+	cli.Parse()
 
 	log.SetFlags(0)
 
-	err := sogvin.NewWebsite().SaveTo(*prefix)
-	if err != nil {
-		log.Fatal(err)
+	switch {
+	case showVersion:
+		fmt.Println(sogvin.Version())
+
+	case checkRelease:
+		if sogvin.Version() == "unreleased" {
+			log.Fatal("not ready for release, fix changelog")
+		}
+
+	default:
+		website := sogvin.NewWebsite()
+		if err := website.SaveTo(prefix); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
