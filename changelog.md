@@ -6,6 +6,7 @@ This project adheres to semantic versioning.
 ## [unreleased]
 
 - Add drills
+  - "Basic use of log printer fucs"
   - "Open file for reading"
   - "Slurp file"
   - "Parse options using cmdline.BasicParser"

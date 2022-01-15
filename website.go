@@ -64,6 +64,11 @@ func NewWebsite() *Website {
 			site.AddDrill("Reading files", "", "drill/slurp_file.go"),
 		),
 
+		H3("Logging"),
+		Ul(
+			site.AddDrill("Logging", "", "drill/logging.go"),
+		),
+
 		H2("References"),
 		Ul(
 			site.AddPage("References", packageRefs()),
