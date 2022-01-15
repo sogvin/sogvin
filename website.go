@@ -62,6 +62,7 @@ func NewWebsite() *Website {
 		Ul(
 			site.AddDrill("Reading files", "", "drill/openfile.go"),
 			site.AddDrill("Reading files", "", "drill/slurp_file.go"),
+			site.AddDrill("Reading files", "", "drill/readfile_byline.go"),
 		),
 
 		H3("Logging"),
