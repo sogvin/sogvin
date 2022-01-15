@@ -48,6 +48,14 @@ func a4() *CSS {
 	css.Style("pre code",
 		"font-size: 14px",
 	)
+	css.Style("pre code a",
+		"text-decoration: none",
+		"color: black",
+		"font-weight: bold",
+	)
+	css.Style("pre code a:hover",
+		"text-decoration: underline",
+	)
 	css.Style("h1 code, h2 code",
 		"font-weight: normal",
 		"margin-left: 8px",

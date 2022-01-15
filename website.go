@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"os"
 	"path"
 	"path/filepath"
 	"strings"
@@ -67,6 +68,11 @@ func NewWebsite() *Website {
 			gregoryv("stamp", "build information code generator"),
 			gregoryv("find", "files by name or content"),
 		),
+
+		H2("Drills"),
+		Ul(
+			site.newDrill("-h", "drill/flag_names.go"),
+		),
 	)
 	index := newPage("index.html", findH1(toc), Header(Code(
 		versionField(), " - ", Released(),
@@ -81,6 +87,7 @@ type Website struct {
 	Author string
 	pages  []*Page
 	themes []*CSS
+	drills []*Page
 }
 
 // Saves all pages and table of contents
@@ -91,6 +98,13 @@ func (me *Website) SaveTo(base string) error {
 	for _, theme := range me.themes {
 		theme.SaveTo(base)
 	}
+	drills := filepath.Join(base, "drill")
+	os.MkdirAll(drills, 0722)
+	for _, drill := range me.drills {
+		if err := drill.SaveTo(drills); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -99,6 +113,33 @@ func (me *Website) AddThemes(v ...*CSS) {
 }
 
 // ----------------------------------------
+func (me *Website) newDrill(cmd string, filename string) *Element {
+	article := Article(
+		loadExample(filename),
+		example(cmd, filename),
+	)
+	page := NewFile(filepath.Base(toHtmlFile(filename)),
+		Html(Lang("en"),
+			Head(
+				Meta(Charset("utf-8")),
+				Meta(
+					Name("viewport"),
+					Content("width=device-width, initial-scale=1.0"),
+				),
+				stylesheet("../theme.css"),
+				stylesheet("../a4.css"),
+				Title(""),
+			),
+			Body(
+				Header(),
+				article,
+				Footer(me.Author),
+			),
+		),
+	)
+	me.drills = append(me.drills, page)
+	return linkDrill(filename)
+}
 
 func versionField() *Element {
 	el := Span()
@@ -272,6 +313,39 @@ func example(cmdline string, files ...string) *Element {
 		log.Fatal(err)
 	}
 	return shellCommand(string(res))
+}
+
+func loadExample(filename string) *Element {
+	e := Wrap(
+		Div(Class("filename"), filename),
+		Pre(Class("srcfile complete"),
+			Code(Class("go"),
+				skipFirstLine(loadAs(filename, "init", "main")),
+			),
+		),
+	)
+	//LinkAll(e, refs)
+	return e
+}
+
+func skipFirstLine(in string) string {
+	i := strings.Index(in, "\n") // skip first line, which should be comment
+	return in[i+1:]
+}
+
+func loadAs(filename, fn, as string) string {
+	data := files.MustLoad(filename)
+	return strings.ReplaceAll(data, fn, as)
+}
+
+// references replaced in examples
+var refs = map[string]string{
+	"log":     "https://pkg.go.dev/log",
+	"int":     "https://pkg.go.dev/builtin#int",
+	"uint":    "https://pkg.go.dev/builtin#uint",
+	"float32": "https://pkg.go.dev/builtin#float32",
+	"print":   "https://pkg.go.dev/builtin#print",
+	"rune":    "https://pkg.go.dev/builtin#rune",
 }
 
 // shellCommand returns a web Element wrapping shell commands
