@@ -6,12 +6,13 @@ This project adheres to semantic versioning.
 ## [unreleased]
 
 - Add drills
-  - "Basic use of log printer fucs"
-  - "Open file for reading"
-  - "Slurp file"
-  - "Parse options using cmdline.BasicParser"
-  - "Parse builtin types"
-  - "Short and long option names"
+  - Simple level loggers
+  - Basic use of log printer fucs
+  - Open file for reading
+  - Slurp file
+  - Parse options using cmdline.BasicParser
+  - Parse builtin types
+  - Short and long option names
 
 
 - Group packages under references

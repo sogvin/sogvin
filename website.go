@@ -67,6 +67,7 @@ func NewWebsite() *Website {
 		H3("Logging"),
 		Ul(
 			site.AddDrill("Logging", "", "drill/logging.go"),
+			site.AddDrill("Logging", "", "drill/level_logs.go"),
 		),
 
 		H2("References"),
