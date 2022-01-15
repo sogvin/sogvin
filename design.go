@@ -77,23 +77,26 @@ func purposeOfFuncMain() *Element {
 	   execution with various options. This is impossible to do with
 	   the above approach while tracking coverage.`),
 
-		sidenote("Run is now testable and complexity can grow slightly", 5),
+		sidenote("Run is now testable and complexity can grow slightly", 8.5),
+		loadFile("./example/cmd/starcounter/starcounter.go"),
+
+		P(`Complexity of func main has grown slightly, looking like`),
 		sidenote(
 			Span("Alternate ",
 				A(
 					Href("https://godoc.org/github.com/gregoryv/cmdline"), "cmdline"),
 				" package for parsing arguments.",
 			),
-			13,
+			1.8,
 		),
-
-		loadFile("./example/cmd/starcounter/starcounter.go"),
-
-		P(`Testing complex patterns is straight forward.`),
-		loadFile("./example/cmd/starcounter/starcounter_test.go"),
-
-		P(`Complexity of func main still remains at one, looking like`),
 		loadFile("./example/cmd/starcounter/main.go"),
+
+		P(`Testing complex patterns is still doable by testing the
+		main func. Although with this design unit tests of `, Code(`func
+		StarCounter.Run()`), ` are probably even simpler once variation
+		increase.`),
+
+		loadFile("./example/cmd/starcounter/starcounter_test.go"),
 	)
 }
 
