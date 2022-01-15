@@ -5,6 +5,8 @@ This project adheres to semantic versioning.
 
 ## [unreleased]
 
+- Add drill Short and long option names
+
 ## [0.3.0] 2022-01-15
 
 - Added version and release date to front page

@@ -33,11 +33,6 @@ func NewWebsite() *Website {
 			site.AddPage("Design", strictMode()),
 			site.AddPage("Design", roleBasedService()),
 		),
-		H3("Go packages"),
-		Ul(
-			gregoryv("draw", "software engineering diagrams"),
-			gregoryv("web", "html generation"),
-		),
 
 		H2("Test"),
 		Ul(
@@ -45,22 +40,10 @@ func NewWebsite() *Website {
 			site.AddPage("Test", alternateDesign()),
 			site.AddPage("Test", setupTeardown()),
 		),
-		H3("Go packages"),
-		Ul(
-			gregoryv("golden", "simplify use of golden files"),
-			gregoryv("qual", "quality constraints"),
-			gregoryv("ex", "indented JSON or redirect handler response to stdout"),
-			gregoryv("uncover", "paths that need more testing"),
-		),
 
 		H2("Build"),
 		Ul(
 			site.AddPage("Build", embedVersionAndRevision()),
-		),
-		H3("Go packages"),
-		Ul(
-			gregoryv("stamp", "build information code generator"),
-			gregoryv("find", "files by name or content"),
 		),
 
 		H2("Drills"),
@@ -77,6 +60,11 @@ func NewWebsite() *Website {
 				),
 			)
 		}(),
+
+		H2("References"),
+		Ul(
+			site.AddPage("References", packageRefs()),
+		),
 	)
 	index := newPage("index.html", findH1(toc), Header(Code(
 		versionField(), " - ", Released(),
