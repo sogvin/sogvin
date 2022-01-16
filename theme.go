@@ -160,7 +160,7 @@ func theme() *CSS {
 	css.Style("code",
 		"font-family: Inconsolata",
 	)
-	css.Style("quote",
+	css.Style("quote, blockquote",
 		"font-style: italic",
 	)
 

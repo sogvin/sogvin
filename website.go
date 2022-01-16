@@ -8,17 +8,26 @@ import (
 )
 
 func NewWebsite() *Website {
-	title := "Software Engineering"
+	title := "Software Engineering - Skills &amp; Practice"
+	author := "Gregory Vin&ccaron;i&cacute;"
 	site := Website{
 		title:  title,
-		Author: "Gregory Vin&ccaron;i&cacute;",
+		author: author,
 	}
 	site.AddThemes(a4(), theme())
 
 	toc := Article(Class("toc"),
 		H1(title),
 		Img(Src("img/office.jpg")),
-		P("Notes by ", site.Author),
+		P("Notes by ", author),
+
+		H2("Preface"),
+
+		Blockquote("Practice makes perfect"),
+
+		P(`In software engineering there are many skills required to
+        become professional. Here I present some of those skills and
+        ways to practice them.`),
 
 		H2("Start"),
 		Ul(
@@ -92,7 +101,7 @@ func NewWebsite() *Website {
 
 type Website struct {
 	title  string
-	Author string
+	author string
 	pages  []*Page
 	themes []*CSS
 	drills []*Page
@@ -110,7 +119,7 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 			right+" - "+A(Href("index.html"), me.title).String(),
 		)),
 		article,
-		Footer(me.Author),
+		Footer(me.author),
 	)
 	me.pages = append(me.pages, page)
 	return linkToPage(page)
@@ -141,7 +150,7 @@ func (me *Website) AddDrill(right, args string, filename string) *Element {
 					)),
 				),
 				article,
-				Footer(me.Author),
+				Footer(me.author),
 			),
 		),
 	)

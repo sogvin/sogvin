@@ -5,6 +5,7 @@ This project adheres to semantic versioning.
 
 ## [unreleased]
 
+- Add preface with purpose of the website
 - Add drills
   - Encode struct to json
   - Read file line by line
