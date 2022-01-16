@@ -70,7 +70,7 @@ func running(s *System) {
 	s.state = StateRunning
 	s.NetSettings = &disabled{}
 	s.LogSettings = &disabled{}
-	s.Runner = RunFunc(func(context.Context) {
+	s.Runner = runFunc(func(context.Context) {
 		log.Println("already running")
 	})
 }
@@ -79,7 +79,7 @@ func stopped(s *System) {
 	s.state = StateStopped
 	s.NetSettings = &enabled{s}
 	s.LogSettings = &enabled{s}
-	s.Runner = RunFunc(s.run)
+	s.Runner = runFunc(s.run)
 }
 
 // change Settings behavior by replacing it's implementation
@@ -110,9 +110,9 @@ func (s *disabled) warn() {
 	log.Printf("%s: settings disabled", name)
 }
 
-type RunFunc func(context.Context)
+type runFunc func(context.Context)
 
-func (fn RunFunc) Run(ctx context.Context) { fn(ctx) }
+func (fn runFunc) Run(ctx context.Context) { fn(ctx) }
 
 type Runner interface {
 	Run(context.Context)
