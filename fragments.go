@@ -255,44 +255,75 @@ func readLine(r io.Reader) string {
 func runExample(args string, files ...string) ([]byte, error) {
 	first := files[0]
 
-	data, err := ioutil.ReadFile(first)
-	if err != nil {
-		return nil, err
-	}
-
-	data = bytes.ReplaceAll(data, []byte("func init("), []byte("func main("))
-	data = bytes.ReplaceAll(data, []byte("package drill"), []byte("package main"))
-
 	// Use name of first file as command name, so we can have many
 	// files in same directory, but speed up builds
 	name := filepath.Base(first)
 	i := strings.Index(name, ".")
 	dir := filepath.Join("./build", name[:i])
-	if err := os.MkdirAll(dir, 0722); err != nil {
-		return nil, err
-	}
-	log.Println(dir)
-
 	scriptFile := filepath.Join(dir, name)
-	if err := ioutil.WriteFile(scriptFile, data, 0644); err != nil {
-		return nil, err
+	outfile := filepath.Join(dir, "output.txt")
+
+	// remove so we have less noise during grep
+	defer os.RemoveAll(scriptFile)
+
+	if changed(first, outfile) {
+		data, err := ioutil.ReadFile(first)
+		if err != nil {
+			return nil, err
+		}
+
+		// modify drill to contain a main func
+		data = bytes.ReplaceAll(data, []byte("func init("), []byte("func main("))
+		data = bytes.ReplaceAll(data, []byte("package drill"), []byte("package main"))
+
+		if err := os.MkdirAll(dir, 0722); err != nil {
+			return nil, err
+		}
+
+		if err := ioutil.WriteFile(scriptFile, data, 0644); err != nil {
+			return nil, err
+		}
+		log.Println(scriptFile)
+
+		parts := strings.Split(args, " ")
+		fullArgs := append(
+			[]string{"run", filepath.Base(scriptFile)}, parts...,
+		)
+
+		// run the drill
+		cmd := exec.Command("go", fullArgs...)
+		cmd.Dir = dir
+		out, err := cmd.CombinedOutput()
+
+		// combine command line and output
+		var buf bytes.Buffer
+		buf.WriteString("$ ")
+		cmdline := cmd.String()
+		cmdline = strings.Replace(cmdline, "/home/gregory/dl/go1/go/bin/", "", 1)
+		buf.WriteString(cmdline)
+		buf.WriteString("\n")
+		buf.Write(out)
+
+		if err := os.WriteFile(outfile, buf.Bytes(), 0644); err != nil {
+			return nil, err
+		}
+		return buf.Bytes(), err
+	}
+	return os.ReadFile(outfile)
+}
+
+// changed returns true if the src has been changed after the dst file
+// Returns false on stat errors
+func changed(src, dst string) bool {
+	s, err := os.Stat(src)
+	if err != nil {
+		return true
 	}
 
-	parts := strings.Split(args, " ")
-	fullArgs := append(
-		[]string{"run", filepath.Base(scriptFile)}, parts...,
-	)
+	d, err := os.Stat(dst)
+	if err != nil {
+		return true
+	}
 
-	cmd := exec.Command("go", fullArgs...)
-	cmd.Dir = dir
-	out, err := cmd.CombinedOutput()
-
-	var buf bytes.Buffer
-	buf.WriteString("$ ")
-	cmdline := cmd.String()
-	cmdline = strings.Replace(cmdline, "/home/gregory/dl/go1/go/bin/", "", 1)
-	buf.WriteString(cmdline)
-	buf.WriteString("\n")
-	buf.Write(out)
-	return buf.Bytes(), err
+	return s.ModTime().After(d.ModTime())
 }
