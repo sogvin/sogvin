@@ -14,6 +14,7 @@ func NewWebsite() *Website {
 		title:  title,
 		author: author,
 	}
+	site.ToSaver = &saveAll{&site}
 	site.AddThemes(a4(), theme())
 
 	toc := Article(Class("toc"),
@@ -100,6 +101,8 @@ func NewWebsite() *Website {
 }
 
 type Website struct {
+	ToSaver
+
 	title  string
 	author string
 	pages  []*Page
@@ -162,11 +165,23 @@ func (me *Website) AddThemes(v ...*CSS) {
 	me.themes = append(me.themes, v...)
 }
 
-// Saves all pages and table of contents
-func (me *Website) SaveTo(base string) error {
-	for _, page := range me.pages {
-		page.SaveTo(base)
+// ----------------------------------------
+// Website behaviors
+
+type ToSaver interface {
+	SaveTo(base string) error
+}
+
+type saveAll struct {
+	*Website
+}
+
+func (me *saveAll) SaveTo(base string) error {
+	p := &savePagesOnly{me.Website}
+	if err := p.SaveTo(base); err != nil {
+		return err
 	}
+
 	for _, theme := range me.themes {
 		theme.SaveTo(base)
 	}
@@ -174,6 +189,19 @@ func (me *Website) SaveTo(base string) error {
 	os.MkdirAll(drills, 0722)
 	for _, drill := range me.drills {
 		if err := drill.SaveTo(drills); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+type savePagesOnly struct {
+	*Website
+}
+
+func (me *savePagesOnly) SaveTo(base string) error {
+	for _, page := range me.pages {
+		if err := page.SaveTo(base); err != nil {
 			return err
 		}
 	}
