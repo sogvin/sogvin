@@ -55,19 +55,19 @@ func (me *System) Is(v State) bool {
 }
 
 func (s *System) run(ctx context.Context) {
-	s.inState(running)
+	s.switchState(running)
 
 	for {
 		select {
 		case <-ctx.Done():
-			s.inState(stopped)
+			s.switchState(stopped)
 			return
 		case <-time.After(time.Second):
 		}
 	}
 }
 
-func (s *System) inState(state func(s *System)) {
+func (s *System) switchState(state func(s *System)) {
 	s.m.Lock()
 	before := s.state
 	state(s)
