@@ -35,13 +35,14 @@ func NewSystem() *System {
 }
 
 type System struct {
-	Settings
-	Runner
+	NetSettings
+	host string
+	port int
 
-	host  string
-	port  int
+	LogSettings
 	debug bool
 
+	Runner
 	m     sync.Mutex // protects system state switching
 	state State
 }
@@ -84,13 +85,15 @@ const (
 
 func running(s *System) {
 	s.state = StateRunning
-	s.Settings = &disabled{}
+	s.NetSettings = &disabled{}
+	s.LogSettings = &disabled{}
 	s.Runner = RunFunc(func(context.Context) {})
 }
 
 func stopped(s *System) {
 	s.state = StateStopped
-	s.Settings = &enabled{s}
+	s.NetSettings = &enabled{s}
+	s.LogSettings = &enabled{s}
 	s.Runner = RunFunc(s.run)
 }
 
@@ -130,8 +133,11 @@ type Runner interface {
 	Run(context.Context)
 }
 
-type Settings interface {
+type NetSettings interface {
 	SetHost(string)
 	SetPort(int)
+}
+
+type LogSettings interface {
 	SetDebug(bool)
 }
