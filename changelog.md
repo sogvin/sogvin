@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to semantic versioning.
 
+## [unreleased]
+
 ## [0.4.0] 2022-01-16
 
 - Add preface with purpose of the website
