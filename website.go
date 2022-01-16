@@ -8,14 +8,15 @@ import (
 )
 
 func NewWebsite() *Website {
+	title := "Software Engineering"
 	site := Website{
-		Title:  "Software Engineering",
+		title:  title,
 		Author: "Gregory Vin&ccaron;i&cacute;",
 	}
 	site.AddThemes(a4(), theme())
 
 	toc := Article(Class("toc"),
-		H1(site.Title),
+		H1(title),
 		Img(Src("img/office.jpg")),
 		P("Notes by ", site.Author),
 
@@ -90,7 +91,7 @@ func NewWebsite() *Website {
 }
 
 type Website struct {
-	Title  string
+	title  string
 	Author string
 	pages  []*Page
 	themes []*CSS
@@ -104,9 +105,9 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 
 	page := newPage(
 		filename,
-		stripTags(title)+" - "+me.Title,
+		stripTags(title)+" - "+me.title,
 		Header(Code(
-			right+" - "+A(Href("index.html"), me.Title).String(),
+			right+" - "+A(Href("index.html"), me.title).String(),
 		)),
 		article,
 		Footer(me.Author),
@@ -136,7 +137,7 @@ func (me *Website) AddDrill(right, args string, filename string) *Element {
 				// todo link to parent
 				Header(
 					Header(Code(
-						right+" - "+A(Href("../index.html"), me.Title).String(),
+						right+" - "+A(Href("../index.html"), me.title).String(),
 					)),
 				),
 				article,
