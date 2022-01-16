@@ -1,5 +1,4 @@
-// Configure some struct
-package drill
+package behavior
 
 import (
 	"context"
@@ -11,22 +10,6 @@ import (
 	"time"
 )
 
-func init() {
-	sys := NewSystem()
-
-	// Configure
-	sys.SetHost("localhost")
-	sys.SetPort(1899)
-	sys.SetDebug(true)
-
-	fmt.Println(sys)
-	go sys.Run(context.Background())
-	<-time.After(10 * time.Millisecond)
-	fmt.Println(sys)
-	sys.SetHost("example.com") // noop
-
-}
-
 // NewSystem returns a stopped system
 func NewSystem() *System {
 	var sys System
@@ -35,12 +18,12 @@ func NewSystem() *System {
 }
 
 type System struct {
-	NetSettings
-	host string
-	port int
+	NetSettings // controls e.g. host and port
+	host        string
+	port        int
 
-	LogSettings
-	debug bool
+	LogSettings // e.g. debug mode
+	debug       bool
 
 	Runner
 	m     sync.Mutex // protects system state switching
@@ -87,7 +70,9 @@ func running(s *System) {
 	s.state = StateRunning
 	s.NetSettings = &disabled{}
 	s.LogSettings = &disabled{}
-	s.Runner = RunFunc(func(context.Context) {})
+	s.Runner = RunFunc(func(context.Context) {
+		log.Println("already running")
+	})
 }
 
 func stopped(s *System) {
