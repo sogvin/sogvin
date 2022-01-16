@@ -87,6 +87,11 @@ func NewWebsite() *Website {
 			site.AddDrill("Encoding", "", "drill/json_encode.go"),
 		),
 
+		H3("Methods"),
+		Ul(
+			site.AddDrill("Methods", "", "drill/pointer_receiver.go"),
+		),
+
 		H2("References"),
 		Ul(
 			site.AddPage("References", packageRefs()),

@@ -5,6 +5,8 @@ This project adheres to semantic versioning.
 
 ## [unreleased]
 
+- Add drill "Pointer receiver or not"
+
 ## [0.4.0] 2022-01-16
 
 - Add preface with purpose of the website
