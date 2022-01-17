@@ -5,6 +5,7 @@ This project adheres to semantic versioning.
 
 ## [unreleased]
 
+- Split design section into system and software design
 - Add drill "Pointer receiver or not"
 
 ## [0.4.0] 2022-01-16

@@ -36,13 +36,26 @@ func NewWebsite() *Website {
 		),
 
 		H2("Design"),
+
+		H3("System design"),
+
+		P(`Skill of communicating with fellow engineers on what makes
+		up a system and why.`),
+
+		Ul(
+			site.AddPage("Design", componentsDiagram()),
+			site.AddPage("Design", roleBasedService()),
+		),
+
+		H3("Software design"),
+
+		P(`Skill of writing software to grow gracefully over time.`),
+
 		Ul(
 			site.AddPage("Design", purposeOfFuncMain()),
 			site.AddPage("Design", nexusPattern()),
 			site.AddPage("Design", gracefulServerShutdown()),
-			site.AddPage("Design", componentsDiagram()),
 			site.AddPage("Design", strictMode()),
-			site.AddPage("Design", roleBasedService()),
 		),
 
 		H2("Test"),

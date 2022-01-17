@@ -107,7 +107,7 @@ func (s *disabled) warn() {
 	if i > -1 {
 		name = name[i+1:]
 	}
-	log.Printf("%s: settings disabled", name)
+	log.Printf("%s: disabled", name)
 }
 
 type runFunc func(context.Context)
