@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"runtime"
-	"strings"
 	"sync"
 	"time"
 )
@@ -94,21 +92,9 @@ func (s *enabled) SetDebug(v bool)  { s.debug = v }
 
 type disabled struct{}
 
-func (s *disabled) SetHost(v string) { s.warn() }
-func (s *disabled) SetPort(v int)    { s.warn() }
-func (s *disabled) SetDebug(v bool)  { s.warn() }
-
-func (s *disabled) warn() {
-	pc := make([]uintptr, 10)
-	runtime.Callers(2, pc)
-	f := runtime.FuncForPC(pc[0])
-	name := f.Name()
-	i := strings.LastIndex(name, ".")
-	if i > -1 {
-		name = name[i+1:]
-	}
-	log.Printf("%s: disabled", name)
-}
+func (s *disabled) SetHost(v string) { log.Print("SetHost: disabled") }
+func (s *disabled) SetPort(v int)    { log.Print("SetPort: disabled") }
+func (s *disabled) SetDebug(v bool)  { log.Print("SetDebug: disabled") }
 
 type runFunc func(context.Context)
 
