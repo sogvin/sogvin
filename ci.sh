@@ -15,19 +15,24 @@ case $1 in
 	;;
     build)
 	pushd ../
-	tree -P "*.go" -I "*_test.go" navstar | grep -v directories > sogvin/example/navstar.tree
+	tree -P "*.go" -I "*_test.go" navstar | \
+	    grep -v directories > sogvin/example/navstar.tree
 	popd
 	go build ./...
 	
 	mkdir -p $dist
 	go run ./cmd/mksite -p $dist/docs
-	rsync -avC ./docs $dist/
+	rsync -aC ./docs $dist/
 	;;
     clean)
 	rm -rf $dist
 	;;
     test)
-	go test -coverprofile /tmp/c.out ./... 2>&1 | sed -e 's| of statements||g' -e 's|coverage: ||g' -e 's|github.com/gregoryv/sogvin|.|g' | grep -v "no test"
+	go test -coverprofile /tmp/c.out ./... 2>&1 | \
+	    sed -e 's| of statements||g' \
+		-e 's|coverage: ||g' \
+		-e 's|github.com/gregoryv/sogvin|.|g' | \
+	    grep -v "no test"
 	;;
     *)
 	$0 build test
