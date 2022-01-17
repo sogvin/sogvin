@@ -19,3 +19,8 @@ what if we could find a similar system, depending on what you want to
 do, but variations of that with a prefix?
 
 */
+
+// outside using tests > implement < incorporate
+func wip_outsideIn() {
+
+}
