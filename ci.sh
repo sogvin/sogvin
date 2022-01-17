@@ -27,7 +27,7 @@ case $1 in
 	rm -rf $dist
 	;;
     test)
-	go test -coverprofile /tmp/c.out ./... 2>&1 | sed 's|github.com/gregoryv|.|g'
+	go test -coverprofile /tmp/c.out ./... 2>&1 | sed -e 's| of statements||g' -e 's|coverage: ||g' -e 's|github.com/gregoryv/sogvin|.|g' | grep -v "no test"
 	;;
     *)
 	$0 build test
