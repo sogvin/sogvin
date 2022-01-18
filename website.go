@@ -35,6 +35,11 @@ func NewWebsite() *Website {
 			site.AddPage("Start", gettingStartedWithProgramming()),
 		),
 
+		H2("Plan"),
+
+		P(`Skill of presenting a problem domain with a scoped solution
+		in mind.`),
+
 		H2("Design"),
 
 		H3("System design"),
@@ -58,16 +63,16 @@ func NewWebsite() *Website {
 			site.AddPage("Design", strictMode()),
 		),
 
-		H2("Test"),
+		H2("Verify"),
 		Ul(
-			site.AddPage("Test", inlineTestHelpers()),
-			site.AddPage("Test", alternateDesign()),
-			site.AddPage("Test", setupTeardown()),
+			site.AddPage("Verify", inlineTestHelpers()),
+			site.AddPage("Verify", alternateDesign()),
+			site.AddPage("Verify", setupTeardown()),
 		),
 
-		H2("Build"),
+		H2("Deliver"),
 		Ul(
-			site.AddPage("Build", embedVersionAndRevision()),
+			site.AddPage("Deliver", embedVersionAndRevision()),
 		),
 
 		H2("Drills"),

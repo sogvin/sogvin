@@ -5,6 +5,7 @@ This project adheres to semantic versioning.
 
 ## [unreleased]
 
+- Rename skill sections
 - Split design section into system and software design
 - Add drill "Pointer receiver or not"
 
