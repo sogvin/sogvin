@@ -8,7 +8,7 @@ import (
 )
 
 func NewWebsite() *Website {
-	title := "Software Engineering - Skills &amp; Practice"
+	title := "Software Engineering - Skills &amp; Drills"
 	author := "Gregory Vin&ccaron;i&cacute;"
 	site := Website{
 		title:  title,
