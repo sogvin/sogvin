@@ -37,27 +37,6 @@ func findH1(article *Element) string {
 	return strings.TrimSpace(string(buf.Bytes()[from:to]))
 }
 
-func newPage(filename, title string, header, article, footer *Element) *Page {
-	return NewFile(filename,
-		Html(Lang("en"),
-			Head(
-				Meta(Charset("utf-8")),
-				Meta(
-					Name("viewport"),
-					Content("width=device-width, initial-scale=1.0"),
-				),
-				stylesheet("theme.css"),
-				stylesheet("a4.css"),
-				Title(title)),
-			Body(
-				header,
-				article,
-				footer,
-			),
-		),
-	)
-}
-
 func linkToPage(page *Page) *Element {
 	return Li(A(Href(page.Filename), findH1(page.Element)))
 }

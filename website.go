@@ -17,7 +17,7 @@ func NewWebsite() *Website {
 	site.ToSaver = &saveAll{&site}
 	site.AddThemes(a4(), theme())
 
-	toc := Article(Class("toc"),
+	article := Article(Class("toc"),
 		H1(title),
 		Img(Src("img/office.jpg")),
 		P("Notes by ", author),
@@ -115,10 +115,29 @@ func NewWebsite() *Website {
 			site.AddPage("References", packageRefs()),
 		),
 	)
-	index := newPage("index.html", findH1(toc), Header(Code(
-		versionField(), " - ", Released(),
-	)), toc, Footer())
-	site.pages = append(site.pages, index)
+
+	page := NewFile("index.html",
+		Html(Lang("en"),
+			Head(
+				Meta(Charset("utf-8")),
+				Meta(
+					Name("viewport"),
+					Content("width=device-width, initial-scale=1.0"),
+				),
+				stylesheet("theme.css"),
+				stylesheet("a4.css"),
+				Title(site.title),
+			),
+			Body(
+				Header(Code(
+					versionField(), " - ", Released(),
+				)),
+				article,
+				Footer(),
+			),
+		),
+	)
+	site.pages = append(site.pages, page)
 
 	return &site
 }
