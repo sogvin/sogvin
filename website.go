@@ -3,7 +3,9 @@ package sogvin
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
+	"github.com/gomarkdown/markdown"
 	. "github.com/gregoryv/web"
 )
 
@@ -130,12 +132,22 @@ func NewWebsite() *Website {
 			),
 			Body(
 				Header(Code(
-					versionField(), " - ", Released(),
+					A(Href("changelog.html"), versionField()), " - ", Released(),
 				)),
 				article,
 				Footer(),
 			),
 		),
+	))
+
+	// todo replace changelog with web.Page
+	log := strings.ReplaceAll(changelog, "## [", "### ")
+	log = strings.Replace(log, "# Changelog", "", 1)
+	log = strings.ReplaceAll(log, "] ", " &#45; ")
+	log = strings.ReplaceAll(log, "]", "")
+	site.AddPage("", Article(
+		H1("Changelog"),
+		string(markdown.ToHTML([]byte(log), nil, nil)),
 	))
 
 	return &site
@@ -156,6 +168,12 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 	title := findH1(article)
 	filename := filenameFrom(title) + ".html"
 
+	backlink := A(Href("index.html"), me.title)
+	if right != "" {
+		backlink = Code(
+			right, " - ", A(Href("index.html"), me.title),
+		)
+	}
 	page := NewFile(filename,
 		Html(Lang("en"),
 			Head(
@@ -168,10 +186,7 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 				stylesheet("a4.css"),
 				Title(stripTags(title)+" - "+me.title)),
 			Body(
-				Header(Code(
-					right+" - "+A(Href("index.html"), me.title).String(),
-				)),
-
+				Header(backlink),
 				article,
 				Footer(me.author),
 			),

@@ -1,11 +1,11 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-This project adheres to semantic versioning.
 
-## [unreleased]
+## [0.5.0] 2022-01-20
 
-- Rename skill sections
+- Link to changelog
+- Rename sections to match skills
 - Split design section into system and software design
 - Add drill "Pointer receiver or not"
 
@@ -22,8 +22,6 @@ This project adheres to semantic versioning.
   - Parse options using cmdline.BasicParser
   - Parse builtin types
   - Short and long option names
-
-
 - Group packages under references
 
 
