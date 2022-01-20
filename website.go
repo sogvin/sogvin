@@ -116,7 +116,7 @@ func NewWebsite() *Website {
 		),
 	)
 
-	page := NewFile("index.html",
+	site.add(NewFile("index.html",
 		Html(Lang("en"),
 			Head(
 				Meta(Charset("utf-8")),
@@ -136,8 +136,7 @@ func NewWebsite() *Website {
 				Footer(),
 			),
 		),
-	)
-	site.pages = append(site.pages, page)
+	))
 
 	return &site
 }
@@ -178,8 +177,8 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 			),
 		),
 	)
+	me.add(page)
 
-	me.pages = append(me.pages, page)
 	return linkToPage(page)
 }
 
@@ -198,7 +197,7 @@ func (me *Website) AddDrill(right, args string, filename string) *Element {
 				),
 				stylesheet("../theme.css"),
 				stylesheet("../a4.css"),
-				Title(""),
+				Title(""), // todo
 			),
 			Body(
 				// todo link to parent
@@ -218,6 +217,10 @@ func (me *Website) AddDrill(right, args string, filename string) *Element {
 
 func (me *Website) AddThemes(v ...*CSS) {
 	me.themes = append(me.themes, v...)
+}
+
+func (me *Website) add(p *Page) {
+	me.pages = append(me.pages, p)
 }
 
 // ----------------------------------------
