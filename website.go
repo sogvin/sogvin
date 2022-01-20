@@ -138,15 +138,28 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 	title := findH1(article)
 	filename := filenameFrom(title) + ".html"
 
-	page := newPage(
-		filename,
-		stripTags(title)+" - "+me.title,
-		Header(Code(
-			right+" - "+A(Href("index.html"), me.title).String(),
-		)),
-		article,
-		Footer(me.author),
+	page := NewFile(filename,
+		Html(Lang("en"),
+			Head(
+				Meta(Charset("utf-8")),
+				Meta(
+					Name("viewport"),
+					Content("width=device-width, initial-scale=1.0"),
+				),
+				stylesheet("theme.css"),
+				stylesheet("a4.css"),
+				Title(stripTags(title)+" - "+me.title)),
+			Body(
+				Header(Code(
+					right+" - "+A(Href("index.html"), me.title).String(),
+				)),
+
+				article,
+				Footer(me.author),
+			),
+		),
 	)
+
 	me.pages = append(me.pages, page)
 	return linkToPage(page)
 }
