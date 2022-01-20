@@ -28,17 +28,17 @@ func versionField() *Element {
 	return el
 }
 
-func findH1(article *Element) string {
-	var buf bytes.Buffer
-	enc := NewHtmlEncoder(&buf)
-	enc.Encode(article)
-	from := bytes.Index(buf.Bytes(), []byte("<h1>")) + 4
-	to := bytes.Index(buf.Bytes(), []byte("</h1>"))
-	return strings.TrimSpace(string(buf.Bytes()[from:to]))
+func linkToPage(page *Page) *Element {
+	h1 := MustQueryOne(page.Element, "h1")
+	return Li(A(Href(page.Filename), h1.Text()))
 }
 
-func linkToPage(page *Page) *Element {
-	return Li(A(Href(page.Filename), findH1(page.Element)))
+func MustQueryOne(root *Element, expr string) *Element {
+	got := Query(root, expr)
+	if len(got) != 1 {
+		panic(fmt.Sprintf("expr %q: %v matches", expr, len(got)))
+	}
+	return got[0]
 }
 
 func stripTags(in string) string {

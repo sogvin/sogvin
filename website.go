@@ -155,7 +155,7 @@ type Website struct {
 
 // AddPage creates a new page and returns a link to it
 func (me *Website) AddPage(right string, article *Element) *Element {
-	title := findH1(article)
+	title := MustQueryOne(article, "h1").Text()
 	filename := filenameFrom(title) + ".html"
 
 	backlink := A(Href("index.html"), me.title)
