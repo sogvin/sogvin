@@ -21,10 +21,10 @@ func main() {
 
 	switch {
 	case showVersion:
-		fmt.Println(sogvin.Version)
+		fmt.Println(sogvin.Version())
 
 	case checkRelease:
-		if sogvin.Version == "unreleased" {
+		if sogvin.Version() == "unreleased" {
 			log.Fatal("not ready for release, fix changelog")
 		}
 

@@ -1,13 +1,22 @@
 package sogvin
 
 import (
+	"strings"
+
 	. "github.com/gregoryv/web"
 )
 
-const (
-	Version  = "unreleased"
-	Released = ""
-)
+func Version() string {
+	latest := MustQueryOne(changelog(), "h3.latest")
+	parts := strings.Split(latest.Text(), " ")
+	return parts[0]
+}
+
+func Released() string {
+	latest := MustQueryOne(changelog(), "h3.latest")
+	parts := strings.Split(latest.Text(), " ")
+	return parts[2]
+}
 
 func changelog() *Element {
 	return Article(Class("changelog"),
@@ -16,7 +25,7 @@ func changelog() *Element {
 		P(`All notable changes to this project will be documented in
         this file.`),
 
-		H3(Version, Span(Released)),
+		H3(Class("latest"), "unreleased", Span("")),
 
 		H3("0.5.0", Span("2022-01-20")),
 		Ul(
