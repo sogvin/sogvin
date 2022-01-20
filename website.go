@@ -3,9 +3,7 @@ package sogvin
 import (
 	"os"
 	"path/filepath"
-	"strings"
 
-	"github.com/gomarkdown/markdown"
 	. "github.com/gregoryv/web"
 )
 
@@ -132,7 +130,7 @@ func NewWebsite() *Website {
 			),
 			Body(
 				Header(Code(
-					A(Href("changelog.html"), versionField()), " - ", Released(),
+					A(Href("changelog.html"), versionField()), " - ", Released,
 				)),
 				article,
 				Footer(),
@@ -140,15 +138,7 @@ func NewWebsite() *Website {
 		),
 	))
 
-	// todo replace changelog with web.Page
-	log := strings.ReplaceAll(changelog, "## [", "### ")
-	log = strings.Replace(log, "# Changelog", "", 1)
-	log = strings.ReplaceAll(log, "] ", " &#45; ")
-	log = strings.ReplaceAll(log, "]", "")
-	site.AddPage("", Article(
-		H1("Changelog"),
-		string(markdown.ToHTML([]byte(log), nil, nil)),
-	))
+	site.AddPage("", changelog())
 
 	return &site
 }

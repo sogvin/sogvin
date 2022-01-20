@@ -19,7 +19,7 @@ import (
 
 func versionField() *Element {
 	el := Span()
-	v := Version()
+	v := Version
 	if v == "unreleased" {
 		el.With(Class("unreleased"), v)
 	} else {

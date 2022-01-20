@@ -10,7 +10,7 @@ require (
 	github.com/gregoryv/logger v0.2.0
 	github.com/gregoryv/navstar v0.2.0
 	github.com/gregoryv/qual v0.4.2
-	github.com/gregoryv/web v0.22.0
+	github.com/gregoryv/web v0.23.0
 	github.com/gregoryv/workdir v0.2.0
 	golang.org/x/net v0.0.0-20220114011407-0dd24b26b47d // indirect
 )

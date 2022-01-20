@@ -16,6 +16,7 @@ github.com/gregoryv/cmdline v0.11.0/go.mod h1:SlmgPqceskkvUcRo/kbyR3qrP0+uVTjiKH
 github.com/gregoryv/draw v0.22.1 h1:led/cSCrdlcVYQKVSrzTm9YPCO9ntctNEjfGcybcv4U=
 github.com/gregoryv/draw v0.22.1/go.mod h1:vbc5fYnAkO2i8lj8lMPKaSVWGqTqKzf2aSv4VlPReJM=
 github.com/gregoryv/english v0.4.1/go.mod h1:5kcVzgVHvYWLxmJ/ymSmMhW30EHaP11iB5kWOx5FChw=
+github.com/gregoryv/english v0.6.0/go.mod h1:F5O7gDq0yWDJUEOXuNv+ebChEjK7N9eBFHsxGyFui/0=
 github.com/gregoryv/find v0.0.0-20180328085109-1bbc2d70c482/go.mod h1:/xxQlO62bzxhyabf2iKJzGJa+VAJy25spLI/6ICTrxU=
 github.com/gregoryv/find v0.2.0/go.mod h1:ZxH/FkVt6VM//T7edeCqCc2dJRrLAtCYvtvdM6Hk398=
 github.com/gregoryv/find v0.4.0 h1:FaIgt1oqZgxdr9gjpgzDT7dscb57nLzqRwl4pg4mVHo=
@@ -44,6 +45,8 @@ github.com/gregoryv/web v0.19.0/go.mod h1:DRjHH1V0vwEGHpzEhb9Y3XrQWioSSOGBz6nJMn
 github.com/gregoryv/web v0.21.0/go.mod h1:wAsePq4XiIuLmEOI9qNpgaK3rdXY3huHkwNGjUuvngw=
 github.com/gregoryv/web v0.22.0 h1:SzcU048ibWFzeQIovDCQ4RBEhkr8UMkIonzSsAmt3qg=
 github.com/gregoryv/web v0.22.0/go.mod h1:ZNxc8oE709qkkeVZw377xfpsR/kgCu+TRIfRsF4hXEY=
+github.com/gregoryv/web v0.23.0 h1:vEv3rn/N4KiUzgvSDwCMTxe/xW23rmKqUqrlFbjBRNs=
+github.com/gregoryv/web v0.23.0/go.mod h1:UKNWM2GN5DJ9W7PYpyCKU5jcCsi7uim2UaT1XDeyeJE=
 github.com/gregoryv/wolf v0.7.1-0.20210322070002-85ee5b00b774/go.mod h1:ZoXAExZzPax7lJuck8S/1npj9eROQJM4ocovg3AD9sg=
 github.com/gregoryv/workdir v0.2.0 h1:a0V87TpJpda5rHPj+lrJTiUD7pqdddUERYPWEJY8ufc=
 github.com/gregoryv/workdir v0.2.0/go.mod h1:qX7yFN0yqysNfEr2F5Tta9+5K8oueS/sqBmdiExBoYA=
@@ -55,6 +58,7 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 golang.org/x/net v0.0.0-20210119194325-5f4716e94777/go.mod h1:m0MpNAwzfU5UDzcl9v0D8zg8gWTRqZa9RBIspLL5mdg=
 golang.org/x/net v0.0.0-20210525063256-abc453219eb5/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/net v0.0.0-20210917221730-978cfadd31cf/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
+golang.org/x/net v0.0.0-20211029224645-99673261e6eb/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/net v0.0.0-20211216030914-fe4d6282115f/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/net v0.0.0-20220114011407-0dd24b26b47d h1:1n1fc535VhN8SYtD4cDUyNlfpAF2ROMM9+11equK3hs=
 golang.org/x/net v0.0.0-20220114011407-0dd24b26b47d/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=

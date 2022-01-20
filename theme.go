@@ -130,7 +130,9 @@ func a4() *CSS {
 		"margin-left: 1em",
 		"list-style-type: none",
 	)
-
+	css.Style("article.changelog span",
+		"padding-left: 0.4em",
+	)
 	screen := css.Media("screen")
 	screen.Style("html, body",
 		"margin: 3px 10px",
