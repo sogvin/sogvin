@@ -8,7 +8,7 @@ import (
 )
 
 func NewWebsite() *Website {
-	title := "Software Engineering - Skills &amp; Drills"
+	title := "Software Engineering"
 	author := "Gregory Vin&ccaron;i&cacute;"
 	site := Website{
 		title:  title,
@@ -18,7 +18,7 @@ func NewWebsite() *Website {
 	site.AddThemes(a4(), theme())
 
 	article := Article(Class("toc"),
-		H1(title),
+		H1(title, " - Skills &amp; Drills"),
 		Img(Src("img/office.jpg")),
 		P("Notes by ", author),
 
