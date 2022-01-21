@@ -37,6 +37,7 @@ func (me *System) Is(v State) bool {
 }
 
 func (s *System) run(ctx context.Context) {
+	log.Print("run")
 	s.switchState(running)
 
 	for {
@@ -49,12 +50,20 @@ func (s *System) run(ctx context.Context) {
 	}
 }
 
-func (s *System) switchState(state func(s *System)) {
+func (s *System) switchState(state func(s *System) (State, error)) {
 	s.m.Lock()
 	before := s.state
-	state(s)
+	newState, err := state(s)
+	if err == nil {
+		s.state = newState
+	}
 	s.m.Unlock()
-	log.Printf("switch state: %s -> %s", before, s.state)
+
+	var msg string
+	if err != nil {
+		msg = " " + err.Error()
+	}
+	log.Printf("switchState: %s -> %s%s", before, s.state, msg)
 }
 
 type State string
@@ -64,20 +73,20 @@ const (
 	StateRunning State = "running"
 )
 
-func running(s *System) {
-	s.state = StateRunning
+func running(s *System) (State, error) {
 	s.NetSettings = &disabled{}
 	s.LogSettings = &disabled{}
 	s.Runner = runFunc(func(context.Context) {
 		log.Println("already running")
 	})
+	return StateRunning, nil
 }
 
-func stopped(s *System) {
-	s.state = StateStopped
+func stopped(s *System) (State, error) {
 	s.NetSettings = &enabled{s}
 	s.LogSettings = &enabled{s}
 	s.Runner = runFunc(s.run)
+	return StateStopped, nil
 }
 
 // change Settings behavior by replacing it's implementation
