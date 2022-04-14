@@ -1,13 +1,14 @@
 // Go idiomic getters and setters
 //
-// Exclude the Get prefix
+// Exclude the Get prefix and group methods by behavior. Ie.
+// Set methods are settings and getters are attribute readers.
+// And separate operations.
 package drill
 
 import "fmt"
 
 func init() {
-	h := NewHotel()
-	fmt.Print(h.String())
+	fmt.Print(NewHotel().String())
 }
 
 func NewHotel() *Building {
@@ -27,28 +28,15 @@ func NewHotel() *Building {
 type Building struct {
 	area      int
 	entrances int
-
-	// complex relation
-	floors []Floor
+	floors    []Floor
 }
 
 // group by behavior
-
-// settings
-
-func (me *Building) SetArea(v int)      { me.area = v }
-func (me *Building) SetEntrances(v int) { me.entrances = v }
-
-// attributes
-
-func (me *Building) Area() int       { return me.area }
-func (me *Building) Entrances() int  { return me.entrances }
-func (me *Building) Floors() []Floor { return me.floors }
-
-// operations
-
 func (me *Building) String() string {
-	return fmt.Sprintf("House with %v floors and %v rooms", len(me.floors), me.RoomCount())
+	return fmt.Sprintf(
+		"House with %v floors and %v rooms",
+		len(me.floors), me.RoomCount(),
+	)
 }
 
 func (me *Building) RoomCount() int {
@@ -59,19 +47,20 @@ func (me *Building) RoomCount() int {
 	return sum
 }
 
-// ----------------------------------------
+func (me *Building) SetArea(v int)      { me.area = v }
+func (me *Building) SetEntrances(v int) { me.entrances = v }
+
+func (me *Building) Area() int       { return me.area }
+func (me *Building) Entrances() int  { return me.entrances }
+func (me *Building) Floors() []Floor { return me.floors }
 
 type Floor struct {
 	number    int
 	roomCount int
 }
 
-// settings
-
 func (me *Floor) SetNumber(v int)    { me.number = v }
 func (me *Floor) SetRoomCount(v int) { me.roomCount = v }
-
-// attributes
 
 func (me *Floor) Number() int    { return me.number }
 func (me *Floor) RoomCount() int { return me.roomCount }
