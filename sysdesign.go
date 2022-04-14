@@ -502,6 +502,6 @@ func navstarDir(subpath string) string {
 
 // ----------------------------------------
 var navrepo = &Repo{
-	host:  "https://github.com/gregoryv/navstar",
-	local: "/home/gregory/src/github.com/gregoryv/navstar",
+	host:  "https://github.com/sogvin/navstar",
+	local: "/home/gregory/src/github.com/sogvin/navstar",
 }
