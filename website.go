@@ -108,6 +108,7 @@ func NewWebsite() *Website {
 		H3("Methods"),
 		Ul(
 			site.AddDrill("Methods", "", "drill/pointer_receiver.go"),
+			site.AddDrill("Methods", "", "drill/getters_and_setters.go"),
 		),
 
 		H2("References"),
