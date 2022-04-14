@@ -61,6 +61,7 @@ func NewWebsite() *Website {
 			site.AddPage("Design", nexusPattern()),
 			site.AddPage("Design", gracefulServerShutdown()),
 			site.AddPage("Design", strictMode()),
+			site.AddPage("Design", usingAbstractions()), // todo
 		),
 
 		H2("Verify"),
@@ -203,13 +204,14 @@ func (me *Website) AddDrill(right, args string, filename string) *Element {
 				),
 				stylesheet("../theme.css"),
 				stylesheet("../a4.css"),
-				Title(""), // todo
+				Title(right, " - drill"),
 			),
 			Body(
-				// todo link to parent
 				Header(
 					Header(Code(
-						right+" - "+A(Href("../index.html"), me.title).String(),
+						right,
+						" - ",
+						A(Href("../index.html"), me.title).String(),
 					)),
 				),
 				article,
