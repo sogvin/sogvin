@@ -8,13 +8,28 @@ package drill
 import "fmt"
 
 func init() {
-	fmt.Print(NewHotel().String())
+	spec := Specification{
+		NumFloors: 20,
+		Entrances: 2,
+		Length:    30,
+		Width:     45,
+	}
+	hotel := Build(spec)
+	fmt.Print(hotel.String())
 }
 
-func NewHotel() *Building {
+// Carrier struct with no logic, just use public fields
+type Specification struct {
+	Length    int
+	Width     int
+	NumFloors int
+	Entrances int
+}
+
+func Build(s Specification) *Building {
 	var b Building
-	b.SetArea(100)
-	b.SetEntrances(2)
+	b.SetArea(s.Width * s.Length * s.NumFloors)
+	b.SetEntrances(s.Entrances)
 
 	for i := 1; i <= 20; i++ {
 		var f Floor
@@ -31,11 +46,10 @@ type Building struct {
 	floors    []Floor
 }
 
-// group by behavior
-func (me *Building) String() string {
+func (me *Building) String() string { // operations
 	return fmt.Sprintf(
-		"House with %v floors and %v rooms",
-		len(me.floors), me.RoomCount(),
+		"%v floors, %v rooms, %v m^2",
+		len(me.Floors()), me.RoomCount(), me.Area(),
 	)
 }
 
@@ -47,10 +61,10 @@ func (me *Building) RoomCount() int {
 	return sum
 }
 
-func (me *Building) SetArea(v int)      { me.area = v }
+func (me *Building) SetArea(v int)      { me.area = v } // settings
 func (me *Building) SetEntrances(v int) { me.entrances = v }
 
-func (me *Building) Area() int       { return me.area }
+func (me *Building) Area() int       { return me.area } // attributes
 func (me *Building) Entrances() int  { return me.entrances }
 func (me *Building) Floors() []Floor { return me.floors }
 
