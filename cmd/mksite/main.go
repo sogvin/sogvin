@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/gregoryv/cmdline"
 	"github.com/gregoryv/sogvin"
@@ -29,6 +30,7 @@ func main() {
 		}
 
 	default:
+		os.MkdirAll(prefix, 0722)
 		website := sogvin.NewWebsite()
 		if err := website.SaveTo(prefix); err != nil {
 			log.Fatal(err)
