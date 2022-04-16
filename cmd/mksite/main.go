@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/gregoryv/cmdline"
-	"github.com/gregoryv/sogvin"
+	"github.com/sogvin/sogvin"
 )
 
 func main() {

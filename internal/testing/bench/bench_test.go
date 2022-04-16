@@ -3,7 +3,7 @@ package bench
 import (
 	"testing"
 
-	"github.com/gregoryv/sogvin/internal"
+	"github.com/sogvin/sogvin/internal"
 )
 
 func Benchmark_double1(b *testing.B) {
