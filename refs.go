@@ -1,4 +1,4 @@
-package sogvin
+package website
 
 import (
 	. "github.com/gregoryv/web"

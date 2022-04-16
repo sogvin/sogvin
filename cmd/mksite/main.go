@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/gregoryv/cmdline"
-	"github.com/sogvin/sogvin"
+	"github.com/sogvin/website"
 )
 
 func main() {
@@ -22,16 +22,16 @@ func main() {
 
 	switch {
 	case showVersion:
-		fmt.Println(sogvin.Version())
+		fmt.Println(website.Version())
 
 	case checkRelease:
-		if sogvin.Version() == "unreleased" {
+		if website.Version() == "unreleased" {
 			log.Fatal("not ready for release, fix changelog")
 		}
 
 	default:
 		os.MkdirAll(prefix, 0722)
-		website := sogvin.NewWebsite()
+		website := website.NewWebsite()
 		if err := website.SaveTo(prefix); err != nil {
 			log.Fatal(err)
 		}

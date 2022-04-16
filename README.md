@@ -6,5 +6,4 @@ Notes about skills and practices in software engineering.
 
 Enable software engineers to improve their skills as developers.
 
-
 [Site design](https://excalidraw.com/#json=jr5IgRKIg0h1jGp4v-Xqm,umj0CZN-R12gsCvsgvZYhg)

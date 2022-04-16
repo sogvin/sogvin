@@ -3,7 +3,7 @@
 set -e
 set -o pipefail
 
-dist=/tmp/sogvin
+dist=/tmp/website
 
 case $1 in
     -h)
@@ -11,12 +11,12 @@ case $1 in
 	;;
     publish)
 	go run ./cmd/mksite -c # guard
-	rsync -avC $dist/docs/ www.7de.se:/var/www/www.sogvin.com/
+	rsync -avC $dist/docs/ www.7de.se:/var/www/www.website.com/
 	;;
     build)
 	pushd ../
 	tree -P "*.go" -I "*_test.go" navstar | \
-	    grep -v directories > sogvin/example/navstar.tree
+	    grep -v directories > website/example/navstar.tree
 	popd
 	go build ./...
 	
@@ -31,7 +31,7 @@ case $1 in
 	go test -coverprofile /tmp/c.out ./... 2>&1 | \
 	    sed -e 's| of statements||g' \
 		-e 's|coverage: ||g' \
-		-e 's|github.com/gregoryv/sogvin|.|g' | \
+		-e 's|github.com/gregoryv/website|.|g' | \
 	    grep -v "no test"
 	;;
     *)

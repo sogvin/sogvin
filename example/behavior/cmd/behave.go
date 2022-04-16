@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/sogvin/sogvin/example/behavior"
+	"github.com/sogvin/website/example/behavior"
 )
 
 func main() {

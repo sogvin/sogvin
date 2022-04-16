@@ -1,4 +1,4 @@
-package sogvin
+package website
 
 import (
 	"path"

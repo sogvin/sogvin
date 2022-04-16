@@ -1,4 +1,4 @@
-package sogvin
+package website
 
 import (
 	"strings"
@@ -25,6 +25,9 @@ var Changelog = Article(Class("changelog"),
         this file.`),
 
 	H3(Class("latest"), "unreleased", Span("")),
+	Ul(
+		Li("Move module to github.com/sogvin/website"),
+	),
 
 	H3("0.5.0", Span("2022-01-20")),
 	Ul(
