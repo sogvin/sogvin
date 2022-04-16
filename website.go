@@ -61,7 +61,6 @@ func NewWebsite() *Website {
 			site.AddPage("Design", nexusPattern()),
 			site.AddPage("Design", gracefulServerShutdown()),
 			site.AddPage("Design", strictMode()),
-			//			site.AddPage("Design", usingAbstractions()), // WIP
 		),
 
 		H2("Verify"),
