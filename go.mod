@@ -1,4 +1,4 @@
-module github.com/gregoryv/sogvin
+module github.com/sogvin/sogvin
 
 go 1.16
 
