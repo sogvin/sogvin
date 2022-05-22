@@ -24,7 +24,7 @@ var Changelog = Article(Class("changelog"),
 	P(`All notable changes to this project will be documented in
         this file.`),
 
-	H3(Class("latest"), "unreleased", Span("")),
+	H3(Class("latest"), "0.5.1", Span("2022-05-22")),
 	Ul(
 		Li("Move module to github.com/sogvin/website"),
 	),
