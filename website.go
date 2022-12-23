@@ -57,6 +57,7 @@ func NewWebsite() *Website {
 		P(`Skill of writing software to grow gracefully over time.`),
 
 		Ul(
+			site.AddPage("Design", projectLayout()), // todo
 			site.AddPage("Design", purposeOfFuncMain()),
 			site.AddPage("Design", nexusPattern()),
 			site.AddPage("Design", gracefulServerShutdown()),
@@ -186,6 +187,12 @@ func (me *Website) AddPage(right string, article *Element) *Element {
 	me.add(page)
 
 	return linkToPage(page)
+}
+
+func linkTo(article *Element) *Element {
+	title := MustQueryOne(article, "h1").Text()
+	filename := filenameFrom(title) + ".html"
+	return A(Href(filename), title)
 }
 
 func (me *Website) AddDrill(right, args string, filename string) *Element {

@@ -6,6 +6,194 @@ import (
 	. "github.com/gregoryv/web"
 )
 
+func projectLayout() *Element {
+	return Article(
+		H1("Golang project layout"),
+
+		P(`In this context `, Em("layout"), ` is about placing files
+		and directories in a repository. `,
+			A(Href("https://go.dev/blog/organizing-go-code"), `Organizing
+		Go Code`), `, by Andrew Gerard, 2012 is still very much valid
+		and we build on it's description. I use the term layout over
+		structure becuse structure implies rigidity and software
+		development needs to be decoupled and agile even at this
+		level. Projects evolve and your layout should support this
+		evolution. The goal is to allow for refactoring with minimal
+		impact.`),
+
+		sidenote(`Layout should minimize refacto- ring impact.`, -1.8),
+
+		P(`Here is an example of a project layout from `,
+			linkTo(roleBasedService()), "."),
+
+		shellCommand(`$ tree ../navstar/
+├── cmd
+│   └── starplan
+│       ├── main.go
+│       └── main_test.go
+├── go.mod
+├── go.sum
+├── htapi
+│   ├── router.go
+│   └── router_test.go
+├── LICENSE
+├── package.go
+├── README.md
+├── resource.go
+├── role.go
+├── system.go
+├── system_test.go
+├── user.go
+└── user_test.go`),
+
+		P(`This layout was however not created from start, it
+		evolved. Initial layout was simply`),
+
+		shellCommand(`$ tree ../navstar/
+├── go.mod
+├── LICENSE
+└── README.md`),
+
+		P(`a resonable base of any repository, and works well
+		on github.com which displays the README.md file. The LICENSE
+		is important once you publish your work and you want it to be
+		accessible through `, A(Href("https://pkg.go.dev"),
+			"pkg.go.dev"), `. Writing domain logic in the root of your
+		repository allows for`),
+
+		Ul(
+			Li("quick access to files"),
+			Li("easy refactoring with tools like gofmt"),
+		),
+
+		P(`If your repository only provides domain logic this could be
+		all you need, a flat and easy to work with layout. Our example
+		evolved into `),
+
+		shellCommand(`$ tree ../navstar/
+├── go.mod
+├── go.sum
+├── LICENSE
+├── package.go
+├── README.md
+├── resource.go
+├── role.go
+├── system.go
+├── system_test.go
+├── user.go
+└── user_test.go`),
+
+		P(`At some point you it's time to use the domain logic. If you
+		look carefully we already have couple of test files. They are
+		the initial use and should contain some examples of it's
+		use. Usually online systems involve some kind of remote API
+		and in our example it was placed in directory named `,
+			Code("htapi"), `.`),
+
+		shellCommand(`$ tree ../navstar/
+├── go.mod
+├── go.sum
+├── htapi
+│   ├── router.go
+│   └── router_test.go
+├── LICENSE
+├── package.go
+├── README.md
+├── resource.go
+├── role.go
+├── system.go
+├── system_test.go
+├── user.go
+└── user_test.go`),
+		//
+
+		P(`Keep it simple and readable. Readable here means more
+		referencable when discussing about the solution. E.g.`),
+
+		Em(`- navstar has a public HTTP API`),
+
+		P(`Let's discuss this, because an argument could be made that
+		the layout should have been something like`),
+
+		Pre(`navstar/
+  http/
+    api/
+      router.go
+`),
+
+		P(`There are several reasons why this makes evolution more
+		cumbersome. FIRST; we've added an extra, unused level with the
+		http directory. It makes it slightly harder to work with
+		depending on which tools you use. In the terminal it adds to
+		the navigation between directories. SECOND; the name
+		<em>api</em> is too generic and should we decide later to add
+		another protocol, e.g. gRPC we'd have to (a) rename api or (b)
+		move it to something like navstart/http/api/rest, increasing
+		levels even more. THIRD; the name http is already used in the
+		standard package net/http. Avoid reusing package names as
+		renaming them later is harder, unless you have really
+		sophisticated refactoring tools.`),
+
+		P(`Once it's time to build an application for others to use,
+		it's benefitial to place this in a directory named the same as
+		the Go build tools default to naming the binary to it. Create
+		your application directory under cmd/, like this`),
+
+		shellCommand(`$ tree ../navstar/
+├── cmd
+│   └── starplan
+└── htapi`),
+
+		P(`Now this goes against the second argument we just made to
+		exclude unused level of directories. And you are right however
+		other reasons come into play here. FIRST; when sharing
+		multiple commands using the Go tooling we can simplify
+		installation instructions, e.g. `),
+
+		shellCommand(`$ go install github.com/sogvin/navstar/cmd/...@latest`),
+
+		P(`SECOND; this layout works in a conversation`),
+
+		Em(`- I can access the navstar system through the command
+		starplan`),
+
+		P(`THIRD; this layout is followed by the Go project so it's
+		familiar. FOURTH; if kept separate from the domain logic,
+		commands can easily be moved to their own repositories,
+		e.g. for having a separate release history.`),
+		//
+
+		H2("Internal"),
+
+		P(`The internal directory is exactly what it says,
+		internal. It is internal to a whole repository, and if treated
+		like that you may end up in issues when refactoring down the
+		road. If the internal directory is only imported by it's
+		parent then you are all good but if other subdirectories
+		import it those subdirectories cannot be moved as the cross
+		package import of internal directories is not allowed unless
+		within the same repository.`),
+
+		P(`Example; navstart/internal can be imported by anything
+		navstart/..., however say navstar/cmd/starplan imports it,
+		then we can no longer move cmd/startplan to it's own
+		repository as that import will be disallowed. Think of
+		internal as internal to the parent directory only. Also use it
+		only when really needed. It's easier to hide constructs such
+		as types and functions withing the same package first. It
+		minimizes the level management as we've mentioned earlier.`),
+
+		H2("Summary"),
+
+		P(`Project layouts evolve; keep a flat layout and add
+		directories when needed, thinking in layers. Be mindful of
+		readability and future refactorings. Keep commands in cmd/
+		subdirectories and postpone use of internal by hiding
+		constructs withing a package first.`),
+		//
+	)
+}
+
 func purposeOfFuncMain() *Element {
 	return Article(
 		H1("Purpose of <code>func main()</code>"),
