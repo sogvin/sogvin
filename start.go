@@ -61,7 +61,7 @@ func stylingConventions() *Element {
 	    after the <code>$</code> character, and other lines are the
 	    output of the command.`),
 
-		shellCommand("$ go version\ngo version go1.14 linux/amd64"),
+		shellCommand("$ go version\ngo version go1.20.3 linux/amd64"),
 
 		P(`Note!  when asked to enter a command do not enter the first
 	    <code>$</code> character, only what is after it. Source code
