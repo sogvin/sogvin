@@ -110,8 +110,8 @@ $ cd go-learn`),
        main. Go uses packages to group files in larger projects. The
        main package is special in that it also indicates this should
        be compiled into a executable command. The keyword func
-       declares a function which we call main. Inside main package you
-       have to have one main function which the compiler uses as a
+       declares a function which we call main. Inside package main,
+       you have to have one function main. The compiler uses it as a
        starting point when running your command.`),
 
 		P(`In the above example the code is nicely formatted for easy
