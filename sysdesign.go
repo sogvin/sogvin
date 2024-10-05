@@ -32,7 +32,7 @@ func roleBasedService() *Element {
 		nav,
 
 		P(`Code examples found below you can view at `,
-			github("gregoryv/navstar", "gregoryv/navstart"), `.`),
+			github("gregoryv/navstar", "gregoryv/navstar"), `.`),
 
 		H2("Domain description"),
 

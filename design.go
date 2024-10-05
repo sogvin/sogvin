@@ -128,7 +128,7 @@ func projectLayout() *Element {
 		the navigation between directories. SECOND; the name
 		<em>api</em> is too generic and should we decide later to add
 		another protocol, e.g. gRPC we'd have to (a) rename api or (b)
-		move it to something like navstart/http/api/rest, increasing
+		move it to something like navstar/http/api/rest, increasing
 		levels even more. THIRD; the name http is already used in the
 		standard package net/http. Avoid reusing package names as
 		renaming them later is harder, unless you have really
@@ -174,8 +174,8 @@ func projectLayout() *Element {
 		package import of internal directories is not allowed unless
 		within the same repository.`),
 
-		P(`Example; navstart/internal can be imported by anything
-		navstart/..., however say navstar/cmd/starplan imports it,
+		P(`Example; navstar/internal can be imported by anything
+		navstar/..., however say navstar/cmd/starplan imports it,
 		then we can no longer move cmd/startplan to it's own
 		repository as that import will be disallowed. Think of
 		internal as internal to the parent directory only. Also use it
